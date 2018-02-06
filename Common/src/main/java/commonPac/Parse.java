@@ -6,9 +6,9 @@ public class Parse {
 
     public static final String PREFIX = "--";
     public static final String Equality = "=";
-    public static String error;
+    public static String error = "";
 
-    public static InputParameters parse(String[] inputString, String[] globalOptions, Map<String, List<String>> map){
+    public static InputParameters parse(String[] inputString, String[] globalOptions, Map<String, List<String>> map) {
         InputParameters inputParameters = new InputParameters();
         String input = "";
 
@@ -19,7 +19,7 @@ public class Parse {
         if (input.equals("")){
             error = "Empty input line";
             System.out.println(error);
-            throw new NullPointerException();
+            return null;
         }
 
         boolean findResult = false;
@@ -36,7 +36,7 @@ public class Parse {
         if (!findResult){
             error = "Wrong command";
             System.out.println(error);
-            throw new NullPointerException();
+            return null;
         }
 
         String[] input2 = input.split((" " + PREFIX));
