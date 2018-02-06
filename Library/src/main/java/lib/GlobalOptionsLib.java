@@ -9,12 +9,11 @@ public class GlobalOptionsLib {
     public void help(boolean s){
         if (s){
             CommandList commandList = new CommandList();
-            Iterator<List<String>> values = commandList.newOptions.values().iterator();
-            Iterator<String> keys = commandList.newOptions.keySet().iterator();
-            while (values.hasNext()){
-                System.out.print(keys.next() + " ");
-                System.out.println(values.next());
-            }
+            System.out.println(commandList.add1);
+            System.out.println(commandList.search1);
+            System.out.println(commandList.update1);
+            System.out.println(commandList.list1);
+            System.out.println(commandList.delete1);
         }
     }
 }

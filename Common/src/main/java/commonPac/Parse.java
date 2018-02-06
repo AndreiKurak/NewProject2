@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Parse {
 
-    public static List commandList;
     public static final String PREFIX = "--";
     public static final String Equality = "=";
     public static String error;
@@ -17,15 +16,10 @@ public class Parse {
             input += inputString[i] + " ";
         }
 
-        try{
-            if (input.equals(""))
-                throw new NullPointerException();
-        }
-        catch(NullPointerException ex){
+        if (input.equals("")){
             error = "Empty input line";
             System.out.println(error);
-            ex.getMessage();
-            System.exit(1);//return null;
+            throw new NullPointerException();
         }
 
         boolean findResult = false;
@@ -39,14 +33,10 @@ public class Parse {
             }
         }
 
-        try{
-            if (!findResult)
-                throw new NullPointerException();
-        }
-        catch (NullPointerException ex){
+        if (!findResult){
             error = "Wrong command";
             System.out.println(error);
-            System.exit(1);//return null;
+            throw new NullPointerException();
         }
 
         String[] input2 = input.split((" " + PREFIX));
