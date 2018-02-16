@@ -1,19 +1,15 @@
 package lib;
 
-import java.util.*;
-
 public class GlobalOptionsLib {
-
-    String[] globalOptions = {"--file=", "--file2=", "--help"};
 
     public void help(boolean s){
         if (s){
+            OptionLists optionLists = new OptionLists();
             CommandList commandList = new CommandList();
-            System.out.println(commandList.add1);
-            System.out.println(commandList.search1);
-            System.out.println(commandList.update1);
-            System.out.println(commandList.list1);
-            System.out.println(commandList.delete1);
+            for (int i = 0; i<commandList.commands.size(); i++){
+                System.out.println(commandList.commands.get(i));
+            }
+            System.out.println("\n" + optionLists.globalOptions);
         }
     }
 }

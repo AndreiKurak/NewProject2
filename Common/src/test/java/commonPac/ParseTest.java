@@ -1,35 +1,34 @@
 package commonPac;
 
-//import org.junit.Test;
-//import org.junit.Assert;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ParseTest {
 
-    static final String PREFIX = "--";
-    static final String[] globalOptions = {PREFIX + "file=", PREFIX + "file2="};
-    static final List<String> options = new ArrayList<String>(){{
-        add("author");
-        add("title");
-        add("year");
-           // {PREFIX + "author=", PREFIX + "title=", PREFIX + "year="}
+    Parse parser = new Parse();
+
+    private static final List<OptionDescription> addOptions = new ArrayList<OptionDescription>(){{
+        add(new OptionDescription("author", true));
+        add(new OptionDescription("title", true));
+        add(new OptionDescription("year", false));
+    }};
+    private static final List<CommandDescription> addList = new ArrayList<CommandDescription>(){{
+        add(new CommandDescription("add", "add - command, that is used for adding new books to the library", addOptions));
+    }};
+    private static final List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
+        add(new OptionDescription("file1", true));
+        add(new OptionDescription("file2", false));
+        add(new OptionDescription("help", false));
     }};
 
-    @Test                              //библиотека из maven
+    @Test
     public void parseCorrectOptions(){
-        String[] line ={"--file=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
+        String[] line ={"--file1=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
 
-        Map<String, List<String>> newOptions = new HashMap<String, List<String>>(){{
-            put("add", options);
-        }};
-        InputParameters inputParameters = Parse.parse(line, globalOptions, newOptions);
+        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
         String commandTest1 = "new author";
         Assert.assertEquals(commandTest1, inputParameters.commandOptions.get("author"));
         String commandTest2 = "2019";
@@ -38,50 +37,37 @@ public class ParseTest {
 
     @Test
     public void parseCorrectGlobalOptions(){
-        String[] line ={"--file=test", "--file2=test2", "add", "--author=new"};
+        String[] line ={"--file1=test", "--file2=test2", "add", "--author=new"};
 
-        Map<String, List<String>> newOptions = new HashMap<String, List<String>>(){{
-            put("add", options);
-        }};
-        InputParameters inputParameters = Parse.parse(line, globalOptions, newOptions);
+        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
         String commandTest1 = "test";
-        Assert.assertEquals(commandTest1, inputParameters.globalOptions.get("--file="));
+        Assert.assertEquals(commandTest1, inputParameters.globalOptions.get("file1"));
         String commandTest2 = "test2";
-        Assert.assertEquals(commandTest2, inputParameters.globalOptions.get("--file2="));
+        Assert.assertEquals(commandTest2, inputParameters.globalOptions.get("file2"));
     }
 
     @Test
     public void parseCorrectCommand(){
-        String[] line ={"--file=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
+        String[] line ={"--file1=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
 
-        Map<String, List<String>> newOptions = new HashMap<String, List<String>>(){{
-            put("add", options);
-        }};
-        InputParameters inputParameters = Parse.parse(line, globalOptions, newOptions);
+        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
         String commandTest = "add";
         Assert.assertEquals(commandTest, inputParameters.command);
     }
 
     @Test
-    public void nullInputLine(){
+    public void nullInputLine(){        //not works
         String[] line ={""};
 
-        Map<String, List<String>> newOptions = new HashMap<String, List<String>>(){{
-            put("add", options);
-        }};
-        InputParameters inputParameters = Parse.parse(line, globalOptions, newOptions);
+        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
         Assert.assertEquals("Empty input line", Parse.error);
     }
 
     @Test
-    public void InputLineWithWrongCommand(){
-        String[] line = {"--file=test", "edd", "--author=new", "author", "--title=World", "--year=2019"};
+    public void InputLineWithWrongCommand(){        //not works
+        String[] line = {"--file1=test", "edd", "--author=new", "author", "--title=World", "--year=2019"};
 
-        Map<String, List<String>> newOptions = new HashMap<String, List<String>>(){{
-            put("add", options);
-        }};
-        InputParameters inputParameters = Parse.parse(line, globalOptions, newOptions);
+        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
         Assert.assertEquals("Wrong command", Parse.error);
     }
-
 }

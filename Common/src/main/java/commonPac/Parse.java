@@ -8,7 +8,7 @@ public class Parse {
     public static final String Equality = "=";
     public static String error = "";
 
-    public static InputParameters parse(String[] inputString, String[] globalOptions, Map<String, List<String>> map) {
+    public InputParameters parse(String[] inputString, List<OptionDescription> globalOptions, List<CommandDescription> commands) {
         InputParameters inputParameters = new InputParameters();
         String input = "";
 
@@ -18,25 +18,28 @@ public class Parse {
 
         if (input.equals("")){
             error = "Empty input line";
-            System.out.println(error);
-            return null;
+            throw new NullPointerException(error);
+            //return null;
         }
 
         boolean findResult = false;
-        Set<String> newCommands = map.keySet();
-        for (String i:newCommands){
-            if (input.contains(i)){
+
+        int requred = 0; //
+        for (int i = 0; i<commands.size(); i++){
+            if (input.contains(commands.get(i).getName())){
                 findResult = true;
-                inputParameters.command = i;
-                input = input.replaceAll(i, "");
+                inputParameters.command = commands.get(i).getName();
+                input = input.replaceAll(commands.get(i).getName(), "");
+                requred = i;
                 break;
             }
         }
+        List<OptionDescription> newOptions = commands.get(requred).getOptions();
 
         if (!findResult){
             error = "Wrong command";
-            System.out.println(error);
-            return null;
+            throw new NullPointerException(error);
+            //return null;
         }
 
         String[] input2 = input.split((" " + PREFIX));
@@ -44,19 +47,16 @@ public class Parse {
             input2[i] = PREFIX + input2[i].trim();
 
         for (int i = 0; i<input2.length; i++)
-            for (int j = 0; j<globalOptions.length; j++)
-                if (input2[i].contains(globalOptions[j])){
-                    inputParameters.globalOptions.put(globalOptions[j], input2[i].replaceAll(globalOptions[j], ""));
+            for (int j = 0; j<globalOptions.size(); j++)
+                if (input2[i].contains(globalOptions.get(j).getName())){
+                    inputParameters.globalOptions.put(globalOptions.get(j).getName(), input2[i].replaceAll(PREFIX + globalOptions.get(j).getName() + Equality, ""));
                 }
         System.out.println(Arrays.toString(input2));
 
-        List<String> newOptions = map.get(inputParameters.command);
-        for (int i = 0; i<input2.length; i++){
+        for (int i = 0; i<input2.length; i++)
             for (int j = 0; j<newOptions.size(); j++)
-                if (input2[i].contains(newOptions.get(j))){
-                    inputParameters.commandOptions.put(newOptions.get(j), input2[i].replaceAll(PREFIX + newOptions.get(j) + Equality, ""));
-                }
-        }
+                if (input2[i].contains(newOptions.get(j).getName()))
+                    inputParameters.commandOptions.put(newOptions.get(j).getName(), input2[i].replaceAll(PREFIX + newOptions.get(j).getName() + Equality, ""));
         return inputParameters;
     }
 }

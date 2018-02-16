@@ -1,14 +1,11 @@
 package lib;
 
+import commonPac.OptionDescription;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class OptionLists {
-
-    OptionDescription auhtor = new OptionDescription("author", true);
-    OptionDescription title = new OptionDescription("title", true);
-    OptionDescription year = new OptionDescription("year", false);
-    OptionDescription id = new OptionDescription("id", true);
 
     List<OptionDescription> addOptions = new ArrayList<OptionDescription>(){{
         add(new OptionDescription("author", true));
@@ -39,12 +36,11 @@ public class OptionLists {
         add(new OptionDescription("year", false));
         add(new OptionDescription("id", true));
     }};
+    ////////////////////////////////////////////////////////////////////////////////////////
+    List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
+        add(new OptionDescription("file1", true));
+        add(new OptionDescription("file2", false));
+        add(new OptionDescription("help", false));
+    }};
 
-    public List<String> getOptName(List<OptionDescription> list){
-        List<String> opt = new ArrayList<String>();
-        for (int i = 0; i<list.size(); i++){
-            opt.add(list.get(i).getName());
-        }
-        return opt;
-    }
 }
