@@ -1,6 +1,5 @@
 package commonPac;
 
-//import org.junit.Assert;
 import org.junit.Test;
 import org.assertj.core.api.Assertions;
 
@@ -56,7 +55,7 @@ public class ParserTest {
         String[] line ={""};
 
         InputParameters inputParameters = parser.parse(line, globalOptions, addList);
-        Assertions.assertThat("Empty input line").isEqualTo(Parser.error);
+
     }
 
     @Test
@@ -64,6 +63,6 @@ public class ParserTest {
         String[] line = {"--file1=test", "edd", "--author=new", "author", "--title=World", "--year=2019"};
 
         InputParameters inputParameters = parser.parse(line, globalOptions, addList);
-        Assertions.assertThat("Wrong command").isEqualTo(Parser.error);
+
     }
 }

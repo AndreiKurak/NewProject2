@@ -6,7 +6,6 @@ public class Parser {
 
     public static final String PREFIX = "--";
     public static final String Equality = "=";
-    public static String error = "";
 
     public InputParameters parse(String[] inputString, List<OptionDescription> globalOptions, List<CommandDescription> commands) {
         InputParameters inputParameters = new InputParameters();
@@ -41,12 +40,10 @@ public class Parser {
 
         try {
             if (!findResult && !input.equals("")){
-                error = "Wrong command";
                 throw new ParseException();
             }
         }
         catch (ParseException ex){
-
             ex.noCommand();
         }
 
