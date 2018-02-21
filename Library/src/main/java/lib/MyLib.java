@@ -1,17 +1,16 @@
 package lib;
 
-import commonPac.Parse;
+import commonPac.Parser;
 import commonPac.InputParameters;
 
 public class MyLib {
 
     public static void main(String[] args){
-        OptionLists optionLists = new OptionLists();
         CommandList commandList = new CommandList();
         GlobalOptionsLib global = new GlobalOptionsLib();
-        Parse parser = new Parse();
+        Parser parser = new Parser();
 
-        InputParameters inputParameters = parser.parse(args, optionLists.globalOptions, commandList.commands);
+        InputParameters inputParameters = parser.parse(args, commandList.globalOptions, commandList.commands);
         System.out.println(inputParameters.command);
         System.out.println(inputParameters.globalOptions);
         System.out.println(inputParameters.commandOptions);

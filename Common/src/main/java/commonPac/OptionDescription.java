@@ -18,6 +18,10 @@ public class OptionDescription {
         this.name = name;
     }
 
+    public boolean getMandatory(){
+        return isMandatory;
+    }
+
     public void setMandatory(boolean isMandatory){
         this.isMandatory = isMandatory;
     }
