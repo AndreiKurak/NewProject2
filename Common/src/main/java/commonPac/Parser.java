@@ -7,7 +7,7 @@ public class Parser {
     public static final String PREFIX = "--";
     public static final String Equality = "=";
 
-    public InputParameters parse(String[] inputString, List<OptionDescription> globalOptions, List<CommandDescription> commands) {
+    public InputParameters parse(String[] inputString, List<OptionDescription> globalOptions, List<CommandDescription> commands){
         InputParameters inputParameters = new InputParameters();
         String input = "";
 
@@ -15,13 +15,8 @@ public class Parser {
             input += inputString[i] + " ";
         }
 
-        try{
-            if (input.equals("")){
-                throw new ParseException();
-            }
-        }
-        catch (ParseException ex){
-            ex.emptyLine();
+        if (input.equals("")){
+            throw new ParseException("Empty input line");
         }
 
         boolean findResult = false;
@@ -30,23 +25,17 @@ public class Parser {
         for (int i = 0; i<commands.size(); i++){
             if (input.contains(commands.get(i).getName())){
                 findResult = true;
-                inputParameters.command = commands.get(i).getName();
+                inputParameters.command = commands.get(i);
                 input = input.replaceAll(commands.get(i).getName(), "");
                 requred = i;
                 break;
             }
         }
-        List<OptionDescription> newOptions = commands.get(requred).getOptions();
+        List<OptionDescription> newOptions = commands.get(requred).getOptions(); //can be deleted
 
-        try {
-            if (!findResult && !input.equals("")){
-                throw new ParseException();
-            }
+        if (!findResult && !input.equals("")){
+            throw new ParseException("Wrong Command");
         }
-        catch (ParseException ex){
-            ex.noCommand();
-        }
-
 
         String[] input2 = input.split((" " + PREFIX));
         for (int i = 1; i<input2.length; i++)
@@ -66,9 +55,9 @@ public class Parser {
                     inputParameters.commandOptions.put(newOptions.get(i).getName(), input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, ""));
                     gotIt = true;
                 }
-            if (!gotIt && newOptions.get(i).getMandatory())
-                System.out.println("Required option missed");
-            gotIt = false;
+            if (!gotIt && newOptions.get(i).getMandatory()){
+                throw new ParseException("Required option missed");
+            }
         }
         return inputParameters;
     }

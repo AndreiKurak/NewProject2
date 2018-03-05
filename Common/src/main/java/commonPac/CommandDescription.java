@@ -7,11 +7,13 @@ public class CommandDescription {
     private String name;
     private String description;
     private List<OptionDescription> options;
+    private Command command;
 
-    public CommandDescription(String name, String description, List<OptionDescription> options){
+    public CommandDescription(String name, String description, List<OptionDescription> options, Command command){
         this.name = name;
         this.description = description;
         this.options = options;
+        this.command = command;
     }
 
     public String getName(){
@@ -20,6 +22,10 @@ public class CommandDescription {
 
     public List<OptionDescription> getOptions(){
         return options;
+    }
+
+    public Command getCommand() {
+        return command;
     }
 
     public void setName(String name){
@@ -32,6 +38,10 @@ public class CommandDescription {
 
     public void setOptions(List<OptionDescription> options){
         this.options = options;
+    }
+
+    public void setCommand(Command command) {
+        this.command = command;
     }
 
     public String toString(){

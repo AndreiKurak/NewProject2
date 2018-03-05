@@ -1,18 +1,12 @@
 package commonPac;
 
-public class ParseException extends Exception {
+public class ParseException extends RuntimeException {
 
-    private String error;
+    ParseException(String error){
 
-    ParseException(){ }
-
-    public void emptyLine(){
-        error = "Empty Input Line";
-        System.out.println(error);
     }
 
-    public void noCommand(){
-        error = "Wrong command or missed";
-        System.out.println(error);
+    public ParseException(String message, Throwable cause) {
+        super(message, cause);
     }
 }
