@@ -4,6 +4,7 @@ import commonPac.Command;
 import commonPac.InputParameters;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,17 +15,18 @@ public class UpdateCommand implements Command {
     private static final String YEAR = "year";
 
     public void execute(InputParameters inputParameters){
+        OpenFileStream openFileStream = new OpenFileStream();
         int id = Integer.valueOf(inputParameters.commandOptions.get("id")) - 1;
 
         try {
-            BooksRegister booksRegister = OpenFileStream.read();
+            List<Book> books = openFileStream.read();
             if (inputParameters.commandOptions.containsKey(AUTHOR))
-                booksRegister.books.get(id).author = inputParameters.commandOptions.get(AUTHOR);
+                books.get(id).author = inputParameters.commandOptions.get(AUTHOR);
             if (inputParameters.commandOptions.containsKey(TITLE))
-                booksRegister.books.get(id).title = inputParameters.commandOptions.get(TITLE);
+                books.get(id).title = inputParameters.commandOptions.get(TITLE);
             if (inputParameters.commandOptions.containsKey(YEAR))
-                booksRegister.books.get(id).year = inputParameters.commandOptions.get(YEAR);
-            OpenFileStream.write(booksRegister);
+                books.get(id).year = inputParameters.commandOptions.get(YEAR);
+            openFileStream.write(books);
             //подумать насчёт нулевых значений
         }
         catch (IOException ex) {

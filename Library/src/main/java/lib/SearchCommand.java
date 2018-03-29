@@ -4,6 +4,7 @@ import commonPac.Command;
 import commonPac.InputParameters;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,12 +18,13 @@ public class SearchCommand implements Command {
 
     public void execute(InputParameters inputParameters){
         Map<String, String> input = inputParameters.commandOptions;
+        OpenFileStream openFileStream = new OpenFileStream();
 
         try {
-            BooksRegister booksRegister = OpenFileStream.read();
+            List<Book> books = openFileStream.read();
             boolean contains = true;
 
-            for (Book book : booksRegister.books){
+            for (Book book : books){
                 if (input.containsKey(AUTHOR))
                     if (!book.author.equals(input.get(AUTHOR)))
                         contains = false;

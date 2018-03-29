@@ -17,13 +17,14 @@ public class ListCommand implements Command {
     private static final String YEAR = "years";
 
     public void execute(InputParameters inputParameters){
+        OpenFileStream openFileStream = new OpenFileStream();
 
         try {
-            BooksRegister booksRegister = OpenFileStream.read();
+            List<Book> books = openFileStream.read();
             if (inputParameters.commandOptions.containsKey("all"))
-                System.out.println(booksRegister.books);
+                System.out.println(books);
             else
-                for (Book book : booksRegister.books){
+                for (Book book : books){
                     if (inputParameters.commandOptions.containsKey(AUTHOR))
                         System.out.println(book.author);
                     if (inputParameters.commandOptions.containsKey(TITLE))

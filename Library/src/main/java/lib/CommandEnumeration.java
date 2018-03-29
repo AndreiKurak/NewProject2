@@ -2,6 +2,7 @@ package lib;
 
 import commonPac.CommandDescription;
 import commonPac.OptionDescription;
+import commonPac.OptionValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +51,11 @@ public class CommandEnumeration {
         add(new CommandDescription("delete", "delete - command, that is used for removing unnecessary or doubtful records", deleteOptions, new DeleteCommand()));
         add(new CommandDescription("list", "list - command, that is used to display the list with specified parameters", listOptions, new ListCommand()));
         add(new CommandDescription("update", "update - command, that is used for rewriting some information", updateOptions, new UpdateCommand()));
+    }};
+    ////////////////////////////////////////////////////////////////////////////////////////
+    public List<OptionValidator> validators = new ArrayList<OptionValidator>(){{
+        add(new AuthorValidator());
+        add(new TitleValidator());
+        add(new YearValidator());
     }};
 }

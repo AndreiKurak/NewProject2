@@ -5,6 +5,8 @@ import commonPac.InputParameters;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +19,7 @@ public class AddCommand implements Command {
 
     public void execute(InputParameters inputParameters){
         Book book = new Book();
+        OpenFileStream openFileStream = new OpenFileStream();
 
         book.author = inputParameters.commandOptions.get(AUTHOR);
         book.title = inputParameters.commandOptions.get(TITLE);
@@ -29,16 +32,16 @@ public class AddCommand implements Command {
             File f = new File(FILENAME);
             long len = f.length();
             if (len != 0){
-                BooksRegister booksRegister = OpenFileStream.read();
-                book.id = booksRegister.books.size() + 1;
-                booksRegister.books.add(book);
-                OpenFileStream.write(booksRegister);
+                List<Book> books = openFileStream.read();
+                book.id = books.size() + 1;
+                books.add(book);
+                openFileStream.write(books);
             }
             else {
-                BooksRegister booksRegister = new BooksRegister();
-                book.id = booksRegister.books.size() + 1;
-                booksRegister.books.add(book);
-                OpenFileStream.write(booksRegister);
+                List<Book> books = new ArrayList<Book>();
+                book.id = books.size() + 1;
+                books.add(book);
+                openFileStream.write(books);
             }
         }
         catch (IOException ex) {

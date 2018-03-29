@@ -7,7 +7,7 @@ public class Parser {
     public static final String PREFIX = "--";
     public static final String Equality = "=";
 
-    public InputParameters parse(String[] inputString, List<OptionDescription> globalOptions, List<CommandDescription> commands){
+    public InputParameters parse(String[] inputString, List<OptionDescription> globalOptions, List<CommandDescription> commands, List<OptionValidator> validators){
         InputParameters inputParameters = new InputParameters();
         String input = "";
 
@@ -59,6 +59,13 @@ public class Parser {
                 throw new ParseException("Required option missed");
             }
         }
+
+        for (OptionValidator validator : validators)
+            if (inputParameters.commandOptions.containsKey(validator.getName())) {
+                if (!validator.check(inputParameters.commandOptions.get(validator.getName())))
+                    throw new ParseException("Options have unacceptable format");
+            }
+
         return inputParameters;
     }
 }

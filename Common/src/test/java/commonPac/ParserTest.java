@@ -27,12 +27,13 @@ public class ParserTest {
         add(new OptionDescription("file2", false));
         add(new OptionDescription("help", false));
     }};
+    private static final List<OptionValidator> OPTION_VALIDATORS = new ArrayList<OptionValidator>();
 
     @Test
     public void parseCorrectOptions(){
         String[] line ={"--file1=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
 
-        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
+        InputParameters inputParameters = parser.parse(line, globalOptions, addList, OPTION_VALIDATORS);
         assertThat("new author").isEqualTo(inputParameters.commandOptions.get("author"));
         assertThat("2019").isEqualTo(inputParameters.commandOptions.get("year"));
     }
@@ -41,7 +42,7 @@ public class ParserTest {
     public void parseCorrectGlobalOptions(){
         String[] line ={"--file1=test", "--file2=test2", "add", "--author=new"};
 
-        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
+        InputParameters inputParameters = parser.parse(line, globalOptions, addList, OPTION_VALIDATORS);
         assertThat("test").isEqualTo(inputParameters.globalOptions.get("file1"));
         assertThat("test2").isEqualTo(inputParameters.globalOptions.get("file2"));
     }
@@ -50,7 +51,7 @@ public class ParserTest {
     public void parseCorrectCommand(){
         String[] line ={"--file1=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
 
-        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
+        InputParameters inputParameters = parser.parse(line, globalOptions, addList, OPTION_VALIDATORS);
         assertThat("add").isEqualTo(inputParameters.command.getName());
     }
 
@@ -58,7 +59,7 @@ public class ParserTest {
     public void nullInputLine(){        //not works
         String[] line ={""};
 
-        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
+        InputParameters inputParameters = parser.parse(line, globalOptions, addList, OPTION_VALIDATORS);
 
     }
 
@@ -66,7 +67,7 @@ public class ParserTest {
     public void InputLineWithWrongCommand(){        //not works
         String[] line = {"--file1=test", "edd", "--author=new", "author", "--title=World", "--year=2019"};
 
-        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
+        InputParameters inputParameters = parser.parse(line, globalOptions, addList, OPTION_VALIDATORS);
 
     }
 }

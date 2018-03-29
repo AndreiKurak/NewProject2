@@ -1,8 +1,10 @@
 package lib;
 
 import commonPac.Command;
+import commonPac.ParseException;
 import commonPac.Parser;
 import commonPac.InputParameters;
+
 
 public class MyLib {
 
@@ -12,12 +14,12 @@ public class MyLib {
         LibraryGlobalOptions global = new LibraryGlobalOptions();
         Parser parser = new Parser();
 
-        InputParameters inputParameters = parser.parse(args, commandEnumeration.globalOptions, commandEnumeration.commands);
+        InputParameters inputParameters = parser.parse(args, commandEnumeration.globalOptions, commandEnumeration.commands, commandEnumeration.validators);
+
         //System.out.println(inputParameters.command.getName() + " " + inputParameters.globalOptions + " " + inputParameters.commandOptions);
         Command command = inputParameters.command.getCommand();
         global.help(inputParameters.globalOptions.containsKey("help"));
 
-        BooksRegister register = new BooksRegister();
-        register.realizeCommand(command, inputParameters);
+        command.execute(inputParameters);
     }
 }
