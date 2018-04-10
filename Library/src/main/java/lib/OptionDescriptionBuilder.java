@@ -30,6 +30,6 @@ public class OptionDescriptionBuilder {
     }
 
     public OptionDescription createOption(){
-        return new OptionDescription(name, validator);
+        return new OptionDescription(name, validator, mandatory);
     }
 }

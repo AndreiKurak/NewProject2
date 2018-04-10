@@ -11,9 +11,10 @@ public class OptionDescription {
         this.isMandatory = isMandatory;
     }
 
-    public OptionDescription(String name, OptionValidator validator){
+    public OptionDescription(String name, OptionValidator validator, boolean isMandatory){
         this.name = name;
         this.validator = validator;
+        this.isMandatory = isMandatory;
     }
 
     public String getName(){
