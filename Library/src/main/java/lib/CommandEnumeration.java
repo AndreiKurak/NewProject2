@@ -2,27 +2,31 @@ package lib;
 
 import commonPac.CommandDescription;
 import commonPac.OptionDescription;
-import commonPac.OptionValidator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandEnumeration {
 
+    OptionDescriptionBuilder author = new OptionDescriptionBuilder("author", new TypeValidator(new String()));
+    OptionDescriptionBuilder title = new OptionDescriptionBuilder("title", new TypeValidator(new String()));
+    OptionDescriptionBuilder year = new OptionDescriptionBuilder("year", new TypeValidator(new Integer(0)).linkWith(new DateBorderValidator()));
+    OptionDescriptionBuilder id = new OptionDescriptionBuilder("id", new TypeValidator(new Integer(0)));
+
     List<OptionDescription> addOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescription("author", true));
-        add(new OptionDescription("title", true));
-        add(new OptionDescription("year", false));
+        add(author.setNewMandatory(true).createOption());
+        add(title.setNewMandatory(true).createOption());
+        add(year.setNewMandatory(false).createOption());
     }};
 
     List<OptionDescription> searchOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescription("author", false));
-        add(new OptionDescription("title", false));
-        add(new OptionDescription("year", false));
+        add(author.setNewMandatory(false).createOption());
+        add(title.setNewMandatory(false).createOption());
+        add(year.setNewMandatory(false).createOption());
     }};
 
     List<OptionDescription> deleteOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescription("id", true));
+        add(id.setNewMandatory(true).createOption());
     }};
 
     List<OptionDescription> listOptions = new ArrayList<OptionDescription>(){{
@@ -33,10 +37,10 @@ public class CommandEnumeration {
     }};
 
     List<OptionDescription> updateOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescription("author", false));
-        add(new OptionDescription("title", false));
-        add(new OptionDescription("year", false));
-        add(new OptionDescription("id", true));
+        add(author.setNewMandatory(false).createOption());
+        add(title.setNewMandatory(false).createOption());
+        add(year.setNewMandatory(false).createOption());
+        add(id.setNewMandatory(true).createOption());
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
     List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
@@ -51,11 +55,5 @@ public class CommandEnumeration {
         add(new CommandDescription("delete", "delete - command, that is used for removing unnecessary or doubtful records", deleteOptions, new DeleteCommand()));
         add(new CommandDescription("list", "list - command, that is used to display the list with specified parameters", listOptions, new ListCommand()));
         add(new CommandDescription("update", "update - command, that is used for rewriting some information", updateOptions, new UpdateCommand()));
-    }};
-    ////////////////////////////////////////////////////////////////////////////////////////
-    public List<OptionValidator> validators = new ArrayList<OptionValidator>(){{
-        add(new AuthorValidator());
-        add(new TitleValidator());
-        add(new YearValidator());
     }};
 }

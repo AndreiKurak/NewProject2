@@ -7,7 +7,7 @@ public class Parser {
     public static final String PREFIX = "--";
     public static final String Equality = "=";
 
-    public InputParameters parse(String[] inputString, List<OptionDescription> globalOptions, List<CommandDescription> commands, List<OptionValidator> validators){
+    public InputParameters parse(String[] inputString, List<OptionDescription> globalOptions, List<CommandDescription> commands){
         InputParameters inputParameters = new InputParameters();
         String input = "";
 
@@ -53,18 +53,15 @@ public class Parser {
             for (int j = 0; j<input2.length; j++)
                 if (input2[j].contains(newOptions.get(i).getName())){
                     inputParameters.commandOptions.put(newOptions.get(i).getName(), input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, ""));
+                    if (newOptions.get(i).getValidator() != null)
+                        if (!newOptions.get(i).getValidator().getFirst().check(inputParameters.commandOptions.get(newOptions.get(i).getName())))
+                            throw new ParseException("Unacceptable option value");
                     gotIt = true;
                 }
             if (!gotIt && newOptions.get(i).getMandatory()){
                 throw new ParseException("Required option missed");
             }
         }
-
-        for (OptionValidator validator : validators)
-            if (inputParameters.commandOptions.containsKey(validator.getName())) {
-                if (!validator.check(inputParameters.commandOptions.get(validator.getName())))
-                    throw new ParseException("Options have unacceptable format");
-            }
 
         return inputParameters;
     }
