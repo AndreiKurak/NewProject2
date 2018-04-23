@@ -8,45 +8,40 @@ import java.util.List;
 
 public class CommandEnumeration {
 
-    OptionDescriptionBuilder author = new OptionDescriptionBuilder("author", new TypeValidator(new String()));
-    OptionDescriptionBuilder title = new OptionDescriptionBuilder("title", new TypeValidator(new String()));
-    OptionDescriptionBuilder year = new OptionDescriptionBuilder("year", new TypeValidator(new Integer(0)).linkWith(new DateBorderValidator()));
-    OptionDescriptionBuilder id = new OptionDescriptionBuilder("id", new TypeValidator(new Integer(0)));
-
     List<OptionDescription> addOptions = new ArrayList<OptionDescription>(){{
-        add(author.setNewMandatory(true).createOption());
-        add(title.setNewMandatory(true).createOption());
-        add(year.setNewMandatory(false).createOption());
+        add(new OptionDescriptionBuilder("author").setMandatoryTrue().setValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("title").setMandatoryTrue().setValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("year").setValidator(new TypeValidator(new Integer(0)).linkWith(new DateBorderValidator())).createOption());
     }};
 
     List<OptionDescription> searchOptions = new ArrayList<OptionDescription>(){{
-        add(author.setNewMandatory(false).createOption());
-        add(title.setNewMandatory(false).createOption());
-        add(year.setNewMandatory(false).createOption());
+        add(new OptionDescriptionBuilder("author").setValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("title").setValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("year").setValidator(new TypeValidator(new Integer(0)).linkWith(new DateBorderValidator())).createOption());
     }};
 
     List<OptionDescription> deleteOptions = new ArrayList<OptionDescription>(){{
-        add(id.setNewMandatory(true).createOption());
+        add(new OptionDescriptionBuilder("id").setValidator(new TypeValidator(new Integer(0))).createOption());
     }};
 
     List<OptionDescription> listOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescription("authors", false));
-        add(new OptionDescription("titles", false));
-        add(new OptionDescription("years", false));
-        add(new OptionDescription("all", false));
+        add(new OptionDescriptionBuilder("authors").createOption());
+        add(new OptionDescriptionBuilder("titles").createOption());
+        add(new OptionDescriptionBuilder("years").createOption());
+        add(new OptionDescriptionBuilder("all").createOption());
     }};
 
     List<OptionDescription> updateOptions = new ArrayList<OptionDescription>(){{
-        add(author.setNewMandatory(false).createOption());
-        add(title.setNewMandatory(false).createOption());
-        add(year.setNewMandatory(false).createOption());
-        add(id.setNewMandatory(true).createOption());
+        add(new OptionDescriptionBuilder("author").setValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("title").setValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("year").setValidator(new TypeValidator(new Integer(0)).linkWith(new DateBorderValidator())).createOption());
+        add(new OptionDescriptionBuilder("id").setMandatoryTrue().setValidator(new TypeValidator(new Integer(0))).createOption());
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
     List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescription("file1", true));
-        add(new OptionDescription("file2", false));
-        add(new OptionDescription("help", false));
+        add(new OptionDescriptionBuilder("file1").setMandatoryTrue().createOption());
+        add(new OptionDescriptionBuilder("file2").createOption());
+        add(new OptionDescriptionBuilder("help").createOption());
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
     public List<CommandDescription> commands = new ArrayList<CommandDescription>(){{

@@ -6,25 +6,19 @@ import commonPac.OptionValidator;
 public class OptionDescriptionBuilder {
 
     private String name;
-    private boolean mandatory;
+    private boolean mandatory = false;
     private OptionValidator validator;
 
-    OptionDescriptionBuilder(String name, OptionValidator validator){
+    OptionDescriptionBuilder(String name){
         this.name = name;
-        this.validator = validator;
     }
 
-    public OptionDescriptionBuilder setNewName(String name){
-        this.name = name;
+    public OptionDescriptionBuilder setMandatoryTrue(){
+        this.mandatory = true;
         return this;
     }
 
-    public OptionDescriptionBuilder setNewMandatory(boolean mandatory){
-        this.mandatory = mandatory;
-        return this;
-    }
-
-    public OptionDescriptionBuilder setNewValidator(OptionValidator validator){
+    public OptionDescriptionBuilder setValidator(OptionValidator validator){
         this.validator = validator;
         return this;
     }
