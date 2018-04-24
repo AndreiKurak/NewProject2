@@ -54,7 +54,7 @@ public class Parser {
                 if (input2[j].contains(newOptions.get(i).getName())){
                     inputParameters.commandOptions.put(newOptions.get(i).getName(), input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, ""));
                     if (newOptions.get(i).getValidator() != null)
-                        if (!newOptions.get(i).getValidator().getFirst().check(inputParameters.commandOptions.get(newOptions.get(i).getName())))
+                        if (!newOptions.get(i).getValidator().checkList(inputParameters.commandOptions.get(newOptions.get(i).getName())))
                             throw new ParseException("Unacceptable option value");
                     gotIt = true;
                 }

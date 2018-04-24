@@ -2,7 +2,7 @@ package lib;
 
 import commonPac.OptionValidator;
 
-public class TypeValidator extends OptionValidator{
+public class TypeValidator implements OptionValidator{
 
     private Object type;
 
@@ -26,9 +26,6 @@ public class TypeValidator extends OptionValidator{
             }
         }
 
-        if (checkResult && isNextExist())
-            return checkNext(optionValue);
-        else
-            return checkResult;
+        return checkResult;
     }
 }

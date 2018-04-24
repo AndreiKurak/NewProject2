@@ -4,14 +4,14 @@ public class OptionDescription {
 
     private String name;
     private boolean isMandatory;
-    private OptionValidator validator;
+    private ValidatorsChain validator;
 
     public OptionDescription(String name, boolean isMandatory){
         this.name = name;
         this.isMandatory = isMandatory;
     }
 
-    public OptionDescription(String name, OptionValidator validator, boolean isMandatory){
+    public OptionDescription(String name, ValidatorsChain validator, boolean isMandatory){
         this.name = name;
         this.validator = validator;
         this.isMandatory = isMandatory;
@@ -33,11 +33,11 @@ public class OptionDescription {
         this.isMandatory = isMandatory;
     }
 
-    public OptionValidator getValidator() {
+    public ValidatorsChain getValidator() {
         return validator;
     }
 
-    public void setValidator(OptionValidator validator) {
+    public void setValidator(ValidatorsChain validator) {
         this.validator = validator;
     }
 

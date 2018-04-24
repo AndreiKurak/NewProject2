@@ -4,7 +4,7 @@ import commonPac.OptionValidator;
 
 import java.util.Date;
 
-public class DateBorderValidator extends OptionValidator {
+public class DateBorderValidator implements OptionValidator {
 
     public boolean check(String optionValue){
         boolean checkResult = true;
@@ -14,9 +14,6 @@ public class DateBorderValidator extends OptionValidator {
         if (1900 + date.getYear() < Integer.valueOf(optionValue))   //??
             checkResult = false;
 
-        if (checkResult && isNextExist())
-            return checkNext(optionValue);
-        else
-            return checkResult;
+        return checkResult;
     }
 }

@@ -1,13 +1,13 @@
 package lib;
 
 import commonPac.OptionDescription;
-import commonPac.OptionValidator;
+import commonPac.ValidatorsChain;
 
 public class OptionDescriptionBuilder {
 
     private String name;
     private boolean mandatory = false;
-    private OptionValidator validator;
+    private ValidatorsChain validator;
 
     OptionDescriptionBuilder(String name){
         this.name = name;
@@ -18,7 +18,7 @@ public class OptionDescriptionBuilder {
         return this;
     }
 
-    public OptionDescriptionBuilder setValidator(OptionValidator validator){
+    public OptionDescriptionBuilder setValidator(ValidatorsChain validator){
         this.validator = validator;
         return this;
     }
