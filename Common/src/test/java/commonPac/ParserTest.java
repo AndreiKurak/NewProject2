@@ -2,10 +2,10 @@ package commonPac;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ParserTest {
 
@@ -54,19 +54,27 @@ public class ParserTest {
         assertThat("add").isEqualTo(inputParameters.command.getName());
     }
 
-    @Test
-    public void nullInputLine(){        //not works
+    @Test//(expected = ParseException.class)
+    public void nullInputLine(){    //should be another message
         String[] line ={""};
-
-        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
-
+        try {
+            parser.parse(line, globalOptions, addList);
+            fail("ParseException was expected");
+        }
+        catch (ParseException parseException){
+            assertThat("Wrong Command").isEqualTo(parseException.getMessage());
+        }
     }
 
     @Test
-    public void InputLineWithWrongCommand(){        //not works
+    public void InputLineWithWrongCommand(){
         String[] line = {"--file1=test", "edd", "--author=new", "author", "--title=World", "--year=2019"};
-
-        InputParameters inputParameters = parser.parse(line, globalOptions, addList);
-
+        try {
+            parser.parse(line, globalOptions, addList);
+            fail("ParseException was expected");
+        }
+        catch (ParseException parseException){
+            assertThat("Wrong Command").isEqualTo(parseException.getMessage());
+        }
     }
 }
