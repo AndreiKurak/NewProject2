@@ -3,6 +3,7 @@ package lib;
 import commonPac.Command;
 import commonPac.Parser;
 import commonPac.InputParameters;
+import commonPac.View;
 
 
 public class MyLib {
@@ -11,6 +12,7 @@ public class MyLib {
         CommandEnumeration commandEnumeration = new CommandEnumeration();
         LibraryGlobalOptions global = new LibraryGlobalOptions();
         Parser parser = new Parser();
+        View view = new View();
 
         InputParameters inputParameters = parser.parse(args, commandEnumeration.globalOptions, commandEnumeration.commands);
 
@@ -19,5 +21,6 @@ public class MyLib {
         global.help(inputParameters.globalOptions.containsKey("help"));
 
         command.execute(inputParameters);
+        view.getResult("");
     }
 }

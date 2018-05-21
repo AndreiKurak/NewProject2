@@ -15,7 +15,7 @@ public class Parser {
             input += inputString[i] + " ";
         }
 
-        if (input.equals("")){
+        if (input.equals(" ")){
             throw new ParseException("Empty input line");
         }
 
@@ -33,7 +33,7 @@ public class Parser {
         }
         List<OptionDescription> newOptions = commands.get(requred).getOptions(); //can be deleted
 
-        if (!findResult && !input.equals("")){
+        if (!findResult){
             throw new ParseException("Wrong Command");
         }
 
@@ -54,7 +54,7 @@ public class Parser {
                 if (input2[j].contains(newOptions.get(i).getName())){
                     inputParameters.commandOptions.put(newOptions.get(i).getName(), input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, ""));
                     if (newOptions.get(i).getValidator() != null)
-                        if (!newOptions.get(i).getValidator().checkList(inputParameters.commandOptions.get(newOptions.get(i).getName())))
+                        if (!newOptions.get(i).getValidator().check(inputParameters.commandOptions.get(newOptions.get(i).getName())))
                             throw new ParseException("Unacceptable option value");
                     gotIt = true;
                 }

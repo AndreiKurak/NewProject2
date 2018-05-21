@@ -29,11 +29,11 @@ public class SearchCommand implements Command {
                     if (!book.author.equals(input.get(AUTHOR)))
                         contains = false;
                 if (input.containsKey(TITLE))
-                    if (!book.author.equals(input.get(TITLE)))
-                    contains = false;
+                    if (!book.title.equals(input.get(TITLE)))
+                        contains = false;
                 if (input.containsKey(YEAR))
-                    if (!book.author.equals(input.get(YEAR)))
-                    contains = false;
+                    if (!book.year.equals(input.get(YEAR)))
+                        contains = false;
                 if (contains){
                     System.out.println(book);
                     break;

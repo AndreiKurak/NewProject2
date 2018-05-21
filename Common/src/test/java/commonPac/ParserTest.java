@@ -62,7 +62,7 @@ public class ParserTest {
             fail("ParseException was expected");
         }
         catch (ParseException parseException){
-            assertThat("Wrong Command").isEqualTo(parseException.getMessage());
+            assertThat("Empty input line").isEqualTo(parseException.getMessage());
         }
     }
 

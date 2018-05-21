@@ -1,8 +1,4 @@
-package lib;
-
-import commonPac.Command;
-import commonPac.CommandDescription;
-import commonPac.OptionDescription;
+package commonPac;
 
 import java.util.List;
 

@@ -1,16 +1,17 @@
 package commonPac;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class ValidatorsChain {
+public class ValidatorsChain implements OptionValidator {
 
     private List<OptionValidator> validatorList;
 
-    public ValidatorsChain(List<OptionValidator> validators){
-        this.validatorList = validators;
+    public ValidatorsChain(OptionValidator... validators){
+        this.validatorList = Arrays.asList(validators);
     }
 
-    public boolean checkList(String optionValue){
+    public boolean check(String optionValue){
         for (OptionValidator option : validatorList){
             if (!option.check(optionValue))
                 return false;
