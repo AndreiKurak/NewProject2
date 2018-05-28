@@ -2,11 +2,11 @@ package lib;
 
 import commonPac.Command;
 import commonPac.InputParameters;
+import commonPac.ViewController;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,30 +16,34 @@ public class ListCommand implements Command {
     private static final String TITLE = "titles";
     private static final String YEAR = "years";
 
-    public void execute(InputParameters inputParameters){
+    public void execute(InputParameters inputParameters, ViewController controller){
         OpenFileStream openFileStream = new OpenFileStream();
 
         try {
             List<Book> books = openFileStream.read();
-            if (inputParameters.commandOptions.containsKey("all"))
-                System.out.println(books);
-            else
+
+            if (inputParameters.commandOptions.containsKey("all"))          {
+                controller.model = books;
+            }
+            else{
+                List<String> singleParameters = new ArrayList<String>();
+
                 for (Book book : books){
                     if (inputParameters.commandOptions.containsKey(AUTHOR))
-                        System.out.println(book.author);
+                        singleParameters.add(book.author);
                     if (inputParameters.commandOptions.containsKey(TITLE))
-                        System.out.println(book.title);
+                        singleParameters.add(book.title);
                     if (inputParameters.commandOptions.containsKey(YEAR))
-                        System.out.println(book.year);
+                        singleParameters.add(book.year);
                 }
+                controller.model = singleParameters;
+            }
         }
         catch (IOException ex) {
-            Logger.getLogger(MyLib.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyLib.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        System.out.println("list was performed");
     }
 }

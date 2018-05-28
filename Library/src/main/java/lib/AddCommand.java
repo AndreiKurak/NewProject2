@@ -2,6 +2,7 @@ package lib;
 
 import commonPac.Command;
 import commonPac.InputParameters;
+import commonPac.ViewController;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class AddCommand implements Command {
     private static final String TITLE = "title";
     private static final String YEAR = "year";
 
-    public void execute(InputParameters inputParameters){
+    public void execute(InputParameters inputParameters, ViewController controller){
         Book book = new Book();
         OpenFileStream openFileStream = new OpenFileStream();
 
@@ -45,12 +46,12 @@ public class AddCommand implements Command {
             }
         }
         catch (IOException ex) {
-            Logger.getLogger(MyLib.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyLib.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        System.out.println("add was performed");
+        controller.model = "Add command was performed";
     }
 }

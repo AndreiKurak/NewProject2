@@ -1,8 +1,6 @@
 package commonPac;
 
-public class View {
+public interface View {
 
-    public void getResult(Object result){
-        System.out.println(result);
-    }
+    public void showResult(Object model);
 }

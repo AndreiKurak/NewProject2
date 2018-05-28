@@ -2,6 +2,7 @@ package lib;
 
 import commonPac.Command;
 import commonPac.InputParameters;
+import commonPac.ViewController;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.logging.Logger;
 
 public class DeleteCommand implements Command {
 
-    public void execute(InputParameters inputParameters){
+    public void execute(InputParameters inputParameters, ViewController controller){
         OpenFileStream openFileStream = new OpenFileStream();
         int id = Integer.valueOf(inputParameters.commandOptions.get("id")) - 1;
 
@@ -22,12 +23,12 @@ public class DeleteCommand implements Command {
             openFileStream.write(books);
         }
         catch (IOException ex) {
-            Logger.getLogger(MyLib.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyLib.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        System.out.println("delete was performed");
+        controller.model = "Delete command was performed";
     }
 }

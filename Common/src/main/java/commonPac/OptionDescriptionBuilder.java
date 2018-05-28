@@ -1,5 +1,7 @@
 package commonPac;
 
+import java.util.Arrays;
+
 public class OptionDescriptionBuilder {
 
     private String name;
@@ -15,10 +17,10 @@ public class OptionDescriptionBuilder {
         return this;
     }
 
-    public OptionDescriptionBuilder addValidator(OptionValidator validator){
-        this.validator = validator;
-        return this;
-    }
+   public OptionDescriptionBuilder addValidator(OptionValidator... validators){
+       this.validator = new ValidatorsChain(Arrays.asList(validators));
+       return this;
+   }
 
     public OptionDescription createOption(){
         return new OptionDescription(name, validator, mandatory);

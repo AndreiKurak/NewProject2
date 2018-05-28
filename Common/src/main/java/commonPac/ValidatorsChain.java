@@ -1,5 +1,6 @@
 package commonPac;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,8 +8,8 @@ public class ValidatorsChain implements OptionValidator {
 
     private List<OptionValidator> validatorList;
 
-    public ValidatorsChain(OptionValidator... validators){
-        this.validatorList = Arrays.asList(validators);
+    public ValidatorsChain(List<OptionValidator> validators){
+        this.validatorList = validators;
     }
 
     public boolean check(String optionValue){

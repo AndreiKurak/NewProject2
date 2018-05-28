@@ -17,7 +17,7 @@ public class ParserTest {
         add(new OptionDescription("year", false));
     }};
     static class TestAdd implements Command{
-        public void execute(InputParameters inputParameters){}
+        public void execute(InputParameters inputParameters, ViewController controller){}
     }
     private static final List<CommandDescription> addList = new ArrayList<CommandDescription>(){{
         add(new CommandDescription("add", "add - command, that is used for adding new books to the library", addOptions, new TestAdd()));

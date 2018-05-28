@@ -2,6 +2,7 @@ package lib;
 
 import commonPac.Command;
 import commonPac.InputParameters;
+import commonPac.ViewController;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +15,7 @@ public class UpdateCommand implements Command {
     private static final String TITLE = "title";
     private static final String YEAR = "year";
 
-    public void execute(InputParameters inputParameters){
+    public void execute(InputParameters inputParameters, ViewController controller){
         OpenFileStream openFileStream = new OpenFileStream();
         int id = Integer.valueOf(inputParameters.commandOptions.get("id")) - 1;
 
@@ -30,12 +31,12 @@ public class UpdateCommand implements Command {
             //подумать насчёт нулевых значений
         }
         catch (IOException ex) {
-            Logger.getLogger(MyLib.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyLib.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        System.out.println("update was performed");
+        controller.model = "Update command was performed";
     }
 }

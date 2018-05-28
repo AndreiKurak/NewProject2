@@ -2,6 +2,7 @@ package lib;
 
 import commonPac.Command;
 import commonPac.InputParameters;
+import commonPac.ViewController;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,38 +17,31 @@ public class SearchCommand implements Command {
     private static final String TITLE = "title";
     private static final String YEAR = "year";
 
-    public void execute(InputParameters inputParameters){
+    public void execute(InputParameters inputParameters, ViewController controller){
         Map<String, String> input = inputParameters.commandOptions;
         OpenFileStream openFileStream = new OpenFileStream();
 
         try {
             List<Book> books = openFileStream.read();
-            boolean contains = true;
 
             for (Book book : books){
                 if (input.containsKey(AUTHOR))
                     if (!book.author.equals(input.get(AUTHOR)))
-                        contains = false;
+                       books.remove(book);
                 if (input.containsKey(TITLE))
                     if (!book.title.equals(input.get(TITLE)))
-                        contains = false;
+                        books.remove(book);
                 if (input.containsKey(YEAR))
                     if (!book.year.equals(input.get(YEAR)))
-                        contains = false;
-                if (contains){
-                    System.out.println(book);
-                    break;
-                }
+                        books.remove(book);
             }
-            //recheck
+            controller.model = books;
         }
         catch (IOException ex) {
-            Logger.getLogger(MyLib.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyLib.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        System.out.println("search was performed");
     }
 }

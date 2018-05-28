@@ -8,19 +8,19 @@ import java.util.List;
 public class CommandEnumeration {
 
     List<OptionDescription> addOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescriptionBuilder("author").setMandatoryTrue().addValidator(new ValidatorsChain(new TypeValidator(new String()))).createOption());
-        add(new OptionDescriptionBuilder("title").setMandatoryTrue().addValidator(new ValidatorsChain(new TypeValidator(new String()))).createOption());
-        add(new OptionDescriptionBuilder("year").addValidator(new ValidatorsChain(new TypeValidator(new Integer(0)), new DateBorderValidator())).createOption());
+        add(new OptionDescriptionBuilder("author").setMandatoryTrue().addValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("title").setMandatoryTrue().addValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()).createOption());
     }};
 
     List<OptionDescription> searchOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescriptionBuilder("author").addValidator(new ValidatorsChain(new TypeValidator(new String()))).createOption());
-        add(new OptionDescriptionBuilder("title").addValidator(new ValidatorsChain(new TypeValidator(new String()))).createOption());
-        add(new OptionDescriptionBuilder("year").addValidator(new ValidatorsChain(new TypeValidator(new Integer(0)), new DateBorderValidator())).createOption());
+        add(new OptionDescriptionBuilder("author").addValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("title").addValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()).createOption());
     }};
 
     List<OptionDescription> deleteOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescriptionBuilder("id").addValidator(new ValidatorsChain(new TypeValidator(new Integer(0)))).createOption());
+        add(new OptionDescriptionBuilder("id").addValidator(new TypeValidator(new Integer(0))).createOption());
     }};
 
     List<OptionDescription> listOptions = new ArrayList<OptionDescription>(){{
@@ -31,10 +31,10 @@ public class CommandEnumeration {
     }};
 
     List<OptionDescription> updateOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescriptionBuilder("author").addValidator(new ValidatorsChain(new TypeValidator(new String()))).createOption());
-        add(new OptionDescriptionBuilder("title").addValidator(new ValidatorsChain(new TypeValidator(new String()))).createOption());
-        add(new OptionDescriptionBuilder("year").addValidator(new ValidatorsChain(new TypeValidator(new Integer(0)), new DateBorderValidator())).createOption());
-        add(new OptionDescriptionBuilder("id").setMandatoryTrue().addValidator(new ValidatorsChain(new TypeValidator(new Integer(0)))).createOption());
+        add(new OptionDescriptionBuilder("author").addValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("title").addValidator(new TypeValidator(new String())).createOption());
+        add(new OptionDescriptionBuilder("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()).createOption());
+        add(new OptionDescriptionBuilder("id").setMandatoryTrue().addValidator(new TypeValidator(new Integer(0))).createOption());
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
     List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
