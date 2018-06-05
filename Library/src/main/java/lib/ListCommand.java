@@ -2,7 +2,7 @@ package lib;
 
 import commonPac.Command;
 import commonPac.InputParameters;
-import commonPac.ViewController;
+import commonPac.ViewModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,14 +16,15 @@ public class ListCommand implements Command {
     private static final String TITLE = "titles";
     private static final String YEAR = "years";
 
-    public void execute(InputParameters inputParameters, ViewController controller){
+    public ViewModel execute(InputParameters inputParameters){
         OpenFileStream openFileStream = new OpenFileStream();
+        ViewModel viewModel = new ViewModel();
 
         try {
             List<Book> books = openFileStream.read();
 
             if (inputParameters.commandOptions.containsKey("all"))          {
-                controller.model = books;
+                viewModel.model = books;
             }
             else{
                 List<String> singleParameters = new ArrayList<String>();
@@ -36,7 +37,7 @@ public class ListCommand implements Command {
                     if (inputParameters.commandOptions.containsKey(YEAR))
                         singleParameters.add(book.year);
                 }
-                controller.model = singleParameters;
+                viewModel.model = singleParameters;
             }
         }
         catch (IOException ex) {
@@ -45,5 +46,9 @@ public class ListCommand implements Command {
         catch (ClassNotFoundException ex) {
             Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        viewModel.view = new ListView();
+
+        return viewModel;
     }
 }

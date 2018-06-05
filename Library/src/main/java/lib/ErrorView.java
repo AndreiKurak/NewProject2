@@ -2,9 +2,9 @@ package lib;
 
 import commonPac.View;
 
-public class SystemOutView implements View {
+public class ErrorView implements View {
 
     public void showResult(Object model){
-        System.out.println(model);
+        System.err.println(model);
     }
 }

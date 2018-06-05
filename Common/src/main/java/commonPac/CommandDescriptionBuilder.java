@@ -1,5 +1,6 @@
 package commonPac;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CommandDescriptionBuilder {
@@ -18,8 +19,8 @@ public class CommandDescriptionBuilder {
         return this;
     }
 
-    public CommandDescriptionBuilder setOptions(List<OptionDescription> options) {
-        this.options = options;
+    public CommandDescriptionBuilder setOptions(OptionDescription... options) {
+        this.options = Arrays.asList(options);
         return this;
     }
 

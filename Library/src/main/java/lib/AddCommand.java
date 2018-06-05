@@ -2,7 +2,7 @@ package lib;
 
 import commonPac.Command;
 import commonPac.InputParameters;
-import commonPac.ViewController;
+import commonPac.ViewModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,9 +18,10 @@ public class AddCommand implements Command {
     private static final String TITLE = "title";
     private static final String YEAR = "year";
 
-    public void execute(InputParameters inputParameters, ViewController controller){
+    public ViewModel execute(InputParameters inputParameters){
         Book book = new Book();
         OpenFileStream openFileStream = new OpenFileStream();
+        ViewModel viewModel = new ViewModel();
 
         book.author = inputParameters.commandOptions.get(AUTHOR);
         book.title = inputParameters.commandOptions.get(TITLE);
@@ -52,6 +53,9 @@ public class AddCommand implements Command {
             Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        controller.model = "Add command was performed";
+        viewModel.model = "Add command was performed";
+        viewModel.view = new MessageView();
+
+        return viewModel;
     }
 }

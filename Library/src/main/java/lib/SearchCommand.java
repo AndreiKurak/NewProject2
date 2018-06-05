@@ -2,7 +2,7 @@ package lib;
 
 import commonPac.Command;
 import commonPac.InputParameters;
-import commonPac.ViewController;
+import commonPac.ViewModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,9 +17,10 @@ public class SearchCommand implements Command {
     private static final String TITLE = "title";
     private static final String YEAR = "year";
 
-    public void execute(InputParameters inputParameters, ViewController controller){
+    public ViewModel execute(InputParameters inputParameters){
         Map<String, String> input = inputParameters.commandOptions;
         OpenFileStream openFileStream = new OpenFileStream();
+        ViewModel viewModel = new ViewModel();
 
         try {
             List<Book> books = openFileStream.read();
@@ -35,7 +36,8 @@ public class SearchCommand implements Command {
                     if (!book.year.equals(input.get(YEAR)))
                         books.remove(book);
             }
-            controller.model = books;
+            viewModel.model = books;
+            viewModel.view = new ListView();
         }
         catch (IOException ex) {
             Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
@@ -43,5 +45,6 @@ public class SearchCommand implements Command {
         catch (ClassNotFoundException ex) {
             Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return viewModel;
     }
 }

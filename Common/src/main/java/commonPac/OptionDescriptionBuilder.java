@@ -17,10 +17,14 @@ public class OptionDescriptionBuilder {
         return this;
     }
 
-   public OptionDescriptionBuilder addValidator(OptionValidator... validators){
-       this.validator = new ValidatorsChain(Arrays.asList(validators));
-       return this;
-   }
+    public OptionDescriptionBuilder addValidator(OptionValidator validator){
+        return this;
+    }
+
+    public OptionDescriptionBuilder addValidator(OptionValidator... validators){
+        this.validator = new ValidatorsChain(Arrays.asList(validators));
+        return this;
+    }
 
     public OptionDescription createOption(){
         return new OptionDescription(name, validator, mandatory);

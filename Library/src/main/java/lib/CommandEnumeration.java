@@ -7,62 +7,44 @@ import java.util.List;
 
 public class CommandEnumeration {
 
-    List<OptionDescription> addOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescriptionBuilder("author").setMandatoryTrue().addValidator(new TypeValidator(new String())).createOption());
-        add(new OptionDescriptionBuilder("title").setMandatoryTrue().addValidator(new TypeValidator(new String())).createOption());
-        add(new OptionDescriptionBuilder("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()).createOption());
-    }};
-
-    List<OptionDescription> searchOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescriptionBuilder("author").addValidator(new TypeValidator(new String())).createOption());
-        add(new OptionDescriptionBuilder("title").addValidator(new TypeValidator(new String())).createOption());
-        add(new OptionDescriptionBuilder("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()).createOption());
-    }};
-
-    List<OptionDescription> deleteOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescriptionBuilder("id").addValidator(new TypeValidator(new Integer(0))).createOption());
-    }};
-
-    List<OptionDescription> listOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescriptionBuilder("authors").createOption());
-        add(new OptionDescriptionBuilder("titles").createOption());
-        add(new OptionDescriptionBuilder("years").createOption());
-        add(new OptionDescriptionBuilder("all").createOption());
-    }};
-
-    List<OptionDescription> updateOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescriptionBuilder("author").addValidator(new TypeValidator(new String())).createOption());
-        add(new OptionDescriptionBuilder("title").addValidator(new TypeValidator(new String())).createOption());
-        add(new OptionDescriptionBuilder("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()).createOption());
-        add(new OptionDescriptionBuilder("id").setMandatoryTrue().addValidator(new TypeValidator(new Integer(0))).createOption());
-    }};
-    ////////////////////////////////////////////////////////////////////////////////////////
     List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
         add(new OptionDescriptionBuilder("file1").setMandatoryTrue().createOption());
         add(new OptionDescriptionBuilder("file2").createOption());
-        add(new OptionDescriptionBuilder("help").createOption());
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
     public List<CommandDescription> commands = new ArrayList<CommandDescription>(){{
         add(new CommandDescriptionBuilder("add").
             setDescription("command, that is used for adding new books to the library").
-            setOptions(addOptions).
+            setOptions(new OptionDescriptionBuilder("author").setMandatoryTrue().addValidator(new TypeValidator(new String())).createOption(),
+                       new OptionDescriptionBuilder("title").setMandatoryTrue().addValidator(new TypeValidator(new String())).createOption(),
+                       new OptionDescriptionBuilder("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()).createOption()).
             setCommand(new AddCommand()).createCommand());
         add(new CommandDescriptionBuilder("search").
             setDescription("command, that is used for finding required book").
-            setOptions(searchOptions).
+            setOptions(new OptionDescriptionBuilder("author").addValidator(new TypeValidator(new String())).createOption(),
+                       new OptionDescriptionBuilder("title").addValidator(new TypeValidator(new String())).createOption(),
+                       new OptionDescriptionBuilder("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()).createOption()).
             setCommand(new SearchCommand()).createCommand());
         add(new CommandDescriptionBuilder("delete").
             setDescription("command, that is used for removing unnecessary or doubtful records").
-            setOptions(deleteOptions).
+            setOptions(new OptionDescriptionBuilder("id").addValidator(new TypeValidator(new Integer(0))).createOption()).
             setCommand(new DeleteCommand()).createCommand());
         add(new CommandDescriptionBuilder("list").
             setDescription("command, that is used to display the list with specified parameters").
-            setOptions(listOptions).
+            setOptions(new OptionDescriptionBuilder("authors").createOption(),
+                       new OptionDescriptionBuilder("titles").createOption(),
+                       new OptionDescriptionBuilder("years").createOption(),
+                       new OptionDescriptionBuilder("all").createOption()).
             setCommand(new ListCommand()).createCommand());
         add(new CommandDescriptionBuilder("update").
             setDescription("command, that is used for rewriting some information").
-            setOptions(updateOptions).
+            setOptions(new OptionDescriptionBuilder("author").addValidator(new TypeValidator(new String())).createOption(),
+                       new OptionDescriptionBuilder("title").addValidator(new TypeValidator(new String())).createOption(),
+                       new OptionDescriptionBuilder("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()).createOption(),
+                       new OptionDescriptionBuilder("id").setMandatoryTrue().addValidator(new TypeValidator(new Integer(0))).createOption()).
             setCommand(new UpdateCommand()).createCommand());
+        add(new CommandDescriptionBuilder("help").
+            setDescription("command, that is used for showing information about commands and options").
+            setCommand(new HelpCommand()).createCommand());
     }};
 }
