@@ -1,5 +1,7 @@
 package commonPac;
 
+import commonPac.descriptions.CommandDescription;
+import commonPac.descriptions.OptionDescription;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -9,23 +11,23 @@ import java.util.List;
 
 public class ParserTest {
 
-    Parser parser = new Parser();
+    private Parser parser = new Parser();
 
     private static final List<OptionDescription> addOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescription("author", true));
-        add(new OptionDescription("title", true));
-        add(new OptionDescription("year", false));
+        add(new OptionDescription("author", null, true));
+        add(new OptionDescription("title", null, true));
+        add(new OptionDescription("year", null, false));
     }};
-    static class TestAdd implements Command{
+    private static class TestAdd implements Command{
         public ViewModel execute(InputParameters inputParameters){ return null; }
     }
     private static final List<CommandDescription> addList = new ArrayList<CommandDescription>(){{
         add(new CommandDescription("add", "add - command, that is used for adding new books to the library", addOptions, new TestAdd()));
     }};
     private static final List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescription("file1", true));
-        add(new OptionDescription("file2", false));
-        add(new OptionDescription("help", false));
+        add(new OptionDescription("file1", null, true));
+        add(new OptionDescription("file2", null, false));
+        add(new OptionDescription("help", null, false));
     }};
 
     @Test
@@ -33,17 +35,17 @@ public class ParserTest {
         String[] line ={"--file1=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
 
         InputParameters inputParameters = parser.parse(line, globalOptions, addList);
-        assertThat("new author").isEqualTo(inputParameters.commandOptions.get("author"));
-        assertThat("2019").isEqualTo(inputParameters.commandOptions.get("year"));
+        assertThat("new author").isEqualTo(inputParameters.getCommandOptions().get("author"));
+        assertThat("2019").isEqualTo(inputParameters.getCommandOptions().get("year"));
     }
 
     @Test
     public void parseCorrectGlobalOptions(){
-        String[] line ={"--file1=test", "--file2=test2", "add", "--author=new"};
+        String[] line ={"--file1=test1", "--file2=test2", "add", "--author=new"};
 
         InputParameters inputParameters = parser.parse(line, globalOptions, addList);
-        assertThat("test").isEqualTo(inputParameters.globalOptions.get("file1"));
-        assertThat("test2").isEqualTo(inputParameters.globalOptions.get("file2"));
+        assertThat("test1").isEqualTo(inputParameters.getGlobalOptions().get("file1"));
+        assertThat("test2").isEqualTo(inputParameters.getGlobalOptions().get("file2"));
     }
 
     @Test
@@ -51,11 +53,11 @@ public class ParserTest {
         String[] line ={"--file1=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
 
         InputParameters inputParameters = parser.parse(line, globalOptions, addList);
-        assertThat("add").isEqualTo(inputParameters.command.getName());
+        assertThat("add").isEqualTo(inputParameters.getCommand().getName());
     }
 
     @Test//(expected = ParseException.class)
-    public void nullInputLine(){    //should be another message
+    public void nullInputLine(){
         String[] line ={""};
         try {
             parser.parse(line, globalOptions, addList);

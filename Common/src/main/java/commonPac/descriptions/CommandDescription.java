@@ -1,4 +1,6 @@
-package commonPac;
+package commonPac.descriptions;
+
+import commonPac.Command;
 
 import java.util.List;
 
@@ -7,13 +9,13 @@ public class CommandDescription {
     private String name;
     private String description;
     private List<OptionDescription> options;
-    private Command command;
+    private Command commandToExecute;
 
-    public CommandDescription(String name, String description, List<OptionDescription> options, Command command){
+    public CommandDescription(String name, String description, List<OptionDescription> options, Command commandToExecute){
         this.name = name;
         this.description = description;
         this.options = options;
-        this.command = command;
+        this.commandToExecute = commandToExecute;
     }
 
     public String getName(){
@@ -24,8 +26,8 @@ public class CommandDescription {
         return options;
     }
 
-    public Command getCommand() {
-        return command;
+    public Command getCommandToExecute() {
+        return commandToExecute;
     }
 
     public void setName(String name){
@@ -40,8 +42,8 @@ public class CommandDescription {
         this.options = options;
     }
 
-    public void setCommand(Command command) {
-        this.command = command;
+    public void setCommandToExecute(Command commandToExecute) {
+        this.commandToExecute = commandToExecute;
     }
 
     public String toString(){

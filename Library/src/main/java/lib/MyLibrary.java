@@ -1,6 +1,7 @@
 package lib;
 
 import commonPac.*;
+import commonPac.views.ErrorView;
 
 
 public class MyLibrary {
@@ -11,10 +12,14 @@ public class MyLibrary {
 
         InputParameters inputParameters = parser.parse(args, commandEnumeration.globalOptions, commandEnumeration.commands);
 
-        Command globalCommand = new GlobalOptionsCommand();
-        globalCommand.execute(inputParameters);
-
-        Command command = inputParameters.command.getCommand();
-        command.execute(inputParameters).view.showResult(command.execute(inputParameters).model);
+        Command command = inputParameters.getCommand().getCommandToExecute();
+        ViewModel viewModel = command.execute(inputParameters);
+        if (viewModel.view != null){
+            viewModel.view.showResult(viewModel.model);
+        }
+        else {
+            viewModel.view = new ErrorView();
+            viewModel.view.showResult("view не задано");
+        }
     }
 }

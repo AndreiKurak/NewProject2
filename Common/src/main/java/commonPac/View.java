@@ -1,6 +1,6 @@
 package commonPac;
 
-public interface View {
+public interface View<T> {
 
-    public void showResult(Object model);
+    public void showResult(T model);
 }
