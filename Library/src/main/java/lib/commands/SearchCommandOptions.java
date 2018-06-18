@@ -19,9 +19,6 @@ public class SearchCommandOptions {
             }
         });
 
-        System.out.println(author);
-        System.out.println(title);
-        System.out.println(year);
     }
 
     public String getAuthor() {
