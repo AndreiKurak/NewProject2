@@ -14,13 +14,13 @@ public class OpenFileStream<T> {   //заюзать generic-и и в общую 
     }
 
     public ArrayList<T> read() throws IOException, ClassNotFoundException {
-        FileInputStream fin = new FileInputStream(directory + fileName);
+        FileInputStream fin = new FileInputStream(fileName);
         ObjectInputStream ois = new ObjectInputStream(fin);
         return (ArrayList<T>) ois.readObject();
     }
 
     public void write(List myObject) throws IOException {
-        final FileOutputStream fos = new FileOutputStream(directory + fileName);
+        final FileOutputStream fos = new FileOutputStream(fileName);
         final ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(myObject);
     }

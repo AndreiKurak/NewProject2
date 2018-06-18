@@ -3,6 +3,7 @@ package lib.commands;
 import commonPac.Command;
 import commonPac.InputParameters;
 import commonPac.ViewModel;
+import commonPac.views.ErrorView;
 import lib.Book;
 import commonPac.views.MessageView;
 import lib.MyLibrary;
@@ -35,14 +36,12 @@ public class UpdateCommand implements Command {
                 books.get(id).setYear(inputParameters.getCommandOptions().get(YEAR));
             openFileStream.write(books);
         }
-        catch (IOException ex) {
-            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
+        catch (Exception ex){
+            viewModel.model = "Update-command failed";
+            viewModel.view = new ErrorView();
         }
 
-        viewModel.model = "Update command was performed";
+        viewModel.model = "Update-command was performed";
         viewModel.view = new MessageView();
 
         return viewModel;

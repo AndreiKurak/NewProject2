@@ -3,6 +3,7 @@ package lib.commands;
 import commonPac.Command;
 import commonPac.InputParameters;
 import commonPac.ViewModel;
+import commonPac.views.ErrorView;
 import lib.Book;
 import commonPac.views.MessageView;
 import lib.MyLibrary;
@@ -29,16 +30,14 @@ public class DeleteCommand implements Command {
             for (int i = id; i<books.size(); i++)
                 books.get(id).setId(id + 1);
             openFileStream.write(books);
-        }
-        catch (IOException ex) {
-            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-        viewModel.model = "Delete command was performed";
-        viewModel.view = new MessageView();
+            viewModel.model = "Delete-command was performed";
+            viewModel.view = new MessageView();
+        }
+        catch (Exception ex){
+            viewModel.model = "Delete-command failed";
+            viewModel.view = new ErrorView();
+        }
 
         return viewModel;
     }

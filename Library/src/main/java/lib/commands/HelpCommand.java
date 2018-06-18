@@ -2,7 +2,7 @@ package lib.commands;
 
 import commonPac.*;
 import commonPac.descriptions.CommandDescription;
-import lib.CommandEnumeration;
+import lib.LibraryDescriptor;
 import commonPac.views.ListView;
 
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ public class HelpCommand implements Command {
         ViewModel viewModel = new ViewModel();
 
         List<CommandDescription> commandsInfo = new ArrayList<>();
-        CommandEnumeration commandEnumeration = new CommandEnumeration();
-        for (int i = 0; i< commandEnumeration.commands.size(); i++){
-            commandsInfo.add(commandEnumeration.commands.get(i));
+        LibraryDescriptor libraryDescriptor = new LibraryDescriptor();
+        for (int i = 0; i< libraryDescriptor.getCommandsList().size(); i++){
+            commandsInfo.add(libraryDescriptor.getCommandsList().get(i));
         }
         viewModel.model = commandsInfo;
         viewModel.view = new ListView();
-        System.out.println("\n" + commandEnumeration.globalOptions);
+        System.out.println("\n" + libraryDescriptor.getGlobalOptionsList());
 
         return viewModel;
     }

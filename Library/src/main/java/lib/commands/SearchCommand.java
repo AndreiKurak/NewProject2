@@ -3,11 +3,13 @@ package lib.commands;
 import commonPac.Command;
 import commonPac.InputParameters;
 import commonPac.ViewModel;
+import commonPac.views.ErrorView;
 import lib.Book;
 import commonPac.views.ListView;
 import lib.MyLibrary;
 import commonPac.OpenFileStream;
 
+import java.lang.reflect.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -27,29 +29,39 @@ public class SearchCommand implements Command {
         OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
         ViewModel viewModel = new ViewModel();
 
+        SearchCommandOptions searchCommandOptions = new SearchCommandOptions();
+        searchCommandOptions.setFields(inputParameters.getCommandOptions());
+
         try {
             List<Book> books = openFileStream.read();
 
             for (Book book : books){
-                if (input.containsKey(AUTHOR))
-                    if (!book.getAuthor().equals(input.get(AUTHOR)))
+                if (searchCommandOptions.getAuthor() != null)
+                    if (!book.getAuthor().equals(searchCommandOptions.getAuthor())){
                        books.remove(book);
-                if (input.containsKey(TITLE))
-                    if (!book.getTitle().equals(input.get(TITLE)))
+                       continue;
+                    }
+                if (searchCommandOptions.getTitle() != null)
+                    if (!book.getTitle().equals(searchCommandOptions.getTitle())){
                         books.remove(book);
-                if (input.containsKey(YEAR))
-                    if (!book.getYear().equals(input.get(YEAR)))
+                        continue;
+                    }
+                if (searchCommandOptions.getYear() != null)
+                    if (!book.getYear().equals(searchCommandOptions.getYear())){
                         books.remove(book);
+                    }
             }
             viewModel.model = books;
             viewModel.view = new ListView();
+            if (books == null){
+                viewModel.model = "nothing found";
+            }
         }
-        catch (IOException ex) {
-            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
+        catch (Exception ex){
+            viewModel.model = "Search-command failed";
+            viewModel.view = new ErrorView();            //java.util.ConcurrentModificationException
         }
-        catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         return viewModel;
     }
 }

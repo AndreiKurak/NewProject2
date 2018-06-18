@@ -1,4 +1,4 @@
-package commonPac;
+package commonPac.validators;
 
 public interface OptionValidator {
 

@@ -1,5 +1,6 @@
-package commonPac;
+package commonPac.parser;
 
+import commonPac.InputParameters;
 import commonPac.descriptions.CommandDescription;
 import commonPac.descriptions.OptionDescription;
 

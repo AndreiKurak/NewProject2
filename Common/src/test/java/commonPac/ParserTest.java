@@ -2,6 +2,8 @@ package commonPac;
 
 import commonPac.descriptions.CommandDescription;
 import commonPac.descriptions.OptionDescription;
+import commonPac.parser.ParseException;
+import commonPac.parser.Parser;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

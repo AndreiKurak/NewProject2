@@ -1,7 +1,5 @@
 package commonPac.views;
 
-import commonPac.View;
-
 import java.util.Iterator;
 import java.util.List;
 

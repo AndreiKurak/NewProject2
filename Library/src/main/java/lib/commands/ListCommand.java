@@ -3,6 +3,7 @@ package lib.commands;
 import commonPac.Command;
 import commonPac.InputParameters;
 import commonPac.ViewModel;
+import commonPac.views.ErrorView;
 import lib.Book;
 import commonPac.views.ListView;
 import lib.MyLibrary;
@@ -44,15 +45,12 @@ public class ListCommand implements Command {
                 }
                 viewModel.model = singleParameters;
             }
+            viewModel.view = new ListView();
         }
-        catch (IOException ex) {
-            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
+        catch (Exception ex){
+            viewModel.model = "List-command failed";
+            viewModel.view = new ErrorView();
         }
-        catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        viewModel.view = new ListView();
 
         return viewModel;
     }

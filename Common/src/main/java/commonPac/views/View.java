@@ -1,4 +1,4 @@
-package commonPac;
+package commonPac.views;
 
 public interface View<T> {
 

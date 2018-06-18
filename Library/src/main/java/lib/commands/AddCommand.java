@@ -3,17 +3,14 @@ package lib.commands;
 import commonPac.Command;
 import commonPac.InputParameters;
 import commonPac.ViewModel;
+import commonPac.views.ErrorView;
 import lib.Book;
 import commonPac.views.MessageView;
-import lib.MyLibrary;
 import commonPac.OpenFileStream;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class AddCommand implements Command {
 
@@ -49,16 +46,20 @@ public class AddCommand implements Command {
                 books.add(book);
                 openFileStream.write(books);
             }
+
+            viewModel.model = "Add-command was performed";
+            viewModel.view = new MessageView();
         }
-        catch (IOException ex) {
+        catch (Exception ex) {
+            viewModel.model = "Add-command failed";
+            viewModel.view = new ErrorView();
+        }
+        /*catch (IOException ex) {
             Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (ClassNotFoundException ex) {
             Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        viewModel.model = "Add command was performed";
-        viewModel.view = new MessageView();
+        }        */
 
         return viewModel;
     }

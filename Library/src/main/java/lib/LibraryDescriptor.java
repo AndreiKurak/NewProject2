@@ -1,5 +1,6 @@
 package lib;
 
+import commonPac.ApplicationDescriptor;
 import commonPac.descriptions.CommandDescription;
 import commonPac.descriptions.CommandDescriptionBuilder;
 import commonPac.descriptions.OptionDescription;
@@ -10,14 +11,14 @@ import lib.validators.TypeValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandEnumeration {
+public class LibraryDescriptor implements ApplicationDescriptor {
 
-    public List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
+    private List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
         add(new OptionDescription("file1").setMandatoryTrue());
         add(new OptionDescription("file2"));
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
-    public List<CommandDescription> commands = new ArrayList<CommandDescription>(){{
+    private List<CommandDescription> commands = new ArrayList<CommandDescription>(){{
         add(new CommandDescriptionBuilder("add").
             setDescription("command, that is used for adding new books to the library").
             setOptions(new OptionDescription("author").setMandatoryTrue().addValidator(new TypeValidator(new String())),
@@ -58,4 +59,12 @@ public class CommandEnumeration {
             .createCommand());
         */
     }};
+
+    public List<CommandDescription> getCommandsList(){
+        return commands;
+    }
+
+    public List<OptionDescription> getGlobalOptionsList(){
+        return globalOptions;
+    }
 }

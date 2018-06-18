@@ -1,7 +1,7 @@
-package commonPac;
+package commonPac.validators;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import commonPac.validators.OptionValidator;
+
 import java.util.List;
 
 public class ValidatorsChain implements OptionValidator {

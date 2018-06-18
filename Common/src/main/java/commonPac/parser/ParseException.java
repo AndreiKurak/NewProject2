@@ -1,4 +1,4 @@
-package commonPac;
+package commonPac.parser;
 
 public class ParseException extends RuntimeException {
 

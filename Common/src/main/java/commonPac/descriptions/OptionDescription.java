@@ -1,7 +1,7 @@
 package commonPac.descriptions;
 
-import commonPac.OptionValidator;
-import commonPac.ValidatorsChain;
+import commonPac.validators.OptionValidator;
+import commonPac.validators.ValidatorsChain;
 
 import java.util.Arrays;
 
