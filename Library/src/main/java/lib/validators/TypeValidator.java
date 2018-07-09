@@ -1,6 +1,6 @@
 package lib.validators;
 
-import commonPac.validators.OptionValidator;
+import common.validators.OptionValidator;
 
 public class TypeValidator implements OptionValidator{
 

@@ -1,19 +1,14 @@
 package lib.commands;
 
-import commonPac.Command;
-import commonPac.InputParameters;
-import commonPac.ViewModel;
-import commonPac.views.ErrorView;
+import common.Command;
+import common.ViewModel;
+import common.views.ErrorView;
 import lib.Book;
-import commonPac.views.ListView;
-import lib.MyLibrary;
-import commonPac.OpenFileStream;
+import common.views.ListView;
+import common.OpenFileStream;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ListCommand implements Command {
 
@@ -22,25 +17,24 @@ public class ListCommand implements Command {
     private static final String TITLE = "titles";
     private static final String YEAR = "years";
 
-    public ViewModel execute(InputParameters inputParameters) {
-        OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
+    public ViewModel execute(Object options, Object globalOptions) {
+        //OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
+        OpenFileStream<Book> openFileStream = new OpenFileStream<>("D:\\test");
         ViewModel viewModel = new ViewModel();
 
         try {
             List<Book> books = openFileStream.read();
-
-            if (inputParameters.getCommandOptions().containsKey("all")) {
+            if (options.getClass().getDeclaredField("all") != null) {
                 viewModel.model = books;
             }
             else{
-                List<String> singleParameters = new ArrayList<String>();
-
+                List<String> singleParameters = new ArrayList<>();
                 for (Book book : books){
-                    if (inputParameters.getCommandOptions().containsKey(AUTHOR))
+                    if (options.getClass().getDeclaredField(AUTHOR) != null)
                         singleParameters.add(book.getAuthor());
-                    if (inputParameters.getCommandOptions().containsKey(TITLE))
+                    if (options.getClass().getDeclaredField(TITLE) != null)
                         singleParameters.add(book.getTitle());
-                    if (inputParameters.getCommandOptions().containsKey(YEAR))
+                    if (options.getClass().getDeclaredField(YEAR) != null)
                         singleParameters.add(book.getYear());
                 }
                 viewModel.model = singleParameters;
@@ -50,6 +44,7 @@ public class ListCommand implements Command {
         catch (Exception ex){
             viewModel.model = "List-command failed";
             viewModel.view = new ErrorView();
+            System.out.println(ex.getClass());
         }
 
         return viewModel;

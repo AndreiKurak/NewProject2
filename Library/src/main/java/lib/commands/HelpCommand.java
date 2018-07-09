@@ -1,16 +1,16 @@
 package lib.commands;
 
-import commonPac.*;
-import commonPac.descriptions.CommandDescription;
+import common.*;
+import common.descriptions.CommandDescription;
 import lib.LibraryDescriptor;
-import commonPac.views.ListView;
+import common.views.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HelpCommand implements Command {
 
-    public ViewModel execute(InputParameters inputParameters){  //check
+    public ViewModel execute(Object options, Object globalOptions){  //check
         ViewModel viewModel = new ViewModel();
 
         List<CommandDescription> commandsInfo = new ArrayList<>();

@@ -1,14 +1,15 @@
 package lib.commands;
 
-import commonPac.Command;
-import commonPac.InputParameters;
-import commonPac.ViewModel;
-import commonPac.views.ErrorView;
+import common.Command;
+import common.DataBaseConnector;
+import common.ViewModel;
+import common.views.ErrorView;
 import lib.Book;
-import commonPac.views.MessageView;
-import commonPac.OpenFileStream;
+import common.views.MessageView;
+import common.OpenFileStream;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,38 +20,54 @@ public class AddCommand implements Command {
     private static final String TITLE = "title";
     private static final String YEAR = "year";
 
-    public ViewModel execute(InputParameters inputParameters) {
+    public ViewModel execute(Object options, Object globalOptions) {
         Book book = new Book();
-        OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
         ViewModel viewModel = new ViewModel();
 
-        book.setAuthor(inputParameters.getCommandOptions().get(AUTHOR));
-        book.setTitle(inputParameters.getCommandOptions().get(TITLE));
-        if (inputParameters.getCommandOptions().containsKey(YEAR))
-            book.setYear(inputParameters.getCommandOptions().get(YEAR));
-        else
-            book.setYear("");
-
         try {
-            File f = new File(inputParameters.getGlobalOptions().get(FILE1));
-            long len = f.length();
-            if (len != 0){
-                List<Book> books = openFileStream.read();
-                book.setId(books.size() + 1);
-                books.add(book);
-                openFileStream.write(books);
+
+            Field author = options.getClass().getDeclaredField(AUTHOR);
+            author.setAccessible(true);
+            book.setAuthor((String) author.get(options));
+            Field title = options.getClass().getDeclaredField(TITLE);
+            title.setAccessible(true);
+            book.setTitle((String) title.get(options));
+            Field year = options.getClass().getDeclaredField(YEAR);
+            year.setAccessible(true);
+            book.setYear((String) year.get(options));
+
+            if (globalOptions.getClass().getDeclaredField(FILE1) != null) {
+                Field file1 = globalOptions.getClass().getDeclaredField(FILE1);
+                file1.setAccessible(true);
+                OpenFileStream<Book> openFileStream = new OpenFileStream<>((String) file1.get(globalOptions));
+
+                File f = new File((String) file1.get(globalOptions));
+                long len = f.length();
+                if (len != 0){
+                    List<Book> books = openFileStream.read();
+                    book.setId(books.size() + 1);
+                    books.add(book);
+                    openFileStream.write(books);
+                }
+                else {   //work with database
+                    List<Book> books = new ArrayList<>();
+                    book.setId(books.size() + 1);
+                    books.add(book);
+                    openFileStream.write(books);
+                }
             }
             else {
-                List<Book> books = new ArrayList<Book>();
-                book.setId(books.size() + 1);
-                books.add(book);
-                openFileStream.write(books);
-            }
+                String query = "INSERT INTO doc_register.library (" + AUTHOR + ", " + TITLE + ", " + YEAR + ")" + "\n" +
+                               " VALUES (" + author.get(options) + ", " + title.get(options) + ", " + year.get(options) + ");";    //char
 
+                DataBaseConnector connector = new DataBaseConnector();
+                connector.connect(query);
+            }
             viewModel.model = "Add-command was performed";
             viewModel.view = new MessageView();
         }
         catch (Exception ex) {
+            System.out.println(ex.getClass());
             viewModel.model = "Add-command failed";
             viewModel.view = new ErrorView();
         }
@@ -59,8 +76,7 @@ public class AddCommand implements Command {
         }
         catch (ClassNotFoundException ex) {
             Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
-        }        */
-
+        }          */
         return viewModel;
     }
 }

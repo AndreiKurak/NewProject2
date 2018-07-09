@@ -1,30 +1,29 @@
 package lib.commands;
 
-import commonPac.Command;
-import commonPac.InputParameters;
-import commonPac.ViewModel;
-import commonPac.views.ErrorView;
+import common.Command;
+import common.ViewModel;
+import common.views.ErrorView;
 import lib.Book;
-import commonPac.views.MessageView;
-import lib.MyLibrary;
-import commonPac.OpenFileStream;
+import common.views.MessageView;
+import common.OpenFileStream;
 
-import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DeleteCommand implements Command {
 
     private static final String FILE1 = "file1";
 
-    public ViewModel execute(InputParameters inputParameters) {
-        OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
+    public ViewModel execute(Object options, Object globalOptions) {  //check
+        //OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
+        OpenFileStream<Book> openFileStream = new OpenFileStream<>("D:\\test");
         ViewModel viewModel = new ViewModel();
 
-        int id = Integer.valueOf(inputParameters.getCommandOptions().get("id")) - 1;
-
         try {
+            Field field = options.getClass().getDeclaredField("id");
+            field.setAccessible(true);
+            int id = Integer.valueOf((String) field.get(options)) - 1;
+
             List<Book> books = openFileStream.read();
             books.remove(id);
             for (int i = id; i<books.size(); i++)

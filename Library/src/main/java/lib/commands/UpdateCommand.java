@@ -1,18 +1,14 @@
 package lib.commands;
 
-import commonPac.Command;
-import commonPac.InputParameters;
-import commonPac.ViewModel;
-import commonPac.views.ErrorView;
+import common.Command;
+import common.ViewModel;
+import common.views.ErrorView;
 import lib.Book;
-import commonPac.views.MessageView;
-import lib.MyLibrary;
-import commonPac.OpenFileStream;
+import common.views.MessageView;
+import common.OpenFileStream;
 
-import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UpdateCommand implements Command {
 
@@ -21,19 +17,32 @@ public class UpdateCommand implements Command {
     private static final String TITLE = "title";
     private static final String YEAR = "year";
 
-    public ViewModel execute(InputParameters inputParameters) {
-        OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
-        int id = Integer.valueOf(inputParameters.getCommandOptions().get("id")) - 1;
+    public ViewModel execute(Object options, Object globalOptions) {
+        //OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
+        OpenFileStream<Book> openFileStream = new OpenFileStream<>("D:\\test");
         ViewModel viewModel = new ViewModel();
 
         try {
+            Field field = options.getClass().getDeclaredField("id");
+            field.setAccessible(true);
+            int id = Integer.valueOf((String) field.get(options)) - 1;
+
             List<Book> books = openFileStream.read();
-            if (inputParameters.getCommandOptions().containsKey(AUTHOR))
-                books.get(id).setAuthor(inputParameters.getCommandOptions().get(AUTHOR));
-            if (inputParameters.getCommandOptions().containsKey(TITLE))
-                books.get(id).setTitle(inputParameters.getCommandOptions().get(TITLE));
-            if (inputParameters.getCommandOptions().containsKey(YEAR))
-                books.get(id).setYear(inputParameters.getCommandOptions().get(YEAR));
+            if (options.getClass().getDeclaredField(AUTHOR) != null){
+                Field author = options.getClass().getDeclaredField(AUTHOR);
+                author.setAccessible(true);
+                books.get(id).setAuthor((String) author.get(options));
+            }
+            if (options.getClass().getDeclaredField(TITLE) != null){
+                Field title = options.getClass().getDeclaredField(TITLE);
+                title.setAccessible(true);
+                books.get(id).setTitle((String) title.get(options));
+            }
+            if (options.getClass().getDeclaredField(YEAR) != null){
+                Field year = options.getClass().getDeclaredField(YEAR);
+                year.setAccessible(true);
+                books.get(id).setYear((String) year.get(options));
+            }
             openFileStream.write(books);
         }
         catch (Exception ex){

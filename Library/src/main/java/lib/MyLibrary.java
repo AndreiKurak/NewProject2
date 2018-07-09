@@ -1,6 +1,6 @@
 package lib;
 
-import commonPac.*;
+import common.*;
 
 public class MyLibrary {
 

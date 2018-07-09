@@ -1,6 +1,7 @@
 package lib;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 
 public class Book implements Serializable {
 
@@ -43,5 +44,17 @@ public class Book implements Serializable {
 
     public String toString(){
         return Integer.toString(id) + " --" + author + " --" + title + " --" + year;
+    }
+
+    public Field getAuthorField() throws NoSuchFieldException{
+        return getClass().getDeclaredField("author");
+    }
+
+    public Field getTitleField() throws NoSuchFieldException{
+        return getClass().getDeclaredField("title");
+    }
+
+    public Field getYearField() throws NoSuchFieldException{
+        return getClass().getDeclaredField("year");
     }
 }

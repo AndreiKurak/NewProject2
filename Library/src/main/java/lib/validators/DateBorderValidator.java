@@ -1,6 +1,6 @@
 package lib.validators;
 
-import commonPac.validators.OptionValidator;
+import common.validators.OptionValidator;
 
 import java.util.Date;
 

@@ -1,20 +1,14 @@
 package lib.commands;
 
-import commonPac.Command;
-import commonPac.InputParameters;
-import commonPac.ViewModel;
-import commonPac.views.ErrorView;
+import common.Command;
+import common.ViewModel;
+import common.views.ErrorView;
 import lib.Book;
-import commonPac.views.ListView;
-import lib.MyLibrary;
-import commonPac.OpenFileStream;
+import common.views.ListView;
+import common.OpenFileStream;
 
-import java.lang.reflect.*;
-import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class SearchCommand implements Command {
@@ -24,30 +18,31 @@ public class SearchCommand implements Command {
     private static final String TITLE = "title";
     private static final String YEAR = "year";
 
-    public ViewModel execute(InputParameters inputParameters) {
-        Map<String, String> input = inputParameters.getCommandOptions();
-        OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
+    public ViewModel execute(Object options, Object globalOptions) {
+        //Map<String, String> input = inputParameters.getCommandOptions();
+        //OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
+        OpenFileStream<Book> openFileStream = new OpenFileStream<>("D:\\test");
         ViewModel viewModel = new ViewModel();
-
-        SearchCommandOptions searchCommandOptions = new SearchCommandOptions();
-        searchCommandOptions.setFields(inputParameters.getCommandOptions());
 
         try {
             List<Book> books = openFileStream.read();
+            Field author = options.getClass().getDeclaredField(AUTHOR);
+            Field title = options.getClass().getDeclaredField(TITLE);
+            Field year = options.getClass().getDeclaredField(YEAR);
 
             for (Book book : books){
-                if (searchCommandOptions.getAuthor() != null)
-                    if (!book.getAuthor().equals(searchCommandOptions.getAuthor())){
+                if (author != null)
+                    if (!book.getAuthorField().equals(author)){
                        books.remove(book);
                        continue;
                     }
-                if (searchCommandOptions.getTitle() != null)
-                    if (!book.getTitle().equals(searchCommandOptions.getTitle())){
+                if (title != null)
+                    if (!book.getTitleField().equals(title)){
                         books.remove(book);
                         continue;
                     }
-                if (searchCommandOptions.getYear() != null)
-                    if (!book.getYear().equals(searchCommandOptions.getYear())){
+                if (year != null)
+                    if (!book.getYearField().equals(year)){
                         books.remove(book);
                     }
             }
