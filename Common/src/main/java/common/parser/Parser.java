@@ -12,9 +12,9 @@ public class Parser {
     public static final String PREFIX = "--";
     public static final String Equality = "=";
 
-    public ExecutableCommand parse(String[] inputString, List<OptionDescription> globalOptions, List<CommandDescription> commands){
-        ExecutableCommand command = null;
+    public CommandDescription parse(String[] inputString, List<OptionDescription> globalOptions, List<CommandDescription> commands){
         OptionsSetter optionsSetter = new OptionsSetter();
+        CommandDescription command = null;
         String input = "";
 
         for (int i = 0; i<inputString.length; i++){
@@ -31,7 +31,7 @@ public class Parser {
         for (int i = 0; i<commands.size(); i++){
             if (input.contains(commands.get(i).getName())){
                 findResult = true;
-                command = commands.get(i).getCommandToExecute();
+                command = commands.get(i);
                 input = input.replaceAll(commands.get(i).getName(), "");
                 requred = i;
                 break;
@@ -58,7 +58,7 @@ public class Parser {
         for (int i = 0; i<newOptions.size(); i++){
             for (int j = 0; j<input2.length; j++)
                 if (input2[j].contains(newOptions.get(i).getName())){
-                    optionsSetter.setOptions(newOptions.get(i).getName(), input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, ""), null);// command.getOptions());
+                    optionsSetter.setOptions(newOptions.get(i).getName(), input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, ""), command.getOptions());
                     if (newOptions.get(i).getValidator() != null)
                         if (!newOptions.get(i).getValidator().check(input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, "")))
                             throw new ParseException("Unacceptable option value");

@@ -37,7 +37,7 @@ public class AddCommand implements Command {
                 File f = new File((String) file1.get(globalOptions));
                 long len = f.length();
                 if (len != 0){
-                    List<Book> books = fileConnector.read();
+                    List<Book> books = new ArrayList<>();//List<Book> books = fileConnector.read();
                     book.setId(books.size() + 1);
                     books.add(book);
                     fileConnector.write(books);
