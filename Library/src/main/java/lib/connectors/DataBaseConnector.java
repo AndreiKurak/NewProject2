@@ -20,20 +20,23 @@ public class DataBaseConnector implements DataConnection {
          //Books
     public ArrayList read() throws IOException, ClassNotFoundException {
         try {
+            Books b = new Books();
             connection = DriverManager.getConnection(url, user, password);
 
-            String query = "SELECT * FROM doc_register";
+            String query = "SELECT * FROM library";
             stmt = connection.createStatement();
             //PreparedStatement ps = connection.prepareStatement(querty);
             rs = stmt.executeQuery(query);
-          /*
+
+            int i = 0;
             while (rs.next()) {
-                int count = rs.getInt(1);
-                System.out.println(rs.getString(2));
-                System.out.println("Total number of books in the table : " + count);
+                b.books.get(i).setAuthor(rs.getString("author"));
+                b.books.get(i).setAuthor(rs.getString("title"));
+                b.books.get(i).setAuthor(rs.getString("year"));
+                System.out.println(rs.getString("author"));               // int count = rs.getInt(1);
 
             }
-            */
+
         }
         catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -47,6 +50,17 @@ public class DataBaseConnector implements DataConnection {
     }
                     //Books
     public void write(List myObject) throws IOException {
+
+    }
+
+    public static void main(String[] args){
+        DataBaseConnector connector = new DataBaseConnector();
+        try {
+            connector.read();
+        }
+        catch (Exception ex){
+
+        }
 
     }
 
