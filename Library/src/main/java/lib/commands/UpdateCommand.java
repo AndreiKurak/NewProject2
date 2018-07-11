@@ -1,49 +1,39 @@
 package lib.commands;
 
 import common.Command;
+import lib.connectors.FileConnector;
 import common.ViewModel;
 import common.views.ErrorView;
 import lib.Book;
 import common.views.MessageView;
-import common.OpenFileStream;
+import lib.command_options.UpdateCommandOptions;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class UpdateCommand implements Command {
 
     private static final String FILE1 = "file1";
-    private static final String AUTHOR = "author";
-    private static final String TITLE = "title";
-    private static final String YEAR = "year";
 
     public ViewModel execute(Object options, Object globalOptions) {
         //OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
-        OpenFileStream<Book> openFileStream = new OpenFileStream<>("D:\\test");
+        FileConnector<Book> fileConnector = new FileConnector<>("D:\\test");
         ViewModel viewModel = new ViewModel();
+        UpdateCommandOptions updateCommandOptions = (UpdateCommandOptions) options;
+
+        int id = Integer.valueOf(updateCommandOptions.getId());
 
         try {
-            Field field = options.getClass().getDeclaredField("id");
-            field.setAccessible(true);
-            int id = Integer.valueOf((String) field.get(options)) - 1;
-
-            List<Book> books = openFileStream.read();
-            if (options.getClass().getDeclaredField(AUTHOR) != null){
-                Field author = options.getClass().getDeclaredField(AUTHOR);
-                author.setAccessible(true);
-                books.get(id).setAuthor((String) author.get(options));
+            List<Book> books = fileConnector.read();
+            if (updateCommandOptions.getAuthor() != null){
+                books.get(id).setAuthor(updateCommandOptions.getAuthor());
             }
-            if (options.getClass().getDeclaredField(TITLE) != null){
-                Field title = options.getClass().getDeclaredField(TITLE);
-                title.setAccessible(true);
-                books.get(id).setTitle((String) title.get(options));
+            if (updateCommandOptions.getTitle() != null){
+                books.get(id).setTitle(updateCommandOptions.getTitle());
             }
-            if (options.getClass().getDeclaredField(YEAR) != null){
-                Field year = options.getClass().getDeclaredField(YEAR);
-                year.setAccessible(true);
-                books.get(id).setYear((String) year.get(options));
+            if (updateCommandOptions.getYear() != null){
+                books.get(id).setYear(updateCommandOptions.getYear());
             }
-            openFileStream.write(books);
+            fileConnector.write(books);
         }
         catch (Exception ex){
             viewModel.model = "Update-command failed";

@@ -2,11 +2,5 @@ package common;
 
 public interface ExecutableCommand {
 
-    void setOptions();
-
-    Object getOptions();
-
-    Object getGlobalOptions();
-
-    ViewModel setAndExecute();
+    ViewModel setAndExecute(Object options, Object globalOptions);
 }

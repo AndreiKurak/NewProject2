@@ -6,17 +6,7 @@ import lib.commands.HelpCommand;
 
 public class HelpCommandExecutor implements ExecutableCommand {
 
-    public void setOptions(){    }
-
-    public Object getOptions(){
-        return null;
-    }
-
-    public Object getGlobalOptions() {
-        return null;
-    }
-
-    public ViewModel setAndExecute(){
+    public ViewModel setAndExecute(Object options, Object globalOptions){
         return new HelpCommand().execute(null, null);
     }
     //no options?

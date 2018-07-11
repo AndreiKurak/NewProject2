@@ -9,7 +9,7 @@ public class ApplicationExecution {
         Parser parser = new Parser();
 
         ExecutableCommand command = parser.parse(args, descriptor.getGlobalOptionsList(), descriptor.getCommandsList());
-
+      /*
         ViewModel viewModel = command.setAndExecute();
 
         if (viewModel.view != null){
@@ -18,6 +18,6 @@ public class ApplicationExecution {
         else {
             viewModel.view = new ErrorView();
             viewModel.view.showResult("view не задано");
-        }
+        }     */
     }
 }

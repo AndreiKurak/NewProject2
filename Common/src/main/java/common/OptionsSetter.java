@@ -11,7 +11,7 @@ public class OptionsSetter {
             field.set(options, option);
         }
         catch (Exception ex) {
-            System.out.println(ex.getClass());
+            //
         }
     }
 }

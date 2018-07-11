@@ -4,18 +4,21 @@ import common.ExecutableCommand;
 
 import java.util.List;
 
-public class CommandDescription {            //CommandDescription<T> setCommand() command = new T();
+public class CommandDescription {
 
     private String name;
     private String description;
     private List<OptionDescription> options;
     private ExecutableCommand commandToExecute;
+    private Object commandOptions;
+    private Object globalOptions;
 
-    public CommandDescription(String name, String description, List<OptionDescription> options, ExecutableCommand commandToExecute){
+    public CommandDescription(String name, String description, List<OptionDescription> options, ExecutableCommand commandToExecute, Object commandOptions){
         this.name = name;
         this.description = description;
         this.options = options;
         this.commandToExecute = commandToExecute;
+        this.commandOptions = commandOptions;
     }
 
     public String getName(){
@@ -28,6 +31,10 @@ public class CommandDescription {            //CommandDescription<T> setCommand(
 
     public ExecutableCommand getCommandToExecute() {
         return commandToExecute;
+    }
+
+    public Object getCommandOptions() {
+        return commandOptions;
     }
 
     public void setName(String name){
@@ -44,6 +51,10 @@ public class CommandDescription {            //CommandDescription<T> setCommand(
 
     public void setCommandToExecute(ExecutableCommand commandToExecute) {
         this.commandToExecute = commandToExecute;
+    }
+
+    public void setCommandOptions(Object commandOptions) {
+        this.commandOptions = commandOptions;
     }
 
     public String toString(){

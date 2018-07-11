@@ -8,23 +8,7 @@ import lib.global_options.GlobalOptions;
 
 public class ListCommandExecutor implements ExecutableCommand {
 
-    private ListCommandOptions listCommandOptions;
-    private GlobalOptions globalOptions;
-
-    public void setOptions(){
-        listCommandOptions = new ListCommandOptions();
-        globalOptions = new GlobalOptions();
-    }
-
-    public Object getOptions(){
-        return listCommandOptions;
-    }
-
-    public Object getGlobalOptions() {
-        return globalOptions;
-    }
-
-    public ViewModel setAndExecute(){
-        return new ListCommand().execute(listCommandOptions, globalOptions);
+    public ViewModel setAndExecute(Object options, Object globalOptions){
+        return new ListCommand().execute(options, globalOptions);
     }
 }

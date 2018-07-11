@@ -5,7 +5,8 @@ import common.ViewModel;
 import common.views.ErrorView;
 import lib.Book;
 import common.views.ListView;
-import common.OpenFileStream;
+import lib.connectors.FileConnector;
+import lib.command_options.ListCommandOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,28 +14,26 @@ import java.util.List;
 public class ListCommand implements Command {
 
     private static final String FILE1 = "file1";
-    private static final String AUTHOR = "authors";
-    private static final String TITLE = "titles";
-    private static final String YEAR = "years";
 
     public ViewModel execute(Object options, Object globalOptions) {
         //OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
-        OpenFileStream<Book> openFileStream = new OpenFileStream<>("D:\\test");
+        FileConnector<Book> fileConnector = new FileConnector<>("D:\\test");
         ViewModel viewModel = new ViewModel();
+        ListCommandOptions listCommandOptions = (ListCommandOptions) options;
 
         try {
-            List<Book> books = openFileStream.read();
-            if (options.getClass().getDeclaredField("all") != null) {
+            List<Book> books = fileConnector.read();
+            if (listCommandOptions.getAll() != null) {
                 viewModel.model = books;
             }
             else{
                 List<String> singleParameters = new ArrayList<>();
                 for (Book book : books){
-                    if (options.getClass().getDeclaredField(AUTHOR) != null)
+                    if (listCommandOptions.getAuthors() != null)
                         singleParameters.add(book.getAuthor());
-                    if (options.getClass().getDeclaredField(TITLE) != null)
+                    if (listCommandOptions.getTitles() != null)
                         singleParameters.add(book.getTitle());
-                    if (options.getClass().getDeclaredField(YEAR) != null)
+                    if (listCommandOptions.getYears() != null)
                         singleParameters.add(book.getYear());
                 }
                 viewModel.model = singleParameters;

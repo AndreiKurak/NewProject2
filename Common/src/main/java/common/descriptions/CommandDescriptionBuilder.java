@@ -9,8 +9,10 @@ public class CommandDescriptionBuilder {
 
     private String name;
     private String description;
-    private List<OptionDescription> options;
+    private List<OptionDescription> optionsDescription;
     private ExecutableCommand command;
+    private Object commandOptions;
+    private Object globalOptions;
 
     public CommandDescriptionBuilder(String name) {
         this.name = name;
@@ -21,8 +23,8 @@ public class CommandDescriptionBuilder {
         return this;
     }
 
-    public CommandDescriptionBuilder setOptions(OptionDescription... options) {
-        this.options = Arrays.asList(options);
+    public CommandDescriptionBuilder setOptionsDescription(OptionDescription... optionsDescription) {
+        this.optionsDescription = Arrays.asList(optionsDescription);
         return this;
     }
 
@@ -31,7 +33,12 @@ public class CommandDescriptionBuilder {
         return this;
     }
 
+    public CommandDescriptionBuilder setCommandOptions(Object commandOptions){
+        this.commandOptions = commandOptions;
+        return this;
+    }
+
     public CommandDescription createCommand(){
-        return new CommandDescription(name, description, options, command);
+        return new CommandDescription(name, description, optionsDescription, command, commandOptions);
     }
 }

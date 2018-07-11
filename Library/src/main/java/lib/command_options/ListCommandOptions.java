@@ -6,4 +6,20 @@ public class ListCommandOptions {
     private String authors;
     private String titles;
     private String years;
+
+    public String getAll() {
+        return all;
+    }
+
+    public String getAuthors() {
+        return authors;
+    }
+
+    public String getTitles() {
+        return titles;
+    }
+
+    public String getYears() {
+        return years;
+    }
 }

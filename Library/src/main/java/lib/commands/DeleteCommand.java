@@ -1,13 +1,13 @@
 package lib.commands;
 
 import common.Command;
+import lib.connectors.FileConnector;
 import common.ViewModel;
 import common.views.ErrorView;
 import lib.Book;
 import common.views.MessageView;
-import common.OpenFileStream;
+import lib.command_options.DeleteCommandOptions;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class DeleteCommand implements Command {
@@ -16,19 +16,18 @@ public class DeleteCommand implements Command {
 
     public ViewModel execute(Object options, Object globalOptions) {  //check
         //OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
-        OpenFileStream<Book> openFileStream = new OpenFileStream<>("D:\\test");
+        FileConnector<Book> fileConnector = new FileConnector<>("D:\\test");
         ViewModel viewModel = new ViewModel();
+        DeleteCommandOptions deleteCommandOptions = (DeleteCommandOptions) options;
+
+        int id = Integer.valueOf(deleteCommandOptions.getId());
 
         try {
-            Field field = options.getClass().getDeclaredField("id");
-            field.setAccessible(true);
-            int id = Integer.valueOf((String) field.get(options)) - 1;
-
-            List<Book> books = openFileStream.read();
+            List<Book> books = fileConnector.read();
             books.remove(id);
             for (int i = id; i<books.size(); i++)
                 books.get(id).setId(id + 1);
-            openFileStream.write(books);
+            fileConnector.write(books);
 
             viewModel.model = "Delete-command was performed";
             viewModel.view = new MessageView();
