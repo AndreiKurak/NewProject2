@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DataConnection<T> {
 
-    public ArrayList<T> read() throws IOException, ClassNotFoundException;
+    public T read();
 
     public void write(List myObject) throws IOException;
 }

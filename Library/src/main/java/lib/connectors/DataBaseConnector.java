@@ -17,10 +17,10 @@ public class DataBaseConnector implements DataConnection {
     private static Connection connection;
     private static Statement stmt;
     private static ResultSet rs;
-         //Books
-    public ArrayList read() throws IOException, ClassNotFoundException {
+
+    public Books read(){
+        Books books = new Books();
         try {
-            Books b = new Books();
             connection = DriverManager.getConnection(url, user, password);
 
             String query = "SELECT * FROM library";
@@ -30,13 +30,11 @@ public class DataBaseConnector implements DataConnection {
 
             int i = 0;
             while (rs.next()) {
-                b.books.get(i).setAuthor(rs.getString("author"));
-                b.books.get(i).setAuthor(rs.getString("title"));
-                b.books.get(i).setAuthor(rs.getString("year"));
+                books.booksList.get(i).setAuthor(rs.getString("author"));
+                books.booksList.get(i).setAuthor(rs.getString("title"));
+                books.booksList.get(i).setAuthor(rs.getString("year"));
                 System.out.println(rs.getString("author"));               // int count = rs.getInt(1);
-
             }
-
         }
         catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -46,12 +44,15 @@ public class DataBaseConnector implements DataConnection {
             try { stmt.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
             try { rs.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
         }
-        return null;
+        return books;
     }
-                    //Books
+
     public void write(List myObject) throws IOException {
 
     }
+
+
+
 
     public static void main(String[] args){
         DataBaseConnector connector = new DataBaseConnector();
@@ -63,8 +64,6 @@ public class DataBaseConnector implements DataConnection {
         }
 
     }
-
-
 
     public void connect(String query){
         try {
