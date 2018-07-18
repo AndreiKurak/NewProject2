@@ -1,6 +1,5 @@
 package common.parser;
 
-import common.ExecutableCommand;
 import common.OptionsSetter;
 import common.descriptions.CommandDescription;
 import common.descriptions.OptionDescription;
@@ -50,7 +49,7 @@ public class Parser {
         for (int i = 0; i<input2.length; i++)
             for (int j = 0; j<globalOptions.size(); j++)
                 if (input2[i].contains(globalOptions.get(j).getName())){
-                    optionsSetter.setOptions(globalOptions.get(j).getName(), input2[i].replaceAll(PREFIX + globalOptions.get(j).getName() + Equality, ""), null); //command.getGlobalOptions());
+                    //optionsSetter.setOptions(globalOptions.get(j).getName(), input2[i].replaceAll(PREFIX + globalOptions.get(j).getName() + Equality, ""), null); //command.getGlobalOptions());
                 }
         System.out.println(Arrays.toString(input2));
 
@@ -58,7 +57,7 @@ public class Parser {
         for (int i = 0; i<newOptions.size(); i++){
             for (int j = 0; j<input2.length; j++)
                 if (input2[j].contains(newOptions.get(i).getName())){
-                    optionsSetter.setOptions(newOptions.get(i).getName(), input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, ""), command.getOptions());
+                    optionsSetter.setOptions(newOptions.get(i).getName(), input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, ""), command.getCommandOptions());
                     if (newOptions.get(i).getValidator() != null)
                         if (!newOptions.get(i).getValidator().check(input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, "")))
                             throw new ParseException("Unacceptable option value");

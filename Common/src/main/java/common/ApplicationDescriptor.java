@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface ApplicationDescriptor {
 
-    List<CommandDescription> getCommandsList();
+    List<CommandDescription> getCommandsDescriptionList();
 
-    List<OptionDescription> getGlobalOptionsList();
+    List<OptionDescription> getGlobalOptionsDescriptionList();
 
 }

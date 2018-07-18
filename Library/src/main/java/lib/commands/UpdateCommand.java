@@ -1,6 +1,9 @@
 package lib.commands;
 
 import common.Command;
+import lib.connectors.Books;
+import lib.connectors.DataBaseConnector;
+import lib.connectors.DataConnection;
 import lib.connectors.FileConnector;
 import common.ViewModel;
 import common.views.ErrorView;
@@ -15,25 +18,12 @@ public class UpdateCommand implements Command {
     private static final String FILE1 = "file1";
 
     public ViewModel execute(Object options, Object globalOptions) {
-        //OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
-        FileConnector<Book> fileConnector = new FileConnector<>("D:\\test");
         ViewModel viewModel = new ViewModel();
-        UpdateCommandOptions updateCommandOptions = (UpdateCommandOptions) options;
-
-        int id = Integer.valueOf(updateCommandOptions.getId());
-
-        try {
-            List<Book> books = fileConnector.read();
-            if (updateCommandOptions.getAuthor() != null){
-                books.get(id).setAuthor(updateCommandOptions.getAuthor());
-            }
-            if (updateCommandOptions.getTitle() != null){
-                books.get(id).setTitle(updateCommandOptions.getTitle());
-            }
-            if (updateCommandOptions.getYear() != null){
-                books.get(id).setYear(updateCommandOptions.getYear());
-            }
-            fileConnector.write(books);
+        DataConnection dbc = new DataBaseConnector(); //
+        Books books = dbc.read();
+        try{
+            books.update(options);
+            dbc.write(books);
         }
         catch (Exception ex){
             viewModel.model = "Update-command failed";

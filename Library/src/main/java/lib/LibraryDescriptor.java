@@ -6,6 +6,8 @@ import common.descriptions.CommandDescriptionBuilder;
 import common.descriptions.OptionDescription;
 import lib.command_options.*;
 import lib.commands_to_execute.*;
+import lib.connectors.DataConnection;
+import lib.global_options.GlobalOptions;
 import lib.validators.DateBorderValidator;
 import lib.validators.TypeValidator;
 
@@ -14,9 +16,10 @@ import java.util.List;
 
 public class LibraryDescriptor implements ApplicationDescriptor {
 
+    GlobalOptions executableGlobalOptions = new GlobalOptions();
+
     private List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
-        add(new OptionDescription("file1").setMandatoryTrue());
-        add(new OptionDescription("file2"));
+        add(new OptionDescription("file"));
         add(new OptionDescription("database"));
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -66,11 +69,19 @@ public class LibraryDescriptor implements ApplicationDescriptor {
             createCommand());
     }};
 
-    public List<CommandDescription> getCommandsList(){
+    private List<DataConnection> dataConnectors = new ArrayList<DataConnection>(){{
+        //...
+    }};
+
+    public List<CommandDescription> getCommandsDescriptionList(){ //commandDescription
         return commands;
     }
 
-    public List<OptionDescription> getGlobalOptionsList(){
+    public List<OptionDescription> getGlobalOptionsDescriptionList(){ //globalDescription
         return globalOptions;
+    }
+
+    public Object getGlobalOptions(){
+        return executableGlobalOptions;
     }
 }

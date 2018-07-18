@@ -1,9 +1,8 @@
 package lib;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 
-public class Book implements Serializable {
+public class Book implements Serializable {    //
 
     private String author = "";
     private String title = "";

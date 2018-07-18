@@ -1,8 +1,18 @@
 package lib.global_options;
 
+import lib.connectors.DataConnection;
+
 public class GlobalOptions {
 
-    private String file1;
-    private String file2;
+    private String file;
     private String database;
+
+    public void getGlobalOpttion(){
+
+    }
+
+    /////
+
+
+
 }

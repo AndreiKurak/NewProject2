@@ -1,7 +1,9 @@
 package lib.commands;
 
 import common.Command;
+import lib.connectors.Books;
 import lib.connectors.DataBaseConnector;
+import lib.connectors.DataConnection;
 import lib.connectors.FileConnector;
 import common.ViewModel;
 import common.views.ErrorView;
@@ -19,14 +21,24 @@ public class AddCommand implements Command {
     private static final String FILE1 = "file1";
 
     public ViewModel execute(Object options, Object globalOptions) {
-        Book book = new Book();
+
         ViewModel viewModel = new ViewModel();
-        AddCommandOptions addCommandOptions = (AddCommandOptions) options;
+        DataConnection dbc = new DataBaseConnector(); //
+        Books books = dbc.read();
+        try{
+            books.add(options);
+            dbc.write(books);
 
-        book.setAuthor(addCommandOptions.getAuthor());
-        book.setTitle(addCommandOptions.getTitle());
-        book.setYear(addCommandOptions.getYear());
+            viewModel.model = "Add-command was performed";
+            viewModel.view = new MessageView();
+        }
+        catch (Exception ex){
+            viewModel.model = "Add-command failed";
+            viewModel.view = new ErrorView();
+        }
+        return viewModel;
 
+        /*
         try {
 
             if (globalOptions.getClass().getDeclaredField(FILE1) != null) {
@@ -49,28 +61,7 @@ public class AddCommand implements Command {
                     fileConnector.write(books);
                 }
             }
-            else {
-                String query = "";
-            //    String query = "INSERT INTO doc_register.library (" + AUTHOR + ", " + TITLE + ", " + YEAR + ")" + "\n" +
-              //                 " VALUES (" + author.get(options) + ", " + title.get(options) + ", " + year.get(options) + ");";    //char
 
-                DataBaseConnector connector = new DataBaseConnector();
-                connector.connect(query);
-            }
-            viewModel.model = "Add-command was performed";
-            viewModel.view = new MessageView();
-        }
-        catch (Exception ex) {
-            System.out.println(ex.getClass());
-            viewModel.model = "Add-command failed";
-            viewModel.view = new ErrorView();
-        }
-        /*catch (IOException ex) {
-            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex) {
-            Logger.getLogger(MyLibrary.class.getName()).log(Level.SEVERE, null, ex);
-        }          */
-        return viewModel;
+        */
     }
 }

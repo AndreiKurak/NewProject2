@@ -1,6 +1,9 @@
 package lib.commands;
 
 import common.Command;
+import lib.connectors.Books;
+import lib.connectors.DataBaseConnector;
+import lib.connectors.DataConnection;
 import lib.connectors.FileConnector;
 import common.ViewModel;
 import common.views.ErrorView;
@@ -14,20 +17,13 @@ public class DeleteCommand implements Command {
 
     private static final String FILE1 = "file1";
 
-    public ViewModel execute(Object options, Object globalOptions) {  //check
-        //OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
-        FileConnector<Book> fileConnector = new FileConnector<>("D:\\test");
+    public ViewModel execute(Object options, Object globalOptions) {
         ViewModel viewModel = new ViewModel();
-        DeleteCommandOptions deleteCommandOptions = (DeleteCommandOptions) options;
-
-        int id = Integer.valueOf(deleteCommandOptions.getId());
-
-        try {
-            List<Book> books = fileConnector.read();
-            books.remove(id);
-            for (int i = id; i<books.size(); i++)
-                books.get(id).setId(id + 1);
-            fileConnector.write(books);
+        DataConnection dbc = new DataBaseConnector(); //
+        Books books = dbc.read();
+        try{
+            books.delete(options);
+            dbc.write(books);
 
             viewModel.model = "Delete-command was performed";
             viewModel.view = new MessageView();
@@ -36,7 +32,6 @@ public class DeleteCommand implements Command {
             viewModel.model = "Delete-command failed";
             viewModel.view = new ErrorView();
         }
-
         return viewModel;
     }
 }

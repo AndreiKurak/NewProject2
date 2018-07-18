@@ -2,9 +2,7 @@ package lib.commands_to_execute;
 
 import common.ExecutableCommand;
 import common.ViewModel;
-import lib.command_options.ListCommandOptions;
 import lib.commands.ListCommand;
-import lib.global_options.GlobalOptions;
 
 public class ListCommandExecutor implements ExecutableCommand {
 

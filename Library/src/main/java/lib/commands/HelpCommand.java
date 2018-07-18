@@ -15,12 +15,12 @@ public class HelpCommand implements Command {
 
         List<CommandDescription> commandsInfo = new ArrayList<>();
         LibraryDescriptor libraryDescriptor = new LibraryDescriptor();
-        for (int i = 0; i< libraryDescriptor.getCommandsList().size(); i++){
-            commandsInfo.add(libraryDescriptor.getCommandsList().get(i));
+        for (int i = 0; i< libraryDescriptor.getCommandsDescriptionList().size(); i++){
+            commandsInfo.add(libraryDescriptor.getCommandsDescriptionList().get(i));
         }
         viewModel.model = commandsInfo;
         viewModel.view = new ListView();
-        System.out.println("\n" + libraryDescriptor.getGlobalOptionsList());
+        System.out.println("\n" + libraryDescriptor.getGlobalOptionsDescriptionList());
 
         return viewModel;
     }

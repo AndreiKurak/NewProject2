@@ -10,7 +10,7 @@ public class OptionsSetter {
             field.setAccessible(true);
             field.set(options, option);
         }
-        catch (Exception ex) {
+        catch (Exception ex) {   //throw ex
             //
         }
     }

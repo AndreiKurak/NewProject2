@@ -11,7 +11,6 @@ public class CommandDescription {
     private List<OptionDescription> options;
     private ExecutableCommand commandToExecute;
     private Object commandOptions;
-    private Object globalOptions;
 
     public CommandDescription(String name, String description, List<OptionDescription> options, ExecutableCommand commandToExecute, Object commandOptions){
         this.name = name;

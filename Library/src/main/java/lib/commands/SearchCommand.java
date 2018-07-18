@@ -1,6 +1,9 @@
 package lib.commands;
 
 import common.Command;
+import lib.connectors.Books;
+import lib.connectors.DataBaseConnector;
+import lib.connectors.DataConnection;
 import lib.connectors.FileConnector;
 import common.ViewModel;
 import common.views.ErrorView;
@@ -16,34 +19,13 @@ public class SearchCommand implements Command {
     private static final String FILE1 = "file1";
 
     public ViewModel execute(Object options, Object globalOptions) {
-        //Map<String, String> input = inputParameters.getCommandOptions();
-        //OpenFileStream<Book> openFileStream = new OpenFileStream<>(inputParameters.getGlobalOptions().get(FILE1));
-        FileConnector<Book> fileConnector = new FileConnector<>("D:\\test");
         ViewModel viewModel = new ViewModel();
-        SearchCommandOptions searchCommandOptions = (SearchCommandOptions) options;
-
-        try {
-            List<Book> books = fileConnector.read();
-
-            for (Book book : books){
-                if (searchCommandOptions.getAuthor() != null)
-                    if (!book.getAuthor().equals(searchCommandOptions.getAuthor())){
-                       books.remove(book);
-                       continue;
-                    }
-                if (searchCommandOptions.getTitle() != null)
-                    if (!book.getTitle().equals(searchCommandOptions.getTitle())){
-                        books.remove(book);
-                        continue;
-                    }
-                if (searchCommandOptions.getYear() != null)
-                    if (!book.getYear().equals(searchCommandOptions.getYear())){
-                        books.remove(book);
-                    }
-            }
-            viewModel.model = books;
+        DataConnection dbc = new DataBaseConnector(); //
+        Books books = dbc.read();
+        try{
+            viewModel.model = books.search(options);
             viewModel.view = new ListView();
-            if (books == null){
+            if (viewModel.model == null){
                 viewModel.model = "nothing found";
             }
         }
@@ -51,7 +33,6 @@ public class SearchCommand implements Command {
             viewModel.model = "Search-command failed";
             viewModel.view = new ErrorView();            //java.util.ConcurrentModificationException
         }
-
         return viewModel;
     }
 }
