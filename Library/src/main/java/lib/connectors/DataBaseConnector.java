@@ -2,19 +2,22 @@ package lib.connectors;
 
 import lib.Book;
 
-import java.io.IOException;
 import java.sql.*;
 
 public class DataBaseConnector implements DataConnection {
 
+    private final String name = "database";
     private static final String url = "jdbc:mysql://localhost:3306/doc_register?serverTimezone=UTC";
     private static final String user = "root";
     private static final String password = "1234A5";
 
     private static Connection connection;
     private static Statement stmt;
-    private static PreparedStatement prStmt;
     private static ResultSet rs;
+
+    public String getName() {
+        return name;
+    }
 
     public Books read(){
         Books books = new Books();
@@ -25,28 +28,26 @@ public class DataBaseConnector implements DataConnection {
 
             int i = 0;
             while (rs.next()) {
-                books.booksList.add(new Book());
+                books.booksList.add(new Book(rs.getString("author"), rs.getString("title"), rs.getString("year")));
                 books.booksList.get(i).setId(rs.getInt("id"));
-                books.booksList.get(i).setAuthor(rs.getString("author"));
-                books.booksList.get(i).setTitle(rs.getString("title"));
-                books.booksList.get(i).setYear(rs.getString("year"));
                 i++;
             }
         }
         catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
+            throw new DataConnectionException("Data reading from table failed");
         }
-        /*
+
         finally {
             try { connection.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
             try { stmt.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
             try { rs.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
         }
-        */
+
         return books;
     }
 
-    public void write(Books books) throws Exception {
+    public void write(Books books) {
+        PreparedStatement prStmt = null;
         try {
             connection = DriverManager.getConnection(url, user, password);
             stmt = connection.createStatement();
@@ -107,12 +108,13 @@ public class DataBaseConnector implements DataConnection {
             }
         }
         catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
+            throw new DataConnectionException("Error during data loading into the table");
         }
         finally {
-            try { connection.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
-            try { stmt.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
-            try { rs.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
+            try { connection.close(); } catch(SQLException se) { /*...*/ }
+            try { stmt.close(); } catch(SQLException se) { /*...*/ }
+            try { prStmt.close(); } catch(SQLException se) { /*...*/ }
+            try { rs.close(); } catch(SQLException se) { /*...*/ }
         }
     }
 }

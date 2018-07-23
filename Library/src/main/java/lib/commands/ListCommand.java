@@ -3,28 +3,39 @@ package lib.commands;
 import common.Command;
 import common.ViewModel;
 import common.views.ErrorView;
-import common.views.MessageView;
 import lib.Book;
 import common.views.ListView;
-import lib.connectors.Books;
-import lib.connectors.DataBaseConnector;
-import lib.connectors.DataConnection;
-import lib.connectors.FileConnector;
+import lib.connectors.*;
 import lib.command_options.ListCommandOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListCommand implements Command {
+public class ListCommand implements Command<ListCommandOptions> {
 
-    private static final String FILE1 = "file1";
-
-    public ViewModel execute(Object options, Object globalOptions) {
+    public ViewModel execute(ListCommandOptions options, Object globalOptions) {
         ViewModel viewModel = new ViewModel();
-        DataConnection dbc = new DataBaseConnector(); //
-        Books books = dbc.read();
+
+        DataConnectionSelector dcs = new DataConnectionSelector();
         try{
-            viewModel.model = books.list(options);
+            DataConnection dbc = dcs.select(globalOptions);
+            Books books = dbc.read();
+
+            if (options.getAll() != null) {
+                viewModel.model = books.list();
+            }
+            else{
+                List<String> singleParameters = new ArrayList<>();
+                for (Book book : books.list()){
+                    if (options.getAuthors() != null)
+                        singleParameters.add(book.getAuthor());
+                    if (options.getTitles() != null)
+                        singleParameters.add(book.getTitle());
+                    if (options.getYears() != null)
+                        singleParameters.add(book.getYear());
+                }
+            viewModel.model = singleParameters;
+            }
             viewModel.view = new ListView();
         }
         catch (Exception ex){

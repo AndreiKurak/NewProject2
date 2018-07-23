@@ -5,8 +5,7 @@ import common.descriptions.CommandDescription;
 import common.descriptions.CommandDescriptionBuilder;
 import common.descriptions.OptionDescription;
 import lib.command_options.*;
-import lib.commands_to_execute.*;
-import lib.connectors.DataConnection;
+import lib.commands.*;
 import lib.global_options.GlobalOptions;
 import lib.validators.DateBorderValidator;
 import lib.validators.TypeValidator;
@@ -16,72 +15,69 @@ import java.util.List;
 
 public class LibraryDescriptor implements ApplicationDescriptor {
 
-    GlobalOptions executableGlobalOptions = new GlobalOptions();
+    GlobalOptions globalOptions = new GlobalOptions();
 
-    private List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
+    private List<OptionDescription> globalOptionsDescription = new ArrayList<OptionDescription>(){{
         add(new OptionDescription("file"));
         add(new OptionDescription("database"));
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
-    private List<CommandDescription> commands = new ArrayList<CommandDescription>(){{
+    private List<CommandDescription> commandsDescription = new ArrayList<CommandDescription>(){{
         add(new CommandDescriptionBuilder("add").
             setDescription("command, that is used for adding new books to the library").
                 setOptionsDescription(new OptionDescription("author").setMandatoryTrue().addValidator(new TypeValidator(new String())),
                         new OptionDescription("title").setMandatoryTrue().addValidator(new TypeValidator(new String())),
                         new OptionDescription("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator())).
-            setCommand(new AddCommandExecutor()).
-            setCommandOptions(new AddCommandOptions()).
+            setCommand(AddCommand.class).
+            setCommandOptions(AddCommandOptions.class).
             createCommand());
         add(new CommandDescriptionBuilder("search").
-            setDescription("command, that is used for finding required book").
+                setDescription("command, that is used for finding required book").
                 setOptionsDescription(new OptionDescription("author").addValidator(new TypeValidator(new String())),
                         new OptionDescription("title").addValidator(new TypeValidator(new String())),
                         new OptionDescription("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator())).
-            setCommand(new SearchCommandExecutor()).
-            setCommandOptions(new SearchCommandOptions()).
-            createCommand());
+                setCommand(SearchCommand.class).
+                setCommandOptions(SearchCommandOptions.class).
+                createCommand());
         add(new CommandDescriptionBuilder("delete").
-            setDescription("command, that is used for removing unnecessary or doubtful records").
+                setDescription("command, that is used for removing unnecessary or doubtful records").
                 setOptionsDescription(new OptionDescription("id").addValidator(new TypeValidator(new Integer(0)))).
-            setCommand(new DeleteCommandExecutor()).
-            setCommandOptions(new DeleteCommandOptions()).
-            createCommand());
+                setCommand(DeleteCommand.class).
+                setCommandOptions(DeleteCommandOptions.class).
+                createCommand());
         add(new CommandDescriptionBuilder("list").
-            setDescription("command, that is used to display the list with specified parameters").
+                setDescription("command, that is used to display the list with specified parameters").
                 setOptionsDescription(new OptionDescription("authors"),
                         new OptionDescription("titles"),
                         new OptionDescription("years"),
                         new OptionDescription("all")).
-            setCommand(new ListCommandExecutor()).
-            setCommandOptions(new ListCommandOptions()).
-            createCommand());
+                setCommand(ListCommand.class).
+                setCommandOptions(ListCommandOptions.class).
+                createCommand());
         add(new CommandDescriptionBuilder("update").
-            setDescription("command, that is used for rewriting some information").
+                setDescription("command, that is used for rewriting some information").
                 setOptionsDescription(new OptionDescription("author").addValidator(new TypeValidator(new String())),
                         new OptionDescription("title").addValidator(new TypeValidator(new String())),
                         new OptionDescription("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()),
                         new OptionDescription("id").setMandatoryTrue().addValidator(new TypeValidator(new Integer(0)))).
-            setCommand(new UpdateCommandExecutor()).
-            setCommandOptions(new UpdateCommandOptions()).
-            createCommand());
+                setCommand(UpdateCommand.class).
+                setCommandOptions(UpdateCommandOptions.class).
+                createCommand());
         add(new CommandDescriptionBuilder("help").
-            setDescription("command, that is used for showing information about commands and options").
+            setDescription("command, that is used for showing information about commandsDescription and options").
+            setCommand(HelpCommand.class).
             createCommand());
-    }};
-
-    private List<DataConnection> dataConnectors = new ArrayList<DataConnection>(){{
-        //...
     }};
 
     public List<CommandDescription> getCommandsDescriptionList(){ //commandDescription
-        return commands;
+        return commandsDescription;
     }
 
     public List<OptionDescription> getGlobalOptionsDescriptionList(){ //globalDescription
-        return globalOptions;
+        return globalOptionsDescription;
     }
 
     public Object getGlobalOptions(){
-        return executableGlobalOptions;
+        return globalOptions;
     }
 }

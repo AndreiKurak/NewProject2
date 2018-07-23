@@ -1,29 +1,25 @@
 package lib.commands;
 
 import common.Command;
-import lib.connectors.Books;
-import lib.connectors.DataBaseConnector;
-import lib.connectors.DataConnection;
-import lib.connectors.FileConnector;
+import lib.connectors.*;
 import common.ViewModel;
 import common.views.ErrorView;
 import lib.Book;
 import common.views.ListView;
 import lib.command_options.SearchCommandOptions;
 
-import java.util.List;
+public class SearchCommand implements Command<SearchCommandOptions> {
 
-
-public class SearchCommand implements Command {
-
-    private static final String FILE1 = "file1";
-
-    public ViewModel execute(Object options, Object globalOptions) {
+    public ViewModel execute(SearchCommandOptions options, Object globalOptions) {
         ViewModel viewModel = new ViewModel();
-        DataConnection dbc = new DataBaseConnector(); //
-        Books books = dbc.read();
+
+        DataConnectionSelector dcs = new DataConnectionSelector();
         try{
-            viewModel.model = books.search(options);
+            DataConnection dbc = dcs.select(globalOptions);
+            Books books = dbc.read();
+
+            Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
+            viewModel.model = books.search(book);
             viewModel.view = new ListView();
             if (viewModel.model == null){
                 viewModel.model = "nothing found";

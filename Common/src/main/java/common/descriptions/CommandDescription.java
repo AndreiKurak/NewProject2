@@ -1,6 +1,6 @@
 package common.descriptions;
 
-import common.ExecutableCommand;
+import common.Command;
 
 import java.util.List;
 
@@ -9,15 +9,15 @@ public class CommandDescription {
     private String name;
     private String description;
     private List<OptionDescription> options;
-    private ExecutableCommand commandToExecute;
-    private Object commandOptions;
+    private Class command;
+    private Class optionsForCommand;
 
-    public CommandDescription(String name, String description, List<OptionDescription> options, ExecutableCommand commandToExecute, Object commandOptions){
+    public CommandDescription(String name, String description, List<OptionDescription> options, Class command, Class optionsForCommand){
         this.name = name;
         this.description = description;
         this.options = options;
-        this.commandToExecute = commandToExecute;
-        this.commandOptions = commandOptions;
+        this.command = command;
+        this.optionsForCommand = optionsForCommand;
     }
 
     public String getName(){
@@ -27,15 +27,11 @@ public class CommandDescription {
     public List<OptionDescription> getOptions(){
         return options;
     }
-
-    public ExecutableCommand getCommandToExecute() {
-        return commandToExecute;
-    }
-
+    /*
     public Object getCommandOptions() {
         return commandOptions;
     }
-
+      */
     public void setName(String name){
         this.name = name;
     }
@@ -48,13 +44,29 @@ public class CommandDescription {
         this.options = options;
     }
 
-    public void setCommandToExecute(ExecutableCommand commandToExecute) {
-        this.commandToExecute = commandToExecute;
+    public void setCommand(Class command){
+        this.command = command;
     }
 
-    public void setCommandOptions(Object commandOptions) {
-        this.commandOptions = commandOptions;
+    public Object createAndGetCommandOptions() {
+        try{
+            return (Object) optionsForCommand.newInstance();
+        }
+        catch (Exception ex){
+            throw new RuntimeException(); //fix
+        }
+
     }
+
+    public Command createAndGetCommand() {
+        try{
+            return (Command) command.newInstance();
+        }
+        catch (Exception ex){
+            throw new RuntimeException(); //fix
+        }
+    }
+
 
     public String toString(){
         return name + ": " + description + " " + options;

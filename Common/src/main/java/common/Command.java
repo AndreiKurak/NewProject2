@@ -1,6 +1,6 @@
 package common;
 
-public interface Command {
+public interface Command<T> {
 
-    public ViewModel execute(Object options, Object globalOptions);
+    ViewModel execute(T options, Object globalOptions);
 }

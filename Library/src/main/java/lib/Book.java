@@ -9,6 +9,14 @@ public class Book implements Serializable {    //
     private String year = "";
     private int id;
 
+    public Book() {}
+
+    public Book(String author, String title, String year){
+        this.author = author;
+        this.title = title;
+        this.year = year;
+    }
+
     public String getAuthor() {
         return author;
     }

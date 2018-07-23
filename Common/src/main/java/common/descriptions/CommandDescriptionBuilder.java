@@ -1,7 +1,5 @@
 package common.descriptions;
 
-import common.ExecutableCommand;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,9 +8,8 @@ public class CommandDescriptionBuilder {
     private String name;
     private String description;
     private List<OptionDescription> optionsDescription;
-    private ExecutableCommand command;
-    private Object commandOptions;
-    private Object globalOptions;
+    private Class command;
+    private Class commandOptions;
 
     public CommandDescriptionBuilder(String name) {
         this.name = name;
@@ -28,12 +25,12 @@ public class CommandDescriptionBuilder {
         return this;
     }
 
-    public CommandDescriptionBuilder setCommand(ExecutableCommand command) {
+    public CommandDescriptionBuilder setCommand(Class command) {
         this.command = command;
         return this;
     }
 
-    public CommandDescriptionBuilder setCommandOptions(Object commandOptions){
+    public CommandDescriptionBuilder setCommandOptions(Class commandOptions){
         this.commandOptions = commandOptions;
         return this;
     }

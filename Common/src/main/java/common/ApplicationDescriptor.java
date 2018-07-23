@@ -11,4 +11,6 @@ public interface ApplicationDescriptor {
 
     List<OptionDescription> getGlobalOptionsDescriptionList();
 
+    Object getGlobalOptions();
+
 }

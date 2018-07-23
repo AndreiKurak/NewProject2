@@ -1,4 +1,4 @@
-package common;
+package common.options_setter;
 
 import java.lang.reflect.Field;
 
@@ -10,8 +10,8 @@ public class OptionsSetter {
             field.setAccessible(true);
             field.set(options, option);
         }
-        catch (Exception ex) {   //throw ex
-            //
+        catch (Exception ex) {
+            throw new OptionsSetterException("Error while setting options");
         }
     }
 }

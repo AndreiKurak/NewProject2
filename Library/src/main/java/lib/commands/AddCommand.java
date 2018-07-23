@@ -1,32 +1,27 @@
 package lib.commands;
 
 import common.Command;
-import lib.connectors.Books;
-import lib.connectors.DataBaseConnector;
-import lib.connectors.DataConnection;
-import lib.connectors.FileConnector;
+import lib.connectors.*;
 import common.ViewModel;
 import common.views.ErrorView;
 import lib.Book;
 import common.views.MessageView;
 import lib.command_options.AddCommandOptions;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+public class AddCommand implements Command<AddCommandOptions> {
 
-public class AddCommand implements Command {
-
-    private static final String FILE1 = "file1";
-
-    public ViewModel execute(Object options, Object globalOptions) {
+    public ViewModel execute(AddCommandOptions options, Object globalOptions) {
 
         ViewModel viewModel = new ViewModel();
-        DataConnection dbc = new DataBaseConnector(); //
-        Books books = dbc.read();
+        DataConnectionSelector dcs = new DataConnectionSelector();
+         //
+
         try{
-            books.add(options);
+            DataConnection dbc = dcs.select(globalOptions);
+            Books books = dbc.read();
+
+            Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
+            books.add(book);
             dbc.write(books);
 
             viewModel.model = "Add-command was performed";
@@ -38,9 +33,10 @@ public class AddCommand implements Command {
         }
         return viewModel;
 
+
+
         /*
         try {
-
             if (globalOptions.getClass().getDeclaredField(FILE1) != null) {
                 Field file1 = globalOptions.getClass().getDeclaredField(FILE1);
                 file1.setAccessible(true);

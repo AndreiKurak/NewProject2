@@ -2,7 +2,9 @@ package lib.connectors;
 
 public interface DataConnection {
 
-    public Books read();
+    String getName();
 
-    public void write(Books myObject) throws Exception;
+    Books read();
+
+    void write(Books myObject);
 }

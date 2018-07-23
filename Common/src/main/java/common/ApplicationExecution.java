@@ -1,6 +1,5 @@
 package common;
 
-import common.descriptions.CommandDescription;
 import common.parser.Parser;
 import common.views.ErrorView;
 
@@ -9,9 +8,9 @@ public class ApplicationExecution {
     public void run(String[] args, ApplicationDescriptor descriptor){
         Parser parser = new Parser();
 
-        CommandDescription command = parser.parse(args, descriptor.getGlobalOptionsDescriptionList(), descriptor.getCommandsDescriptionList());
+        CommandWithOptions command = parser.parse(args, descriptor.getGlobalOptionsDescriptionList(), descriptor.getCommandsDescriptionList(), descriptor.getGlobalOptions());
 
-        ViewModel viewModel = command.getCommandToExecute().setAndExecute(command.getCommandOptions(), null);
+        ViewModel viewModel = command.getCommand().execute(command.getCommandOptions(), command.getGlobalOptions());
 
         if (viewModel.view != null){
             viewModel.view.showResult(viewModel.model);
