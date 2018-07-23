@@ -24,11 +24,8 @@ public class ParserTest {
     private static class TestAdd implements Command{
         public ViewModel execute(Object options, Object globalOptions){ return null; }
     }
-    private static class TestExecutor implements ExecutableCommand{
-        public ViewModel setAndExecute(Object obj1, Object obj2) { return null; }
-    }
     private static final List<CommandDescription> addList = new ArrayList<CommandDescription>(){{
-        add(new CommandDescription("add", "add - command, that is used for adding new books to the library", addOptions, new TestExecutor(), new Object()));
+        add(new CommandDescription("add", "add - command, that is used for adding new books to the library", addOptions, TestAdd.class, null));
     }};
     private static final List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
         add(new OptionDescription("file", null, false));
@@ -39,7 +36,7 @@ public class ParserTest {
     public void parseCorrectOptions() {
         String[] line ={"--file=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
 
-        CommandDescription command = parser.parse(line, globalOptions, addList);
+        CommandWithOptions command = parser.parse(line, globalOptions, addList, null);
         try {
             //Field field = command.getOptions().getClass().getDeclaredField("author");
             //field.setAccessible(true);
@@ -54,7 +51,7 @@ public class ParserTest {
     public void parseCorrectGlobalOptions(){
         String[] line ={"--file=test1", "add", "--author=new"};
 
-        CommandDescription command = parser.parse(line, globalOptions, addList);
+        CommandWithOptions command = parser.parse(line, globalOptions, addList, null);
         //assertThat("test1").isEqualTo(inputParameters.getGlobalOptions().get("file1"));
         //assertThat("test2").isEqualTo(inputParameters.getGlobalOptions().get("file2"));
     }
@@ -63,7 +60,7 @@ public class ParserTest {
     public void parseCorrectCommand(){
         String[] line ={"--file=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
 
-        CommandDescription command = parser.parse(line, globalOptions, addList);
+        CommandWithOptions command = parser.parse(line, globalOptions, addList, null);
         //assertThat("add").isEqualTo(inputParameters.getCommand().getName());
     }
 
@@ -71,7 +68,7 @@ public class ParserTest {
     public void nullInputLine(){
         String[] line ={""};
         try {
-            parser.parse(line, globalOptions, addList);
+            parser.parse(line, globalOptions, addList, null);
             fail("ParseException was expected");
         }
         catch (ParseException parseException){
@@ -83,7 +80,7 @@ public class ParserTest {
     public void InputLineWithWrongCommand(){
         String[] line = {"--file=test", "edd", "--author=new", "author", "--title=World", "--year=2019"};
         try {
-            parser.parse(line, globalOptions, addList);
+            parser.parse(line, globalOptions, addList, null);
             fail("ParseException was expected");
         }
         catch (ParseException parseException){
