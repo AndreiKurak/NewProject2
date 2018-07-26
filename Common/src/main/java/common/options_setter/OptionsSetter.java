@@ -11,7 +11,7 @@ public class OptionsSetter {
             field.set(options, option);
         }
         catch (Exception ex) {
-            throw new OptionsSetterException("Error while setting options");
+            throw new OptionsSetterException("Error while setting options", ex);
         }
     }
 }

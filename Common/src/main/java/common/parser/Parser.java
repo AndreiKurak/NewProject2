@@ -34,7 +34,7 @@ public class Parser {
                 findResult = true;
                 commandDescription = commands.get(i);
                 command.setCommand(commandDescription.createAndGetCommand());
-                input = input.replaceAll(commands.get(i).getName(), "");
+                input = input.replaceAll(commands.get(i).getName() + " ", "");
                 requred = i;
                 break;
             }

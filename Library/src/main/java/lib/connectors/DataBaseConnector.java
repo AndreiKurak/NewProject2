@@ -11,21 +11,15 @@ public class DataBaseConnector implements DataConnection {
     private static final String user = "root";
     private static final String password = "1234A5";
 
-    private static Connection connection;
-    private static Statement stmt;
-    private static ResultSet rs;
-
     public String getName() {
         return name;
     }
 
     public Books read(){
         Books books = new Books();
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-            stmt = connection.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM library");
-
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM library")) {
             int i = 0;
             while (rs.next()) {
                 books.booksList.add(new Book(rs.getString("author"), rs.getString("title"), rs.getString("year")));
@@ -34,13 +28,7 @@ public class DataBaseConnector implements DataConnection {
             }
         }
         catch (SQLException sqlEx) {
-            throw new DataConnectionException("Data reading from table failed");
-        }
-
-        finally {
-            try { connection.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
-            try { stmt.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
-            try { rs.close(); } catch(SQLException se) { System.out.println(se.getClass()); }
+            throw new DataConnectionException("Data reading from table failed", sqlEx);
         }
 
         return books;
@@ -48,11 +36,9 @@ public class DataBaseConnector implements DataConnection {
 
     public void write(Books books) {
         PreparedStatement prStmt = null;
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-            stmt = connection.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM library");
-
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM library")) {
             int count=0;
             while(rs.next())
                 count=rs.getInt(1);
@@ -108,13 +94,10 @@ public class DataBaseConnector implements DataConnection {
             }
         }
         catch (SQLException sqlEx) {
-            throw new DataConnectionException("Error during data loading into the table");
+            throw new DataConnectionException("Error during data loading into the table", sqlEx);
         }
         finally {
-            try { connection.close(); } catch(SQLException se) { /*...*/ }
-            try { stmt.close(); } catch(SQLException se) { /*...*/ }
             try { prStmt.close(); } catch(SQLException se) { /*...*/ }
-            try { rs.close(); } catch(SQLException se) { /*...*/ }
         }
     }
 }

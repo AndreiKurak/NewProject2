@@ -27,11 +27,7 @@ public class CommandDescription {
     public List<OptionDescription> getOptions(){
         return options;
     }
-    /*
-    public Object getCommandOptions() {
-        return commandOptions;
-    }
-      */
+
     public void setName(String name){
         this.name = name;
     }
@@ -53,7 +49,7 @@ public class CommandDescription {
             return (Object) optionsForCommand.newInstance();
         }
         catch (Exception ex){
-            throw new RuntimeException(); //fix
+            throw new CommandDescriptionException("Creating object of command options failed", ex);
         }
 
     }
@@ -63,7 +59,7 @@ public class CommandDescription {
             return (Command) command.newInstance();
         }
         catch (Exception ex){
-            throw new RuntimeException(); //fix
+            throw new CommandDescriptionException("Creating object of command failed", ex);
         }
     }
 

@@ -7,10 +7,11 @@ import common.views.ErrorView;
 import lib.Book;
 import common.views.ListView;
 import lib.command_options.SearchCommandOptions;
+import lib.global_options.GlobalOptions;
 
-public class SearchCommand implements Command<SearchCommandOptions> {
+public class SearchCommand implements Command<SearchCommandOptions, GlobalOptions> {
 
-    public ViewModel execute(SearchCommandOptions options, Object globalOptions) {
+    public ViewModel execute(SearchCommandOptions options, GlobalOptions globalOptions) {
         ViewModel viewModel = new ViewModel();
 
         DataConnectionSelector dcs = new DataConnectionSelector();

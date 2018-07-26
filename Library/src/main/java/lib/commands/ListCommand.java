@@ -7,13 +7,14 @@ import lib.Book;
 import common.views.ListView;
 import lib.connectors.*;
 import lib.command_options.ListCommandOptions;
+import lib.global_options.GlobalOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListCommand implements Command<ListCommandOptions> {
+public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
 
-    public ViewModel execute(ListCommandOptions options, Object globalOptions) {
+    public ViewModel execute(ListCommandOptions options, GlobalOptions globalOptions) {
         ViewModel viewModel = new ViewModel();
 
         DataConnectionSelector dcs = new DataConnectionSelector();

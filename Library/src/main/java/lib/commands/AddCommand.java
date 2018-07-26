@@ -7,10 +7,11 @@ import common.views.ErrorView;
 import lib.Book;
 import common.views.MessageView;
 import lib.command_options.AddCommandOptions;
+import lib.global_options.GlobalOptions;
 
-public class AddCommand implements Command<AddCommandOptions> {
+public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
 
-    public ViewModel execute(AddCommandOptions options, Object globalOptions) {
+    public ViewModel execute(AddCommandOptions options, GlobalOptions globalOptions) {
 
         ViewModel viewModel = new ViewModel();
         DataConnectionSelector dcs = new DataConnectionSelector();
