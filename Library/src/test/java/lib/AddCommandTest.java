@@ -5,9 +5,12 @@ import lib.commands.AddCommand;
 import lib.connectors.Books;
 import lib.connectors.DataBaseConnector;
 import lib.connectors.DataConnectionSelector;
+import org.junit.runner.RunWith;
 import org.mockito.*;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
+import org.mockito.runners.MockitoJUnitRunner;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AddCommandTest {
@@ -54,5 +57,18 @@ public class AddCommandTest {
         when(connector.read()).thenReturn(new Books());
 
         assertThat(new AddCommand(selector).execute(new AddCommandOptions(), new GlobalOptions()).view).isInstanceOf(MessageView.class);
+    }
+
+    @Test
+    public void shouldCallMethodAddOfBooksOnce(){
+        DataConnectionSelector selector = mock(DataConnectionSelector.class);
+        DataBaseConnector connector = mock(DataBaseConnector.class);
+        Books books = mock(Books.class);
+
+        when(selector.select(Matchers.<lib.global_options.GlobalOptions>any())).thenReturn(connector);
+        when(connector.read()).thenReturn(books);
+
+        new AddCommand(selector).execute(new AddCommandOptions(), new GlobalOptions());
+        verify(books).add(Matchers.<Book>anyObject());
     }
 }
