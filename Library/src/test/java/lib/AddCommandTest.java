@@ -14,8 +14,8 @@ public class AddCommandTest {
 
     private static class AddCommandOptions extends lib.command_options.AddCommandOptions {
 
-        private String author = "Aleksey";
-        private String title = "Mirror";
+        private String author;
+        private String title;
         private String year;
 
         public String getAuthor() {
@@ -34,7 +34,7 @@ public class AddCommandTest {
     private static class GlobalOptions extends lib.global_options.GlobalOptions{
 
         private String file;
-        private String database = "library";
+        private String database;
 
         public String getFile() {
             return file;
