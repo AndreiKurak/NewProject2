@@ -1,16 +1,14 @@
 package lib;
 
-import common.ViewModel;
 import common.views.MessageView;
 import lib.commands.AddCommand;
-import lib.command_options.AddCommandOptions;
-import lib.global_options.GlobalOptions;
+import lib.connectors.Books;
+import lib.connectors.DataBaseConnector;
+import lib.connectors.DataConnectionSelector;
 import org.mockito.*;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 public class AddCommandTest {
 
@@ -48,16 +46,13 @@ public class AddCommandTest {
     }
 
     @Test
-    public void shouldReturnViewModel(){
-        ViewModel viewModel = new ViewModel();
-        viewModel.model = "Add-command was performed";
-        viewModel.view = new MessageView();
+    public void shouldReturnViewModelWhereViewIsMessageView(){
+        DataConnectionSelector selector = mock(DataConnectionSelector.class);
+        DataBaseConnector connector = mock(DataBaseConnector.class);
 
-        AddCommand addCommand = mock(AddCommand.class);
-        when(addCommand.execute(new AddCommandOptions(), new GlobalOptions())).thenReturn(mock(ViewModel.class));
-        assertThat(addCommand.execute(new AddCommandOptions(), new GlobalOptions())).isEqualTo(viewModel);
-        //assertThat(new AddCommand().execute(new AddCommandOptions(), new GlobalOptions()).model).isEqualTo(viewModel.model);
+        when(selector.select(Matchers.<lib.global_options.GlobalOptions>any())).thenReturn(connector);
+        when(connector.read()).thenReturn(new Books());
 
-
+        assertThat(new AddCommand(selector).execute(new AddCommandOptions(), new GlobalOptions()).view).isInstanceOf(MessageView.class);
     }
 }

@@ -11,14 +11,23 @@ import lib.global_options.GlobalOptions;
 
 public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
 
+    private DataConnectionSelector dcs;
+
+        public AddCommand(){
+            dcs = new DataConnectionSelector();
+        }
+
+        public AddCommand(DataConnectionSelector selector){
+            dcs = selector;
+        }
+
     public ViewModel execute(AddCommandOptions options, GlobalOptions globalOptions) {
 
         ViewModel viewModel = new ViewModel();
-        DataConnectionSelector dcs = new DataConnectionSelector();
-         //
 
         try{
             DataConnection dbc = dcs.select(globalOptions);
+
             Books books = dbc.read();
 
             Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
@@ -33,32 +42,5 @@ public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
             viewModel.view = new ErrorView();
         }
         return viewModel;
-
-
-
-        /*
-        try {
-            if (globalOptions.getClass().getDeclaredField(FILE1) != null) {
-                Field file1 = globalOptions.getClass().getDeclaredField(FILE1);
-                file1.setAccessible(true);
-                FileConnector<Book> fileConnector = new FileConnector<>((String) file1.get(globalOptions));
-
-                File f = new File((String) file1.get(globalOptions));
-                long len = f.length();
-                if (len != 0){
-                    List<Book> books = new ArrayList<>();//List<Book> books = fileConnector.read();
-                    book.setId(books.size() + 1);
-                    books.add(book);
-                    fileConnector.write(books);
-                }
-                else {   //work with database
-                    List<Book> books = new ArrayList<>();
-                    book.setId(books.size() + 1);
-                    books.add(book);
-                    fileConnector.write(books);
-                }
-            }
-
-        */
     }
 }

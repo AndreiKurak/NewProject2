@@ -6,7 +6,6 @@ import common.parser.ParseException;
 import common.parser.Parser;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -24,17 +23,17 @@ public class ParserTest {
     public static final class TestAdd implements Command{
         public ViewModel execute(Object options, Object globalOptions){ return null; }
     }
-    public static final class AddCommandOptions {
+    public static final class TestAddCommandOptions {
         private String author;
         private String title;
         private String year;
     }
-    public static final class GlobalOptions {
+    public static final class TestGlobalOptions {
         private String file;
         private String database;
     }
     private static final List<CommandDescription> addList = new ArrayList<CommandDescription>(){{
-        add(new CommandDescription("add", "add - command, that is used for adding new books to the library", addOptions, TestAdd.class, AddCommandOptions.class));
+        add(new CommandDescription("add", "", addOptions, TestAdd.class, TestAddCommandOptions.class));
     }};
     private static final List<OptionDescription> globalOptions = new ArrayList<OptionDescription>(){{
         add(new OptionDescription("file", null, false));
@@ -45,7 +44,7 @@ public class ParserTest {
     public void shouldParseCorrectCommandOptions() {
         String[] line ={"--file=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
 
-        CommandWithOptions command = parser.parse(line, globalOptions, addList, new GlobalOptions());
+        CommandWithOptions command = parser.parse(line, globalOptions, addList, new TestGlobalOptions());
         try {
             Field author = command.getCommandOptions().getClass().getDeclaredField("author");
             author.setAccessible(true);
@@ -64,7 +63,7 @@ public class ParserTest {
     public void shouldParseCorrectGlobalOptions(){
         String[] line ={"--file=test1", "add", "--author=new"};
 
-        CommandWithOptions command = parser.parse(line, globalOptions, addList, new GlobalOptions());
+        CommandWithOptions command = parser.parse(line, globalOptions, addList, new TestGlobalOptions());
         try {
             Field file = command.getGlobalOptions().getClass().getDeclaredField("file");
             file.setAccessible(true);
@@ -79,16 +78,15 @@ public class ParserTest {
     public void shouldParseCorrectCommand(){
         String[] line ={"--file=test", "add", "--author=new", "author", "--title=World", "--year=2019"};
 
-        CommandWithOptions command = parser.parse(line, globalOptions, addList, new GlobalOptions());
+        CommandWithOptions command = parser.parse(line, globalOptions, addList, new TestGlobalOptions());
         assertThat(TestAdd.class.getName()).isEqualTo(command.getCommand().getClass().getName());
     }
 
-    @Test//(expected = ParseException.class)
+    @Test
     public void shouldThrowExceptionInformingAboutNullInputLine(){
         String[] line ={""};
         try {
-            parser.parse(line, globalOptions, addList, new GlobalOptions());
-            fail("ParseException was expected");
+            parser.parse(line, globalOptions, addList, new TestGlobalOptions());
         }
         catch (ParseException parseException){
             assertThat("Empty input line").isEqualTo(parseException.getMessage());
@@ -99,8 +97,7 @@ public class ParserTest {
     public void shouldThrowExceptionInformingAboutInputLineWithWrongCommand(){
         String[] line = {"--file=test", "edd", "--author=new", "author", "--title=World", "--year=2019"};
         try {
-            parser.parse(line, globalOptions, addList, new GlobalOptions());
-            fail("ParseException was expected");
+            parser.parse(line, globalOptions, addList, new TestGlobalOptions());
         }
         catch (ParseException parseException){
             assertThat("Wrong Command").isEqualTo(parseException.getMessage());

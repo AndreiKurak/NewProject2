@@ -11,7 +11,7 @@ public class DateBorderValidator implements OptionValidator {
         System.out.println("проверка значения даты");
 
         Date date = new Date();
-        if (1900 + date.getYear() < Integer.valueOf(optionValue))   //??
+        if (1900 + date.getYear() < Integer.valueOf(optionValue))
             checkResult = false;
 
         return checkResult;
