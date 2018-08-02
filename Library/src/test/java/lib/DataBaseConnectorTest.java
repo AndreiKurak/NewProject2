@@ -19,7 +19,7 @@ public class DataBaseConnectorTest {
     @Test (expected = DataConnectionException.class)
     public void shouldThrowDataConnectionExceptionIfTheArgumentIsNull(){
         DataBaseConnector dbc = new DataBaseConnector();
-        dbc.write(null);     //?
+        dbc.write(null);
     }
 
 }
