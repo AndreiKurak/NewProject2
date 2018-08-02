@@ -69,6 +69,6 @@ public class AddCommandTest {
         when(connector.read()).thenReturn(books);
 
         new AddCommand(selector).execute(new AddCommandOptions(), new GlobalOptions());
-        verify(books).add(Matchers.<Book>anyObject());
+        verify(books, times(1)).add(Matchers.<Book>anyObject());
     }
 }

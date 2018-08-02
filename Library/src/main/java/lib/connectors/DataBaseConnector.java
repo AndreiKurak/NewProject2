@@ -93,8 +93,8 @@ public class DataBaseConnector implements DataConnection {
                 }
             }
         }
-        catch (SQLException sqlEx) {
-            throw new DataConnectionException("Error during data loading into the table", sqlEx);
+        catch (Exception ex) {
+            throw new DataConnectionException("Error during data loading into the table", ex);
         }
         finally {
             try { prStmt.close(); } catch(SQLException se) { /*...*/ }
