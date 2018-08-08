@@ -12,7 +12,7 @@ import lib.global_options.GlobalOptions;
 public class UpdateCommand implements Command<UpdateCommandOptions, GlobalOptions> {
 
     public ViewModel execute(UpdateCommandOptions options, GlobalOptions globalOptions) {
-        ViewModel viewModel = new ViewModel();
+        ViewModel<String> viewModel = new ViewModel<>();
 
         DataConnectionSelector dcs = new DataConnectionSelector();
         try{
@@ -25,12 +25,12 @@ public class UpdateCommand implements Command<UpdateCommandOptions, GlobalOption
             dbc.write(books);
         }
         catch (Exception ex){
-            viewModel.model = "Update-command failed";
-            viewModel.view = new ErrorView();
+            viewModel.setModel("Update-command failed");
+            viewModel.setView(new ErrorView());
         }
 
-        viewModel.model = "Update-command was performed";
-        viewModel.view = new MessageView();
+        viewModel.setModel("Update-command was performed");
+        viewModel.setView(new MessageView());
 
         return viewModel;
     }

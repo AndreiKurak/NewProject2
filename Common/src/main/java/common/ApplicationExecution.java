@@ -12,12 +12,12 @@ public class ApplicationExecution {
 
         ViewModel viewModel = command.getCommand().execute(command.getCommandOptions(), command.getGlobalOptions());
 
-        if (viewModel.view != null){
-            viewModel.view.showResult(viewModel.model);
+        if (viewModel.getView() != null){
+            viewModel.getView().showResult(viewModel.getModel());
         }
         else {
-            viewModel.view = new ErrorView();
-            viewModel.view.showResult("view не задано");
+            viewModel.setView(new ErrorView());
+            viewModel.getView().showResult("view не задано");
         }
     }
 }

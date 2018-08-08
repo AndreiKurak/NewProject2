@@ -15,7 +15,7 @@ public class TypeValidator implements OptionValidator{
 
         System.out.println("проверка типа");
         try{
-            int s2 = Integer.valueOf(optionValue);
+            Integer s2 = Integer.valueOf(optionValue);
             if (Integer.class.isInstance(s2) && Integer.class.isInstance(type)) {
                 checkResult = true;
             }

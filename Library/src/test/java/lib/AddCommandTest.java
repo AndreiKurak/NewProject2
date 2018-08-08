@@ -7,11 +7,9 @@ import lib.connectors.Books;
 import lib.connectors.DataBaseConnector;
 import lib.connectors.DataConnectionSelector;
 import lib.global_options.GlobalOptions;
-import org.junit.runner.RunWith;
 import org.mockito.*;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,7 +23,7 @@ public class AddCommandTest {
         when(selector.select(Matchers.<lib.global_options.GlobalOptions>any())).thenReturn(connector);
         when(connector.read()).thenReturn(new Books());
 
-        assertThat(new AddCommand(selector).execute(new AddCommandOptions(), new GlobalOptions()).view).isInstanceOf(MessageView.class);
+        assertThat(new AddCommand(selector).execute(new AddCommandOptions(), new GlobalOptions()).getView()).isInstanceOf(MessageView.class);
     }
 
     @Test

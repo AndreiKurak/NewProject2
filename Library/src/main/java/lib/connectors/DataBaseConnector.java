@@ -6,13 +6,16 @@ import java.sql.*;
 
 public class DataBaseConnector implements DataConnection {
 
-    private final String name = "database";
-    private static final String url = "jdbc:mysql://localhost:3306/doc_register?serverTimezone=UTC";
+    private String url = "jdbc:mysql://localhost:3306/";
     private static final String user = "root";
     private static final String password = "1234A5";
 
-    public String getName() {
-        return name;
+    public DataBaseConnector() {
+        url += "doc_register?serverTimezone=UTC";
+    }
+
+    public DataBaseConnector(String databaseName) {
+        url += databaseName + "?serverTimezone=UTC";
     }
 
     public Books read(){
@@ -45,7 +48,6 @@ public class DataBaseConnector implements DataConnection {
             System.out.println("count " + count);
 
             int ii = 0;
-            boolean stop = false;
             if (books.booksList.size() > count){
                 //insert new book
                 prStmt = connection.prepareStatement("INSERT INTO library (id, author, title, year) VALUES(?, ?, ?, ?)");
@@ -60,18 +62,12 @@ public class DataBaseConnector implements DataConnection {
                 rs.first();
                 prStmt = connection.prepareStatement("DELETE FROM library WHERE id=?");
                 while (rs.next()){
-                    if (!stop && books.booksList.get(ii).getId() != rs.getInt("id")){       //когда произойдёт, перестать сравнивать
+                    if (books.booksList.get(ii).getId() != rs.getInt("id")){
                         prStmt.setInt(1, rs.getInt("id"));
-                        prStmt.executeUpdate();
-                        stop = true;
-                    }
-                    ii++;
-                    if (stop){
-                        prStmt = connection.prepareStatement("UPDATE library SET id=id-1 WHERE id>?");
-                        prStmt.setInt(1, rs.getInt("id") - 1);
                         prStmt.executeUpdate();
                         break;
                     }
+                    ii++;
                 }
             }
             else {

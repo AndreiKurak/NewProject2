@@ -28,14 +28,14 @@ public class Parser {
 
         boolean findResult = false;
 
-        int requred = 0; //
+        int required = 0;
         for (int i = 0; i<commands.size(); i++){
             if (input.contains(commands.get(i).getName())){
                 findResult = true;
                 commandDescription = commands.get(i);
                 command.setCommand(commandDescription.createAndGetCommand());
                 input = input.replaceAll(commands.get(i).getName() + " ", "");
-                requred = i;
+                required = i;
                 break;
             }
         }
@@ -43,7 +43,7 @@ public class Parser {
         if (!findResult){
             throw new ParseException("Wrong Command");
         }
-        List<OptionDescription> newOptions = commands.get(requred).getOptions();
+        List<OptionDescription> newOptions = commands.get(required).getOptions();
         String[] input2 = input.split((" " + PREFIX));
 
         command.setGlobalOptions(globalOptions);

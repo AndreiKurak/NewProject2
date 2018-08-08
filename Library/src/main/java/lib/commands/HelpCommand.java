@@ -11,15 +11,15 @@ import java.util.List;
 public class HelpCommand implements Command {
 
     public ViewModel execute(Object options, Object globalOptions){  //check
-        ViewModel viewModel = new ViewModel();
+        ViewModel<List> viewModel = new ViewModel<>();
 
         List<CommandDescription> commandsInfo = new ArrayList<>();
         LibraryDescriptor libraryDescriptor = new LibraryDescriptor();
         for (int i = 0; i< libraryDescriptor.getCommandsDescriptionList().size(); i++){
             commandsInfo.add(libraryDescriptor.getCommandsDescriptionList().get(i));
         }
-        viewModel.model = commandsInfo;
-        viewModel.view = new ListView();
+        viewModel.setModel(commandsInfo);
+        viewModel.setView(new ListView());
         System.out.println("\n" + libraryDescriptor.getGlobalOptionsDescriptionList());
 
         return viewModel;

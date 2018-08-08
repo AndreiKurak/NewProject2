@@ -13,17 +13,17 @@ public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
 
     private DataConnectionSelector dcs;
 
-        public AddCommand(){
-            dcs = new DataConnectionSelector();
-        }
+    public AddCommand(){
+        dcs = new DataConnectionSelector();
+    }
 
-        public AddCommand(DataConnectionSelector selector){
-            dcs = selector;
-        }
+    public AddCommand(DataConnectionSelector selector){
+        dcs = selector;
+    }
 
     public ViewModel execute(AddCommandOptions options, GlobalOptions globalOptions) {
 
-        ViewModel viewModel = new ViewModel();
+        ViewModel<String> viewModel = new ViewModel<>();
 
         try{
             DataConnection dbc = dcs.select(globalOptions);
@@ -34,12 +34,12 @@ public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
             books.add(book);
             dbc.write(books);
 
-            viewModel.model = "Add-command was performed";
-            viewModel.view = new MessageView();
+            viewModel.setModel("Add-command was performed");
+            viewModel.setView(new MessageView());
         }
         catch (Exception ex){
-            viewModel.model = "Add-command failed";
-            viewModel.view = new ErrorView();
+            viewModel.setModel("Add-command failed");
+            viewModel.setView(new ErrorView());
         }
         return viewModel;
     }

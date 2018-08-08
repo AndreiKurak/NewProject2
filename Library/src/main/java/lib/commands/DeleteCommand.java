@@ -11,7 +11,7 @@ import lib.global_options.GlobalOptions;
 public class DeleteCommand implements Command<DeleteCommandOptions, GlobalOptions> {
 
     public ViewModel execute(DeleteCommandOptions options, GlobalOptions globalOptions) {
-        ViewModel viewModel = new ViewModel();
+        ViewModel<String> viewModel = new ViewModel<>();
 
         DataConnectionSelector dcs = new DataConnectionSelector();
         try{
@@ -22,12 +22,12 @@ public class DeleteCommand implements Command<DeleteCommandOptions, GlobalOption
             books.delete(bookId);
             dbc.write(books);
 
-            viewModel.model = "Delete-command was performed";
-            viewModel.view = new MessageView();
+            viewModel.setModel("Delete-command was performed");
+            viewModel.setView(new MessageView());
         }
         catch (Exception ex){
-            viewModel.model = "Delete-command failed";
-            viewModel.view = new ErrorView();
+            viewModel.setModel("Delete-command failed");
+            viewModel.setView(new ErrorView());
         }
         return viewModel;
     }

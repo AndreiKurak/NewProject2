@@ -20,15 +20,15 @@ public class SearchCommand implements Command<SearchCommandOptions, GlobalOption
             Books books = dbc.read();
 
             Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
-            viewModel.model = books.search(book);
-            viewModel.view = new ListView();
-            if (viewModel.model == null){
-                viewModel.model = "nothing found";
+            viewModel.setModel(books.search(book));
+            viewModel.setView(new ListView());
+            if (viewModel.getModel() == null){
+                viewModel.setModel("nothing found");
             }
         }
         catch (Exception ex){
-            viewModel.model = "Search-command failed";
-            viewModel.view = new ErrorView();            //java.util.ConcurrentModificationException
+            viewModel.setModel("Search-command failed");
+            viewModel.setView(new ErrorView());            //java.util.ConcurrentModificationException
         }
         return viewModel;
     }

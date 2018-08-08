@@ -7,13 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OptionsSetterTest {
 
-    private static final class AddCommandOptions {
+    private final class AddCommandOptions {
         private String author;
         private String title;
         private String year;
     }
 
-    private static final OptionsSetter optionsSetter = new OptionsSetter();
+    private final OptionsSetter optionsSetter = new OptionsSetter();
 
     @Test
     public void shouldSetInputValueOfRequiredOptionCorrectly(){

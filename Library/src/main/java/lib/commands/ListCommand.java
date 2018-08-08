@@ -23,7 +23,7 @@ public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
             Books books = dbc.read();
 
             if (options.getAll() != null) {
-                viewModel.model = books.list();
+                viewModel.setModel(books.list());
             }
             else{
                 List<String> singleParameters = new ArrayList<>();
@@ -35,13 +35,13 @@ public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
                     if (options.getYears() != null)
                         singleParameters.add(book.getYear());
                 }
-            viewModel.model = singleParameters;
+            viewModel.setModel(singleParameters);
             }
-            viewModel.view = new ListView();
+            viewModel.setView(new ListView());
         }
         catch (Exception ex){
-            viewModel.model = "List-command failed";
-            viewModel.view = new ErrorView();
+            viewModel.setModel("List-command failed");
+            viewModel.setView(new ErrorView());
         }
         return viewModel;
     }

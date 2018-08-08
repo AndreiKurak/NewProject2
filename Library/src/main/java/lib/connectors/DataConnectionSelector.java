@@ -6,7 +6,7 @@ public class DataConnectionSelector {
 
     public DataConnection select(GlobalOptions globalOptions) {
         if (globalOptions.getFile() != null) {
-            return new FileConnector("");
+            return new FileConnector();
         }
         else if (globalOptions.getDatabase() != null) {
             return new DataBaseConnector();
