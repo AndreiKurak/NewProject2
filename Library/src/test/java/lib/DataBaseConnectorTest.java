@@ -77,6 +77,18 @@ public class DataBaseConnectorTest {
         assertThat(booksFromTable.list().size()).isEqualTo(books.list().size());
     }
 
+    @Test
+    public void shouldUpdateBooksCorrectly(){
+        Preparer.fillTable();
+        DataBaseConnector dbc = new DataBaseConnector("doc_register_test");
+        Books books = dbc.read();
+        books.update(1, new Book("newAuthor", "Sorrow", "1890"));
+        dbc.write(books);
+
+        Books booksFromTable = dbc.read();
+        assertThat(booksFromTable.list().get(1).getAuthor()).isEqualTo(books.list().get(1).getAuthor());
+    }
+
     @After
     public void clearTable(){
         try (Connection connection = DriverManager.getConnection(url, user, password);

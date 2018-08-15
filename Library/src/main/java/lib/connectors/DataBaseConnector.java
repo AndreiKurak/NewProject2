@@ -74,7 +74,6 @@ public class DataBaseConnector implements DataConnection {
                 //update
                 rs.first();
                 for (int i = 0; i<books.booksList.size(); i++){
-                    rs.next();
                     if (!books.booksList.get(i).getAuthor().equals(rs.getString("author"))
                             || !books.booksList.get(i).getTitle().equals(rs.getString("title"))
                             || !books.booksList.get(i).getYear().equals(rs.getString("year"))){
@@ -86,6 +85,7 @@ public class DataBaseConnector implements DataConnection {
                         prStmt.executeUpdate();
                         break;
                     }
+                    rs.next();
                 }
             }
         }
