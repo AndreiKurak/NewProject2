@@ -1,10 +1,10 @@
 package common;
 
-public class CommandWithOptions<CommandOptions, GlobalOptions> {
+public class CommandWithOptions {
 
     private Command command;
-    private GlobalOptions globalOptions;
-    private CommandOptions commandOptions;
+    private Object globalOptions;
+    private Object commandOptions;
 
     public Command getCommand() {
         return command;
@@ -14,19 +14,19 @@ public class CommandWithOptions<CommandOptions, GlobalOptions> {
         this.command = command;
     }
 
-    public CommandOptions getCommandOptions() {
+    public Object getCommandOptions() {
         return commandOptions;
     }
 
-    public void setCommandOptions(CommandOptions commandOptions){
+    public void setCommandOptions(Object commandOptions){
         this.commandOptions = commandOptions;
     }
 
-    public GlobalOptions getGlobalOptions() {
+    public Object getGlobalOptions() {
         return globalOptions;
     }
 
-    public void setGlobalOptions(GlobalOptions globalOptions) {
+    public void setGlobalOptions(Object globalOptions) {
         this.globalOptions = globalOptions;
     }
 }
