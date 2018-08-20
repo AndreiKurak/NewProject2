@@ -13,7 +13,7 @@
     <body>
         <form action="${pageContext.request.contextPath}/task3_2" method="post">
             <PRE>
-                First Value: <input name="value1" type="text">
+                First Value:  <input name="value1" type="text">
                 Second Value: <input name="value2" type="text">
                 <input type="submit" name="sumGetter" value="get sum">
             </PRE>

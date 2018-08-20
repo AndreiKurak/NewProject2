@@ -1,4 +1,4 @@
-package common.servlets;
+package servlets.task1;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,11 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class Task1 extends HttpServlet {
+public class SumCalculatingServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //req.getRequestDispatcher("/test.jsp").forward(req, resp);
-
         resp.setContentType("text/html;charset=utf-8");
 
         int value1 = Integer.valueOf(req.getParameter("value1"));

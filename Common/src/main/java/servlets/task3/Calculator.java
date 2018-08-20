@@ -1,4 +1,4 @@
-package common.servlets;
+package servlets.task3;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -6,10 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/task3_2")
-public class Task3_2 extends HttpServlet {
+public class Calculator extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -23,8 +22,12 @@ public class Task3_2 extends HttpServlet {
         int value1 = Integer.valueOf(request.getParameter("value1"));
         int value2 = Integer.valueOf(request.getParameter("value2"));
 
-        if (request.getParameter("sumGetter") != null)
-            request.getRequestDispatcher("/task3_2.jsp?sum=" + (value1 + value2)).forward(request, response);
+        if (request.getParameter("sumGetter") != null) {
+            request.setAttribute("sum", value1 + value2);
+            //request.getRequestDispatcher("/pages/task3/sum_result.jsp?sum=" + (value1 + value2)).forward(request, response);
+            request.getRequestDispatcher("/pages/task3/sum_result.jsp").forward(request, response);
+        }
+
 
     }
 }
