@@ -1,7 +1,5 @@
 package servlets;
 
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,15 +11,6 @@ import java.io.IOException;
 public class AuthorizationServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/pages/start.jsp");
-        dispatcher.forward(request, response);
-
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String inputLogin = request.getParameter("login");
         String inputPassword = request.getParameter("password");
@@ -30,7 +19,7 @@ public class AuthorizationServlet extends HttpServlet {
             request.getSession().setAttribute("login", inputLogin);
             request.getSession().setAttribute("password", inputPassword);
 
-            response.sendRedirect("/start");
+            response.sendRedirect("/start" + request.getSession().getAttribute("unreachedURL"));
         }
     }
 }
