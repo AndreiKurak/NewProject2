@@ -31,17 +31,17 @@ public class SecurityFilter implements Filter {
             return;
         }
 
-        try {
+        if (request.getSession().getAttribute("login") != null)
             if (request.getSession().getAttribute("login").equals(login) && request.getSession().getAttribute("password").equals(password)) {
                 chain.doFilter(request, response);
             }
-        }
-        catch (NullPointerException ex) {
+            else {}
+        else {
             if (request.getQueryString() != null)
                 request.getSession().setAttribute("unreachedURL", request.getServletPath() + "?" + request.getQueryString());
             else
                 request.getSession().setAttribute("unreachedURL", request.getServletPath());
-            
+
             req.getRequestDispatcher("/pages/start.jsp").forward(req, resp);
         }
     }
