@@ -31,11 +31,8 @@ public class SecurityFilter implements Filter {
             return;
         }
 
-        if (request.getSession().getAttribute("login") != null)
-            if (request.getSession().getAttribute("login").equals(login) && request.getSession().getAttribute("password").equals(password)) {
-                chain.doFilter(request, response);
-            }
-            else {}
+        if (request.getSession().getAttribute("login") != null && request.getSession().getAttribute("login").equals(login) && request.getSession().getAttribute("password").equals(password))
+            chain.doFilter(request, response);
         else {
             if (request.getQueryString() != null)
                 request.getSession().setAttribute("unreachedURL", request.getServletPath() + "?" + request.getQueryString());
