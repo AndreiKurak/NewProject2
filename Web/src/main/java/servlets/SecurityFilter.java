@@ -37,14 +37,12 @@ public class SecurityFilter implements Filter {
             }
         }
         catch (NullPointerException ex) {
-            request.getSession().setAttribute("unreachedURL", request.getServletPath()); //
+            if (request.getQueryString() != null)
+                request.getSession().setAttribute("unreachedURL", request.getServletPath() + "?" + request.getQueryString());
+            else
+                request.getSession().setAttribute("unreachedURL", request.getServletPath());
+            
             req.getRequestDispatcher("/pages/start.jsp").forward(req, resp);
         }
     }
 }
-    /*
-    if (request.getQueryString() != null)
-            request.getSession.setAttribute(request.getServletPath() + "?" + request.getQueryString());
-        else
-            request.getSession.setAttribute(request.getServletPath());
-     */
