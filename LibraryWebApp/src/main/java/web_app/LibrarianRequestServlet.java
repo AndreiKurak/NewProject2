@@ -18,12 +18,6 @@ public class LibrarianRequestServlet extends HttpServlet {
         String[] query = request.getParameter("inputQuery").split(" ");
 
         if (request.getParameter("submitPressed") != null) {
-            request.getSession().setAttribute("query", query);
-            request.getSession().setAttribute("libDescriptor", new LibraryDescriptor());
-
-            //request.getRequestDispatcher("/view_servlet").forward(request, response);
-            //response.sendRedirect("/common/view_servlet");
-
             ApplicationExecution applicationExecution = new ApplicationExecution();
             applicationExecution.run(query, new LibraryDescriptor(), request, response);
         }

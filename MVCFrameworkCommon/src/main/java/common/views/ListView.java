@@ -5,10 +5,10 @@ import java.util.List;
 
 public class ListView implements View<List> {
 
-    public void showResult(List model, OutputWindowView setter){
+    public void showResult(List model, OutputWindowView outputWindow){
         Iterator iterator = model.iterator();
         while (iterator.hasNext()){
-            setter.printResult(iterator.next());
+            outputWindow.printResult(iterator.next());
         }
     }
 }

@@ -40,8 +40,6 @@ public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
             viewModel.setView(new ListView());
         }
         catch (Exception ex){
-            System.out.println(ex.getClass());
-            System.out.println(ex.getCause());
             viewModel.setModel("List-command failed");
             viewModel.setView(new ErrorView());
         }
