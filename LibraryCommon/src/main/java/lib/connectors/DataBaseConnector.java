@@ -20,12 +20,14 @@ public class DataBaseConnector implements DataConnection {
 
     public Books read(){
         Books books = new Books();
+        /*
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         }
         catch (Exception ex){
             
         }
+        */
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM library")) {
