@@ -2,7 +2,7 @@ package framework_console;
 
 import common.views.OutputWindowView;
 
-public class ConsolePrinter implements OutputWindowView {
+public class ConsoleOutput implements OutputWindowView {
 
     @Override
     public void printResult(Object object) {

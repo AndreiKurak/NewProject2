@@ -19,11 +19,11 @@ public class ApplicationExecution {
         ViewModel viewModel = command.getCommand().execute(command.getCommandOptions(), command.getGlobalOptions());
 
         if (viewModel.getView() != null){
-            viewModel.getView().showResult(viewModel.getModel(), new WebPagePrinter(request, response));
+            viewModel.getView().showResult(viewModel.getModel(), new WebPageOutput(request, response));
         }
         else {
             viewModel.setView(new ErrorView());
-            viewModel.getView().showResult("view не задано", new WebPagePrinter(request, response));
+            viewModel.getView().showResult("view не задано", new WebPageOutput(request, response));
         }
     }
 }
