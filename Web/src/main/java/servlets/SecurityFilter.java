@@ -9,9 +9,6 @@ import java.io.IOException;
 @WebFilter("/*")
 public class SecurityFilter implements Filter {
 
-    private String login = "Andrey";
-    private String password = "fk215R+L";
-
     @Override
     public void init(FilterConfig fConfig) throws ServletException {
 
@@ -31,7 +28,7 @@ public class SecurityFilter implements Filter {
             return;
         }
 
-        if (request.getSession().getAttribute("login") != null && request.getSession().getAttribute("login").equals(login) && request.getSession().getAttribute("password").equals(password))
+        if (request.getSession().getAttribute("login") != null)
             chain.doFilter(request, response);
         else {
             if (request.getQueryString() != null)
