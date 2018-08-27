@@ -25,7 +25,7 @@ public class DataBaseConnector implements DataConnection {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         }
         catch (Exception ex){
-            
+            throw new DataConnectionException("jdbc driver registration failed", ex);
         }
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
