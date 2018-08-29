@@ -6,24 +6,17 @@ import common.ViewModel;
 import common.parser.Parser;
 import common.views.ErrorView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 public class ApplicationExecution {
 
-    public void run(String[] args, ApplicationDescriptor descriptor, HttpServletRequest request, HttpServletResponse response){
+    public ViewModel run(Map<String, String[]> parameters, ApplicationDescriptor descriptor) {
         Parser parser = new Parser();
 
-        CommandWithOptions command = parser.parse(args, descriptor.getGlobalOptionsDescriptionList(), descriptor.getCommandsDescriptionList(), descriptor.getGlobalOptions());
+        CommandWithOptions command = parser.parse(parameters.get("inputQuery"), descriptor.getGlobalOptionsDescriptionList(), descriptor.getCommandsDescriptionList(), descriptor.getGlobalOptions());
 
         ViewModel viewModel = command.getCommand().execute(command.getCommandOptions(), command.getGlobalOptions());
 
-        if (viewModel.getView() != null){
-            viewModel.getView().showResult(viewModel.getModel(), new WebPageOutput(request, response));
-        }
-        else {
-            viewModel.setView(new ErrorView());
-            viewModel.getView().showResult("view не задано", new WebPageOutput(request, response));
-        }
+        return viewModel;
     }
 }
