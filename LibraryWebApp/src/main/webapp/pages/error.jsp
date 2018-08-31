@@ -13,9 +13,6 @@
         <H1>Error during performance</H1>
     </head>
     <body>
-    <%
-        ViewModel viewModel = (ViewModel) request.getAttribute("view");
-        viewModel.getView().showResult(viewModel.getModel(), new WebPageOutput(response.getWriter()));
-    %>
+        <%= request.getAttribute("view") %>
     </body>
 </html>

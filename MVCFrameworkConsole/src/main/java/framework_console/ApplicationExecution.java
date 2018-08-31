@@ -14,9 +14,11 @@ public class ApplicationExecution {
         CommandWithOptions command = parser.parse(args, descriptor.getGlobalOptionsDescriptionList(), descriptor.getCommandsDescriptionList(), descriptor.getGlobalOptions());
 
         ViewModel viewModel = command.getCommand().execute(command.getCommandOptions(), command.getGlobalOptions());
-
+     /////
         if (viewModel.getView() != null){
             viewModel.getView().showResult(viewModel.getModel(), new ConsoleOutput());
+            
+            //new ConsoleOutputView().printResult(viewModel.getModel(), viewModel.getView());
         }
         else {
             viewModel.setView(new ErrorView());

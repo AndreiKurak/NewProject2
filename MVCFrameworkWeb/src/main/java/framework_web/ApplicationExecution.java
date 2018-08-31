@@ -4,7 +4,6 @@ import common.ApplicationDescriptor;
 import common.CommandWithOptions;
 import common.ViewModel;
 import common.parser.Parser;
-import common.views.ErrorView;
 
 import java.util.Map;
 

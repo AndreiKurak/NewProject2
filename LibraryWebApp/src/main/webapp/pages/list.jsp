@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="common.ViewModel" %>
 <%@ page import="framework_web.WebPageOutput" %><%--
   Created by IntelliJ IDEA.
@@ -13,9 +14,6 @@
         <H1>List of books</H1>
     </head>
     <body>
-    <%
-        ViewModel viewModel = (ViewModel) request.getAttribute("view");
-        viewModel.getView().showResult(viewModel.getModel(), new WebPageOutput(response.getWriter()));
-    %>
+        <%= request.getAttribute("view") %>
     </body>
 </html>

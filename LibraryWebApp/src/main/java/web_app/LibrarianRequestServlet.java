@@ -24,13 +24,11 @@ public class LibrarianRequestServlet extends HttpServlet {
         ViewModel viewModel = applicationExecution.run(parameters, new LibraryDescriptor());
 
         if (viewModel.getView() != null) {
-            request.setAttribute("view", viewModel);
-            if (viewModel.getView().getClass().getName().contains("MessageView"))
-                request.getRequestDispatcher("/pages/message.jsp").forward(request, response);
-            else if (viewModel.getView().getClass().getName().contains("ListView"))
-                request.getRequestDispatcher("/pages/list.jsp").forward(request, response);
-            else
-                request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
+            request.setAttribute("view", viewModel.getModel());
+
+            WebPageResolver pageResolver = new WebPageResolver();
+            request.getRequestDispatcher(pageResolver.getPage(viewModel.getView().getName())).forward(request, response);
+
         } else {
             viewModel.setModel("view не задано");
             viewModel.setView(new ErrorView());
