@@ -1,7 +1,6 @@
 package web_app;
 
 import common.ViewModel;
-import common.views.ErrorView;
 import framework_web.ApplicationExecution;
 import lib.LibraryDescriptor;
 
@@ -21,17 +20,17 @@ public class LibrarianRequestServlet extends HttpServlet {
         Map parameters = request.getParameterMap();
 
         ApplicationExecution applicationExecution = new ApplicationExecution();
-        ViewModel viewModel = applicationExecution.run(parameters, new LibraryDescriptor());
+        ViewModel viewModel = applicationExecution.run(parameters, new LibraryDescriptor(), response.getWriter());
 
-        if (viewModel.getView() != null) {
+        if (viewModel.getViewName() != null) {
             request.setAttribute("view", viewModel.getModel());
 
             WebPageResolver pageResolver = new WebPageResolver();
-            request.getRequestDispatcher(pageResolver.getPage(viewModel.getView().getName())).forward(request, response);
-
+            request.getRequestDispatcher(pageResolver.getPage(viewModel.getViewName())).forward(request, response);
         } else {
             viewModel.setModel("view не задано");
-            viewModel.setView(new ErrorView());
+            request.setAttribute("view", viewModel.getModel());
+
             request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
         }
     }

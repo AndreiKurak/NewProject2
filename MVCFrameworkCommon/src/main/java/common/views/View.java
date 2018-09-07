@@ -1,8 +1,34 @@
 package common.views;
 
-public interface View<T> {
+import javax.servlet.http.HttpServletRequest;
 
-    String getName();
+public abstract class View<T> {
 
-    void showResult(T model, OutputWindowView outputWindow);
+    private OutputWindowView outputWindowView;
+
+    View() { }
+  
+    View(OutputWindowView outputWindowView){
+        this.outputWindowView = outputWindowView;
+    }
+
+    public abstract void showResult(T model);
+
+    OutputWindowView getOutputWindowView() {
+        return outputWindowView;
+    }
+  /*
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+
+    View(String jspAddress, HttpServletRequest request, HttpServletResponse response) {  }
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public HttpSevletResponse getResponse() {
+        return response;
+    }
+    */
 }

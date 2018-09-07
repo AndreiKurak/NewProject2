@@ -23,11 +23,11 @@ public class DeleteCommand implements Command<DeleteCommandOptions, GlobalOption
             dbc.write(books);
 
             viewModel.setModel("Delete-command was performed");
-            viewModel.setView(new MessageView());
+            viewModel.setViewName("MessageView");
         }
         catch (Exception ex){
             viewModel.setModel("Delete-command failed");
-            viewModel.setView(new ErrorView());
+            viewModel.setViewName("ErrorView");
         }
         return viewModel;
     }

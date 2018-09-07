@@ -1,18 +1,16 @@
 package common;
 
-import common.views.View;
-
 public class ViewModel<Model> {
 
-    private View view;
+    private String viewName;
     private Model model;
 
-    public View getView() {
-        return view;
+    public String getViewName() {
+        return viewName;
     }
 
-    public void setView(View view) {
-        this.view = view;
+    public void setViewName(String viewName) {
+        this.viewName = viewName;
     }
 
     public Model getModel() {

@@ -37,11 +37,11 @@ public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
                 }
             viewModel.setModel(singleParameters);
             }
-            viewModel.setView(new ListView());
+            viewModel.setViewName("ListView");
         }
         catch (Exception ex){
             viewModel.setModel("List-command failed");
-            viewModel.setView(new ErrorView());
+            viewModel.setViewName("ErrorView");
         }
         return viewModel;
     }

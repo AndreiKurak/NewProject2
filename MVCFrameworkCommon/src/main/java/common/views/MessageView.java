@@ -1,16 +1,12 @@
 package common.views;
 
-public class MessageView implements View<String> {
+public class MessageView extends View<String> {
 
-    private String name = "MessageView";
-
-    public void showResult(String model, OutputWindowView outputWindow) {
-        outputWindow.printResult(model);
-
+    public MessageView(OutputWindowView outputWindowView) {
+        super(outputWindowView);
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public void showResult(String model) {
+        getOutputWindowView().printResult(model);
     }
 }

@@ -35,11 +35,11 @@ public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
             dbc.write(books);
 
             viewModel.setModel("Add-command was performed");
-            viewModel.setView(new MessageView());
+            viewModel.setViewName("MessageView");
         }
         catch (Exception ex){
             viewModel.setModel("Add-command failed");
-            viewModel.setView(new ErrorView());
+            viewModel.setViewName("ErrorView");
         }
         return viewModel;
     }

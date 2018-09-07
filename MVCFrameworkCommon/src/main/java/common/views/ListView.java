@@ -3,19 +3,16 @@ package common.views;
 import java.util.Iterator;
 import java.util.List;
 
-public class ListView implements View<List> {
+public class ListView extends View<List> {
 
-    private String name = "ListView";
-
-    public void showResult(List model, OutputWindowView outputWindow){
-        Iterator iterator = model.iterator();
-        while (iterator.hasNext()){
-            outputWindow.printResult(iterator.next());
-        }
+    public ListView(OutputWindowView outputWindowView) {
+        super(outputWindowView);
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public void showResult(List model){
+        Iterator iterator = model.iterator();
+        while (iterator.hasNext()){
+            getOutputWindowView().printResult(model);
+        }
     }
 }

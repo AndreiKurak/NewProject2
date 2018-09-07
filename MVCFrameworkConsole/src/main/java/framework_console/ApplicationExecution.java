@@ -4,7 +4,7 @@ import common.ApplicationDescriptor;
 import common.CommandWithOptions;
 import common.ViewModel;
 import common.parser.Parser;
-import common.views.ErrorView;
+import common.views.ViewResolver;
 
 public class ApplicationExecution {
 
@@ -15,14 +15,12 @@ public class ApplicationExecution {
 
         ViewModel viewModel = command.getCommand().execute(command.getCommandOptions(), command.getGlobalOptions());
      /////
-        if (viewModel.getView() != null){
-            viewModel.getView().showResult(viewModel.getModel(), new ConsoleOutput());
-            
-            //new ConsoleOutputView().printResult(viewModel.getModel(), viewModel.getView());
+        ViewResolver resolver = new ViewResolver(new ConsoleOutput());
+        if (viewModel.getViewName() != null) {
+            resolver.getView(viewModel.getViewName()).showResult(viewModel.getModel());
         }
         else {
-            viewModel.setView(new ErrorView());
-            viewModel.getView().showResult("view не задано", new ConsoleOutput());
+            resolver.getView("ErrorView").showResult("View is not specified");
         }
     }
 }

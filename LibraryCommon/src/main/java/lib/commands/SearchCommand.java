@@ -21,14 +21,14 @@ public class SearchCommand implements Command<SearchCommandOptions, GlobalOption
 
             Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
             viewModel.setModel(books.search(book));
-            viewModel.setView(new ListView());
+            viewModel.setViewName("ListView");
             if (viewModel.getModel() == null){
                 viewModel.setModel("nothing found");
             }
         }
         catch (Exception ex){
             viewModel.setModel("Search-command failed");
-            viewModel.setView(new ErrorView());            //java.util.ConcurrentModificationException
+            viewModel.setViewName("ErrorView");                             //java.util.ConcurrentModificationException
         }
         return viewModel;
     }

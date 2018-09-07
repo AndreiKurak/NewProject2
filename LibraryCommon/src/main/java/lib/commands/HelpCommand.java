@@ -19,7 +19,7 @@ public class HelpCommand implements Command {
             commandsInfo.add(libraryDescriptor.getCommandsDescriptionList().get(i));
         }
         viewModel.setModel(commandsInfo);
-        viewModel.setView(new ListView());
+        viewModel.setViewName("ListView");
         System.out.println("\n" + libraryDescriptor.getGlobalOptionsDescriptionList());
 
         return viewModel;

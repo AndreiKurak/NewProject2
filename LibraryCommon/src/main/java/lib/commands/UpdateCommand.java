@@ -26,11 +26,11 @@ public class UpdateCommand implements Command<UpdateCommandOptions, GlobalOption
         }
         catch (Exception ex){
             viewModel.setModel("Update-command failed");
-            viewModel.setView(new ErrorView());
+            viewModel.setViewName("ErrorView");
         }
 
         viewModel.setModel("Update-command was performed");
-        viewModel.setView(new MessageView());
+        viewModel.setViewName("MessageView");
 
         return viewModel;
     }
