@@ -8,7 +8,7 @@ public class JSPView extends View {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    public JSPView(HttpServletRequest request, HttpServletResponse response) {
+    public JSPView(HttpServletRequest request, HttpServletResponse response) { //String PageAddress
         this.request = request;
         this.response = response;
     }
@@ -22,5 +22,13 @@ public class JSPView extends View {
         catch (Exception ex) {
             
         }
+    }
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public HttpServletResponse getResponse() {
+        return response;
     }
 }

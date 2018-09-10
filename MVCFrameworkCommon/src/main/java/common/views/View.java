@@ -21,13 +21,13 @@ public abstract class View<T> {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    View(String jspAddress, HttpServletRequest request, HttpServletResponse response) {  }
+    View(HttpServletRequest request, HttpServletResponse response) {  }
 
     public HttpServletRequest getRequest() {
         return request;
     }
 
-    public HttpSevletResponse getResponse() {
+    public HttpServletResponse getResponse() {
         return response;
     }
     */
