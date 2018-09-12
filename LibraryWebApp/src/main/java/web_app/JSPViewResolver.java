@@ -1,0 +1,33 @@
+package web_app;
+
+import common.views.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
+
+public class JSPViewResolver implements ViewResolver {
+
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+
+    private Map<String, View> viewsMap = new HashMap<String, View>(){{
+        put("MessageView", new JSPView("/pages/message.jsp", request, response));
+        put("ListView", new JSPView("/pages/list.jsp", request, response));
+        put("ErrorView", new JSPView("/pages/error.jsp", request, response));
+    }};
+
+    public JSPViewResolver(HttpServletRequest request, HttpServletResponse response) {
+        this.request = request;
+        this.response = response;
+    }
+
+    public View getView(String viewName) {
+        return viewsMap.getOrDefault(viewName, null);
+    }
+
+    public void addView(String viewName, View view) {
+        viewsMap.put(viewName, view);
+    }
+}

@@ -3,12 +3,14 @@ package common.views;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class JSPView extends View {
+public class JSPView implements View {
 
+    private String pageAddress;
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    public JSPView(HttpServletRequest request, HttpServletResponse response) { //String PageAddress
+    public JSPView(String pageAddress, HttpServletRequest request, HttpServletResponse response) {
+        this.pageAddress = pageAddress;
         this.request = request;
         this.response = response;
     }
@@ -17,18 +19,10 @@ public class JSPView extends View {
     public void showResult(Object model) {
         try {
             request.setAttribute("view", model);
-            request.getRequestDispatcher("/pages/....jsp").forward(request, response);
+            request.getRequestDispatcher(pageAddress).forward(request, response);
         }
         catch (Exception ex) {
-            
+            //...
         }
-    }
-
-    public HttpServletRequest getRequest() {
-        return request;
-    }
-
-    public HttpServletResponse getResponse() {
-        return response;
     }
 }

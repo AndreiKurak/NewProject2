@@ -1,7 +1,13 @@
 package web_app;
 
+import common.ApplicationExecution;
 import common.ViewModel;
-import framework_web.ApplicationExecution;
+
+import common.views.ErrorView;
+import common.views.ListView;
+import common.views.MessageView;
+import common.views.ViewResolver;
+import framework_web.WebPageOutput;
 import lib.LibraryDescriptor;
 
 import javax.servlet.ServletException;
@@ -18,20 +24,14 @@ public class LibrarianRequestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map parameters = request.getParameterMap();
-
+        String[] query = request.getParameter("inputQuery").split(" ");
+       /*
+        ViewResolver viewResolver = new WebViewResolver(new WebPageOutput(response.getWriter()));
+        viewResolver.addView("MessageView", new MessageView(new WebPageOutput(response.getWriter())));
+        viewResolver.addView("ListView", new ListView(new WebPageOutput(response.getWriter())));
+        viewResolver.addView("ErrorView", new ErrorView(new WebPageOutput(response.getWriter())));
+         */
         ApplicationExecution applicationExecution = new ApplicationExecution();
-        ViewModel viewModel = applicationExecution.run(parameters, new LibraryDescriptor(), response.getWriter());
-
-        if (viewModel.getViewName() != null) {
-            request.setAttribute("view", viewModel.getModel());
-
-            WebPageResolver pageResolver = new WebPageResolver();
-            request.getRequestDispatcher(pageResolver.getPage(viewModel.getViewName())).forward(request, response);
-        } else {
-            viewModel.setModel("view не задано");
-            request.setAttribute("view", viewModel.getModel());
-
-            request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
-        }
+        applicationExecution.run(query, new LibraryDescriptor(), new WebViewResolver(new WebPageOutput(response.getWriter())));
     }
 }

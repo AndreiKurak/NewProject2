@@ -1,12 +1,12 @@
 package common.views;
 
-public class ErrorView extends View<String> {
+public class ErrorView extends AbstractView<String> {
 
     public ErrorView(OutputWindowView outputWindowView) {
         super(outputWindowView);
     }
 
     public void showResult(String model){
-        getOutputWindowView().printResult(model);   //system.err.out
+        outputWindowView.printResult(model);   //system.err.out
     }
 }

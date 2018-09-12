@@ -1,12 +1,12 @@
 package common.views;
 
-public class MessageView extends View<String> {
+public class MessageView extends AbstractView<String> {
 
     public MessageView(OutputWindowView outputWindowView) {
         super(outputWindowView);
     }
 
     public void showResult(String model) {
-        getOutputWindowView().printResult(model);
+        outputWindowView.printResult(model);
     }
 }

@@ -3,7 +3,7 @@ package common.views;
 import java.util.Iterator;
 import java.util.List;
 
-public class ListView extends View<List> {
+public class ListView extends AbstractView<List> {
 
     public ListView(OutputWindowView outputWindowView) {
         super(outputWindowView);
@@ -12,7 +12,7 @@ public class ListView extends View<List> {
     public void showResult(List model){
         Iterator iterator = model.iterator();
         while (iterator.hasNext()){
-            getOutputWindowView().printResult(model);
+            outputWindowView.printResult(model);
         }
     }
 }
