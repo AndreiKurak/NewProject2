@@ -4,7 +4,7 @@ import common.parser.ParametersParser;
 
 public class ConsoleParametersParser implements ParametersParser {
 
-    String[] input;
+    private String[] input;
 
     public ConsoleParametersParser(String[] input) {
         this.input = input;

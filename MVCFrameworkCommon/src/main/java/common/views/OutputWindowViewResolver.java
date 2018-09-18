@@ -26,6 +26,4 @@ public class OutputWindowViewResolver implements ViewResolver {
             throw new RuntimeException("View adding failed", ex);
         }
     }
-
-
 }

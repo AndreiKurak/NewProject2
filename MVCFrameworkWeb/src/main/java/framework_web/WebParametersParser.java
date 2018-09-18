@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class WebParametersParser implements ParametersParser {
 
-    Map<String, String[]> input;
+    private Map<String, String[]> input;
 
     public WebParametersParser(Map input) {
         this.input = input;
