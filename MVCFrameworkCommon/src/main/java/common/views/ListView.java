@@ -12,7 +12,7 @@ public class ListView extends AbstractView<List> {
     public void showResult(List model){
         Iterator iterator = model.iterator();
         while (iterator.hasNext()){
-            outputWindowView.printResult(model);
+            outputWindowView.printResult(iterator.next());
         }
     }
 }
