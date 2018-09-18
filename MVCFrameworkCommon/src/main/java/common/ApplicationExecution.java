@@ -1,14 +1,15 @@
 package common;
 
+import common.parser.ParametersParser;
 import common.parser.Parser;
 import common.views.ViewResolver;
 
 public class ApplicationExecution {
 
-    public void run(String[] args, ApplicationDescriptor descriptor, ViewResolver viewResolver){
+    public void run(ParametersParser parametersParser, ApplicationDescriptor descriptor, ViewResolver viewResolver){
         Parser parser = new Parser();
 
-        CommandWithOptions command = parser.parse(args, descriptor.getGlobalOptionsDescriptionList(), descriptor.getCommandsDescriptionList(), descriptor.getGlobalOptions());
+        CommandWithOptions command = parser.parse((String[]) parametersParser.getInput(), descriptor.getGlobalOptionsDescriptionList(), descriptor.getCommandsDescriptionList(), descriptor.getGlobalOptions());
 
         ViewModel viewModel = command.getCommand().execute(command.getCommandOptions(), command.getGlobalOptions());
         

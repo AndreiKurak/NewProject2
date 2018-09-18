@@ -3,11 +3,9 @@ package web_app;
 import common.ApplicationExecution;
 import common.ViewModel;
 
-import common.views.ErrorView;
-import common.views.ListView;
-import common.views.MessageView;
-import common.views.ViewResolver;
+import common.views.*;
 import framework_web.WebPageOutput;
+import framework_web.WebParametersParser;
 import lib.LibraryDescriptor;
 
 import javax.servlet.ServletException;
@@ -21,17 +19,17 @@ import java.util.Map;
 @WebServlet("/librarian_request")
 public class LibrarianRequestServlet extends HttpServlet {
 
+    private ApplicationExecution applicationExecution = new ApplicationExecution();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map parameters = request.getParameterMap();
-        String[] query = request.getParameter("inputQuery").split(" ");
-       /*
-        ViewResolver viewResolver = new WebViewResolver(new WebPageOutput(response.getWriter()));
-        viewResolver.addView("MessageView", new MessageView(new WebPageOutput(response.getWriter())));
-        viewResolver.addView("ListView", new ListView(new WebPageOutput(response.getWriter())));
-        viewResolver.addView("ErrorView", new ErrorView(new WebPageOutput(response.getWriter())));
-         */
-        ApplicationExecution applicationExecution = new ApplicationExecution();
-        applicationExecution.run(query, new LibraryDescriptor(), new WebViewResolver(new WebPageOutput(response.getWriter())));
+
+        OutputWindowViewResolver viewResolver = new OutputWindowViewResolver(new WebPageOutput(response.getWriter()));
+        viewResolver.addView("MessageView", MessageView.class);
+        viewResolver.addView("ListView", ListView.class);
+        viewResolver.addView("ErrorView", ErrorView.class);
+        
+        applicationExecution.run(new WebParametersParser(parameters), new LibraryDescriptor(), viewResolver);
     }
 }
