@@ -26,7 +26,7 @@ public class Parser {
         parametersParser.getCommandOptions().forEach((key, value) -> {
             for (int i = 0; i<options.size(); i++) {
                 optionsSetter.setOptions(key, (String) value, command.getCommandOptions());
-                if (!options.get(i).getValidator().check((String) value))
+                if (options.get(i).getValidator() != null && !options.get(i).getValidator().check((String) value))
                     throw new ParseException("Unacceptable option value");
                 if (!gotIt && options.get(i).getMandatory()) {
                     throw new ParseException("Required option missed");
