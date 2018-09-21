@@ -9,14 +9,15 @@ import common.parser.ParametersParser;
 import common.parser.ParseException;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ConsoleParametersParser implements ParametersParser {
     
     private CommandDescription command;
-    private Map<String, Object> commandOptions;
-    private Map<String, Object> globalOptions;
+    private Map<String, Object> commandOptions = new HashMap<>();
+    private Map<String, Object> globalOptions = new HashMap<>();
 
     public static final String PREFIX = "--";
     public static final String Equality = "=";
