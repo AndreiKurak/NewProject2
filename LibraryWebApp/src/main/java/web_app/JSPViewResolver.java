@@ -1,6 +1,7 @@
 package web_app;
 
 import common.views.*;
+import framework_web.JSPView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

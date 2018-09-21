@@ -20,15 +20,17 @@ import java.util.Map;
 public class LibrarianRequestServlet extends HttpServlet {
 
     private ApplicationExecution applicationExecution = new ApplicationExecution();
+    private OutputWindowViewResolver viewResolver = new OutputWindowViewResolver(){{
+        viewResolver.addView("MessageView", MessageView.class);
+        viewResolver.addView("ListView", ListView.class);
+        viewResolver.addView("ErrorView", ErrorView.class);
+    }};
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map parameters = request.getParameterMap();
-
-        OutputWindowViewResolver viewResolver = new OutputWindowViewResolver(new WebPageOutput(response.getWriter()));
-        viewResolver.addView("MessageView", MessageView.class);
-        viewResolver.addView("ListView", ListView.class);
-        viewResolver.addView("ErrorView", ErrorView.class);
+        
+        viewResolver.setOutputWindowView(new WebPageOutput(response.getWriter()));
         
         applicationExecution.run(new WebParametersParser(parameters), new LibraryDescriptor(), viewResolver);
     }

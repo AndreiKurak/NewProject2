@@ -23,7 +23,7 @@ public class AddCommandTest {
         when(selector.select(Matchers.<lib.global_options.GlobalOptions>any())).thenReturn(connector);
         when(connector.read()).thenReturn(new Books());
 
-        assertThat(new AddCommand(selector).execute(new AddCommandOptions(), new GlobalOptions()).getView()).isInstanceOf(MessageView.class);
+        assertThat(new AddCommand(selector).execute(new AddCommandOptions(), new GlobalOptions()).getViewName()).isEqualTo("MessageView");
     }
 
     @Test

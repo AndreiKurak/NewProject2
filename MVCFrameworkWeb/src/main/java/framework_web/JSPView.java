@@ -1,4 +1,6 @@
-package common.views;
+package framework_web;
+
+import common.views.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +24,7 @@ public class JSPView implements View {
             request.getRequestDispatcher(pageAddress).forward(request, response);
         }
         catch (Exception ex) {
-            //...
+            throw new RuntimeException("JSPView failure using request", ex);
         }
     }
 }

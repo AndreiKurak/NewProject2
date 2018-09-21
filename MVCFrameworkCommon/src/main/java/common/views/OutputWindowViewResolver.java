@@ -8,13 +8,16 @@ public class OutputWindowViewResolver implements ViewResolver {
     private OutputWindowView outputWindowView;
     private Map<String, View> viewMap = new HashMap<>();
 
+    public OutputWindowViewResolver() {
+    }
+
     public OutputWindowViewResolver(OutputWindowView outputWindowView) {
         this.outputWindowView = outputWindowView;
     }
 
     @Override
     public View getView(String viewName) {
-        return viewMap.getOrDefault(viewName, null);
+        return viewMap.get(viewName);
     }
 
     public void addView(String viewName, Class viewClass) {
@@ -25,5 +28,9 @@ public class OutputWindowViewResolver implements ViewResolver {
         catch (Exception ex) {
             throw new RuntimeException("View adding failed", ex);
         }
+    }
+
+    public void setOutputWindowView(OutputWindowView outputWindowView) {
+        this.outputWindowView = outputWindowView;
     }
 }

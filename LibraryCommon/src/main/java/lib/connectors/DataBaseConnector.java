@@ -3,6 +3,7 @@ package lib.connectors;
 import lib.Book;
 
 import java.sql.*;
+import java.util.Objects;
 
 public class DataBaseConnector implements DataConnection {
 
@@ -52,7 +53,8 @@ public class DataBaseConnector implements DataConnection {
              ResultSet rs = stmt.executeQuery("SELECT * FROM library")) {
             int count=0;
             while(rs.next())
-                count=rs.getInt(1);
+                //count=rs.getInt(1);
+                count++;
             System.out.println("count " + count);
 
             int ii = 0;
@@ -82,9 +84,9 @@ public class DataBaseConnector implements DataConnection {
                 //update
                 rs.first();
                 for (int i = 0; i<books.booksList.size(); i++){
-                    if (!books.booksList.get(i).getAuthor().equals(rs.getString("author"))
-                            || !books.booksList.get(i).getTitle().equals(rs.getString("title"))
-                            || !books.booksList.get(i).getYear().equals(rs.getString("year"))){
+                    if (!Objects.equals(books.booksList.get(i).getAuthor(), rs.getString("author"))
+                            || !Objects.equals(books.booksList.get(i).getTitle(), rs.getString("title"))
+                            || !Objects.equals(books.booksList.get(i).getYear(), rs.getString("year"))) {
                         prStmt = connection.prepareStatement("UPDATE library SET author=?, title=?, year=? WHERE id=?");
                         prStmt.setString(1, books.booksList.get(i).getAuthor());
                         prStmt.setString(2, books.booksList.get(i).getTitle());

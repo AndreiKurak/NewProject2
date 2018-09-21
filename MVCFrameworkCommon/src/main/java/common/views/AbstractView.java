@@ -7,6 +7,4 @@ public abstract class AbstractView<T> implements View<T> {
     public AbstractView(OutputWindowView outputWindowView){
         this.outputWindowView = outputWindowView;
     }
-
-  //  public class MessageView extends AbstractView implements View<String> {
 }
