@@ -45,24 +45,22 @@ public class CommandDescription {
     }
 
     public Object createAndGetCommandOptions() {
-        try{
+        try {
             return (Object) optionsForCommand.newInstance();
         }
-        catch (Exception ex){
+        catch (Exception ex) {
             throw new CommandDescriptionException("Creating object of command options failed", ex);
         }
-
     }
 
     public Command createAndGetCommand() {
-        try{
+        try {
             return (Command) command.newInstance();
         }
-        catch (Exception ex){
+        catch (Exception ex) {
             throw new CommandDescriptionException("Creating object of command failed", ex);
         }
     }
-
 
     public String toString(){
         return name + ": " + description + " " + options;

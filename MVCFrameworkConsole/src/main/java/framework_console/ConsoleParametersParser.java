@@ -64,11 +64,16 @@ public class ConsoleParametersParser implements ParametersParser {
                 }
         System.out.println(Arrays.toString(input2));
 
-        for (int i = 0; i<newOptions.size(); i++)
-            for (int j = 0; j<input2.length; j++)
-                if (input2[j].contains(newOptions.get(i).getName())){
+        boolean gotIt = false;
+        for (int i = 0; i<newOptions.size(); i++) {
+            for (int j = 0; j < input2.length; j++)
+                if (input2[j].contains(newOptions.get(i).getName())) {
                     commandOptions.put(newOptions.get(i).getName(), input2[j].replaceAll(PREFIX + newOptions.get(i).getName() + Equality, ""));
+                gotIt = true;
                 }
+            if (!gotIt && newOptions.get(i).getMandatory())
+                throw new ParseException("Required option missed");
+        }
     }
 
     @Override
