@@ -21,8 +21,8 @@ public class Parser {
         });
 
         command.setCommandOptions(parametersParser.getCommand().createAndGetCommandOptions());
-        List<OptionDescription> options = parametersParser.getCommand().getOptions();
 
+        List<OptionDescription> options = parametersParser.getCommand().getOptions();
         for (OptionDescription option : options) {
             parametersParser.getCommandOptions().forEach((key, value) -> {
                 if (option.getName().equals(key)) {

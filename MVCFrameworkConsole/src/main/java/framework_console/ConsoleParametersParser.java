@@ -19,8 +19,8 @@ public class ConsoleParametersParser implements ParametersParser {
     private Map<String, Object> commandOptions = new HashMap<>();
     private Map<String, Object> globalOptions = new HashMap<>();
 
-    public static final String PREFIX = "--";
-    public static final String Equality = "=";
+    private static final String PREFIX = "--";
+    private static final String Equality = "=";
 
     public ConsoleParametersParser(String[] input, ApplicationDescriptor applicationDescriptor) {
         String inputString = "";

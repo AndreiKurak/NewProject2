@@ -32,6 +32,6 @@ public class LibrarianRequestServlet extends HttpServlet {
         
         viewResolver.setOutputWindowView(new WebPageOutput(response.getWriter()));
         
-        applicationExecution.run(new WebParametersParser(parameters), new LibraryDescriptor(), viewResolver);
+        applicationExecution.run(new WebParametersParser(parameters, new LibraryDescriptor()), new LibraryDescriptor(), viewResolver);
     }
 }
