@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Acer
-  Date: 26.08.2018
-  Time: 3:24
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -12,8 +5,19 @@
     </head>
     <body>
         <form action="${pageContext.request.contextPath}/librarian_request" method="post">
-            input your request: <input name="inputQuery" type="text">
-            <input type="submit" name="submitPressed" value="confirm">
+            <PRE>
+                action: <select name="selection">
+                            <option selected>add</option>
+                            <option>delete</option>
+                            <option>update</option>
+                            <option>list</option>
+                            <option>search</option>
+                        </select>
+                author <input name="author" type="text">
+                title  <input name="title" type="text">
+                year   <input name="year" type="text">
+                <input type="submit" value="confirm">
+            </PRE>
         </form>
     </body>
 </html>

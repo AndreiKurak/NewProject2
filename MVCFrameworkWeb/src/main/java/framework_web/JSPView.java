@@ -11,6 +11,10 @@ public class JSPView implements View {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
+    public JSPView(String pageAddress) {
+        this.pageAddress = pageAddress;
+    }
+
     public JSPView(String pageAddress, HttpServletRequest request, HttpServletResponse response) {
         this.pageAddress = pageAddress;
         this.request = request;

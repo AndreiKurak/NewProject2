@@ -14,9 +14,14 @@ public class JSPViewResolver implements ViewResolver {
     private HttpServletResponse response;
 
     private Map<String, View> viewsMap = new HashMap<String, View>(){{
+        put("MessageView", new JSPView("/pages/message.jsp"));
+        put("ListView", new JSPView("/pages/list.jsp"));
+        put("ErrorView", new JSPView("/pages/error.jsp"));
+        /*
         put("MessageView", new JSPView("/pages/message.jsp", request, response));
         put("ListView", new JSPView("/pages/list.jsp", request, response));
         put("ErrorView", new JSPView("/pages/error.jsp", request, response));
+        */
     }};
 
     public JSPViewResolver(HttpServletRequest request, HttpServletResponse response) {
@@ -25,10 +30,14 @@ public class JSPViewResolver implements ViewResolver {
     }
 
     public View getView(String viewName) {
-        return viewsMap.getOrDefault(viewName, null);
+        return viewsMap.get(viewName);
     }
 
     public void addView(String viewName, View view) {
         viewsMap.put(viewName, view);
+    }
+
+    public void setServletArguments(HttpServletRequest request, HttpServletResponse response) {
+        
     }
 }
