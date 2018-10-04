@@ -4,6 +4,7 @@
 <%@ page import="lib.connectors.DataConnection" %>
 <%@ page import="lib.connectors.DataBaseConnector" %>
 <%@ page import="lib.connectors.Books" %>
+<%@ page import="common.views.ErrorView" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -22,10 +23,12 @@
                 <input type="submit" value="confirm">
         </form>
         <%
-            DataConnection connector = new DataBaseConnector();
-            Books books = connector.read();
-            List<Book> bookList = books.list();
-            request.setAttribute("bookList", bookList);
+            List<Book> bookList = null;
+            try {
+                DataConnection connector = new DataBaseConnector();
+                Books books = connector.read();
+                bookList = books.list();
+                request.setAttribute("bookList", bookList);
         %>
         <TABLE border="4" class="table table-striped table-bordered" cellspacing="0" width="50%">
             <thead>
@@ -46,6 +49,12 @@
                     <td><%=book.getTitle() %></td>
                     <td><%=book.getYear() %></td>
                 </tr>
+                <%
+                    }
+                    }
+                    catch (Exception ex) {
+                        %>
+                  <%=ex.getMessage()%>
                 <%
                     }
                 %>
