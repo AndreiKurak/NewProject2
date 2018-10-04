@@ -25,7 +25,7 @@ public class UpdateCommand implements Command<UpdateCommandOptions, GlobalOption
             dbc.write(books);
         }
         catch (Exception ex){
-            viewModel.setModel("Update-command failed");
+            viewModel.setModel("Update-command failed: " + ex.getMessage());
             viewModel.setViewName("ErrorView");
         }
 

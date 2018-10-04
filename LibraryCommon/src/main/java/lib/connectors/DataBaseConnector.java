@@ -21,9 +21,10 @@ public class DataBaseConnector implements DataConnection {
 
     public Books read(){
         Books books = new Books();
-        
+
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            //Class.forName("com.mysql.jdbc.Driver");
         }
         catch (Exception ex){
             throw new DataConnectionException("jdbc driver registration failed", ex);
@@ -55,9 +56,9 @@ public class DataBaseConnector implements DataConnection {
             while(rs.next())
                 //count=rs.getInt(1);
                 count++;
-            System.out.println("count " + count);
+            System.out.println("count: " + count);
 
-            int ii = 0;
+            int bookIndex = 0;
             if (books.booksList.size() > count){
                 //insert new book
                 prStmt = connection.prepareStatement("INSERT INTO library (id, author, title, year) VALUES(?, ?, ?, ?)");
@@ -69,19 +70,19 @@ public class DataBaseConnector implements DataConnection {
             }
             else if (books.booksList.size() < count) {
                 //find id, delete book
-                rs.first();
+                rs.beforeFirst();
                 prStmt = connection.prepareStatement("DELETE FROM library WHERE id=?");
-                while (rs.next()){
-                    if (books.booksList.get(ii).getId() != rs.getInt("id")){
+                while (rs.next()) {
+                    if (bookIndex >= books.booksList.size() || books.booksList.get(bookIndex).getId() != rs.getInt("id")){
                         prStmt.setInt(1, rs.getInt("id"));
                         prStmt.executeUpdate();
                         break;
                     }
-                    ii++;
+                    bookIndex++;
                 }
             }
             else {
-                //update
+                //update book info
                 rs.first();
                 for (int i = 0; i<books.booksList.size(); i++){
                     if (!Objects.equals(books.booksList.get(i).getAuthor(), rs.getString("author"))

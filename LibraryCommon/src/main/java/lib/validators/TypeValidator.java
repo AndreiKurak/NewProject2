@@ -13,7 +13,7 @@ public class TypeValidator implements OptionValidator{
     public boolean check(String optionValue){
         boolean checkResult = false;
 
-        System.out.println("проверка типа");
+        System.out.println("check of the value type");
         try{
             Integer s2 = Integer.valueOf(optionValue);
             if (Integer.class.isInstance(s2) && Integer.class.isInstance(type)) {

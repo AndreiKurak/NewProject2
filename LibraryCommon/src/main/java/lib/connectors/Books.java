@@ -11,12 +11,20 @@ public class Books implements Serializable {
     List<Book> booksList = new ArrayList<>();
 
     public void add(Book book) {
-        book.setId(booksList.size() + 1);
+        if (booksList.size() != 0)
+            book.setId(booksList.get(booksList.size() - 1).getId() + 1);
+        else
+            book.setId(1);
         booksList.add(book);
     }
 
     public void delete(int bookId) {
-        booksList.remove(bookId);
+        for (Book book : booksList)
+            if (book.getId() == bookId) {
+                booksList.remove(book);
+                break;
+            }
+        //booksList.remove(bookId);
     }
 
     public void update(int id, Book book) {

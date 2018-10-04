@@ -40,7 +40,7 @@ public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
             viewModel.setViewName("ListView");
         }
         catch (Exception ex){
-            viewModel.setModel("List-command failed");
+            viewModel.setModel("List-command failed: " + ex.getMessage());
             viewModel.setViewName("ErrorView");
         }
         return viewModel;

@@ -18,7 +18,7 @@ public class DeleteCommand implements Command<DeleteCommandOptions, GlobalOption
             DataConnection dbc = dcs.select(globalOptions);
             Books books = dbc.read();
 
-            int bookId = Integer.valueOf(options.getId()) - 1;
+            int bookId = Integer.valueOf(options.getId());
             books.delete(bookId);
             dbc.write(books);
 
@@ -26,7 +26,7 @@ public class DeleteCommand implements Command<DeleteCommandOptions, GlobalOption
             viewModel.setViewName("MessageView");
         }
         catch (Exception ex){
-            viewModel.setModel("Delete-command failed");
+            viewModel.setModel("Delete-command failed: " + ex.getMessage());
             viewModel.setViewName("ErrorView");
         }
         return viewModel;

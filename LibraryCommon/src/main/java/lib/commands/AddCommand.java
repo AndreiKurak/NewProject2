@@ -38,7 +38,7 @@ public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
             viewModel.setViewName("MessageView");
         }
         catch (Exception ex){
-            viewModel.setModel("Add-command failed");
+            viewModel.setModel("Add-command failed: " + ex.getMessage());
             viewModel.setViewName("ErrorView");
         }
         return viewModel;

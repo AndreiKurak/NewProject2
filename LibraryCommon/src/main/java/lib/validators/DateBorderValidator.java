@@ -8,7 +8,7 @@ public class DateBorderValidator implements OptionValidator {
 
     public boolean check(String optionValue){
         boolean checkResult = true;
-        System.out.println("проверка значения даты");
+        System.out.println("check of the data value");
 
         Date date = new Date();
         if (1900 + date.getYear() < Integer.valueOf(optionValue))

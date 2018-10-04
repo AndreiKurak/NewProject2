@@ -39,7 +39,7 @@ public class Parser {
                 if (key.contains(option.getName())) {
                     optionsSetter.setOptions(option.getName(), (String) value, command.getCommandOptions());
                     if (option.getValidator() != null && !option.getValidator().check((String) value))
-                        throw new ParseException("Unacceptable option value");
+                        throw new ParseException("Unacceptable option value");  //fix this
                 }
             });
 

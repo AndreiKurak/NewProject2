@@ -15,6 +15,11 @@ public class ConsoleAppRunner {
         viewResolver.addView("ErrorView", ErrorView.class);
 
         ApplicationExecution applicationExecution = new ApplicationExecution();
-        applicationExecution.run(new ConsoleParametersParser(args), new LibraryDescriptor(), viewResolver);
+        try {
+            applicationExecution.run(new ConsoleParametersParser(args), new LibraryDescriptor(), viewResolver);
+        }
+        catch (Exception ex) {
+            
+        }
     }
 }

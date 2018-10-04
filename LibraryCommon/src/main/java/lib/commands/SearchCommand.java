@@ -27,7 +27,7 @@ public class SearchCommand implements Command<SearchCommandOptions, GlobalOption
             }
         }
         catch (Exception ex){
-            viewModel.setModel("Search-command failed");
+            viewModel.setModel("Search-command failed:" + ex.getMessage());
             viewModel.setViewName("ErrorView");                             //java.util.ConcurrentModificationException
         }
         return viewModel;
