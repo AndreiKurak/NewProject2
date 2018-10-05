@@ -1,10 +1,13 @@
 package console_app;
 
+import com.sun.javafx.util.Logging;
 import common.ApplicationExecution;
 import common.views.*;
 import framework_console.ConsoleOutput;
 import framework_console.ConsoleParametersParser;
 import lib.LibraryDescriptor;
+
+import java.util.logging.Logger;
 
 public class ConsoleAppRunner {
 
@@ -15,11 +18,6 @@ public class ConsoleAppRunner {
         viewResolver.addView("ErrorView", ErrorView.class);
 
         ApplicationExecution applicationExecution = new ApplicationExecution();
-        try {
-            applicationExecution.run(new ConsoleParametersParser(args), new LibraryDescriptor(), viewResolver);
-        }
-        catch (Exception ex) {
-            
-        }
+        applicationExecution.run(new ConsoleParametersParser(args), new LibraryDescriptor(), viewResolver);
     }
 }

@@ -2,8 +2,10 @@ package common;
 
 import common.parser.ParametersParser;
 import common.parser.Parser;
-import common.views.ErrorView;
 import common.views.ViewResolver;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ApplicationExecution {
 
@@ -18,6 +20,7 @@ public class ApplicationExecution {
             viewModel = new ViewModel();
             viewModel.setViewName("ErrorView");
             viewModel.setModel("Execution failed: " + ex.getMessage());
+            Logger.getLogger(ApplicationExecution.class.getName()).log(Level.SEVERE, "Exception:", ex);
         }
         if (viewModel == null)
             viewModel = command.getCommand().execute(command.getCommandOptions(), command.getGlobalOptions());

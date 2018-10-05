@@ -9,6 +9,9 @@ import common.views.MessageView;
 import lib.command_options.UpdateCommandOptions;
 import lib.global_options.GlobalOptions;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class UpdateCommand implements Command<UpdateCommandOptions, GlobalOptions> {
 
     public ViewModel execute(UpdateCommandOptions options, GlobalOptions globalOptions) {
@@ -27,6 +30,7 @@ public class UpdateCommand implements Command<UpdateCommandOptions, GlobalOption
         catch (Exception ex){
             viewModel.setModel("Update-command failed: " + ex.getMessage());
             viewModel.setViewName("ErrorView");
+            Logger.getLogger(UpdateCommand.class.getName()).log(Level.SEVERE, "Exception:", ex);
         }
 
         viewModel.setModel("Update-command was performed");

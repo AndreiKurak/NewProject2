@@ -1,5 +1,6 @@
 package lib.commands;
 
+import common.ApplicationExecution;
 import common.Command;
 import lib.connectors.*;
 import common.ViewModel;
@@ -8,6 +9,9 @@ import lib.Book;
 import common.views.MessageView;
 import lib.command_options.AddCommandOptions;
 import lib.global_options.GlobalOptions;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
 
@@ -34,12 +38,13 @@ public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
             books.add(book);
             dbc.write(books);
 
-            viewModel.setModel("Add-command was performed");
+            viewModel.setModel("Add-command was performed:");
             viewModel.setViewName("MessageView");
         }
         catch (Exception ex){
             viewModel.setModel("Add-command failed: " + ex.getMessage());
             viewModel.setViewName("ErrorView");
+            Logger.getLogger(AddCommand.class.getName()).log(Level.SEVERE, "Exception:", ex);
         }
         return viewModel;
     }

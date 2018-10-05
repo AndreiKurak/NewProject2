@@ -29,7 +29,7 @@ public class LibrarianRequestServlet extends HttpServlet {
         viewResolver.addView("MessageView", MessageView.class);
         viewResolver.addView("ListView", ListView.class);
         viewResolver.addView("ErrorView", ErrorView.class);
-    }
+    }        
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

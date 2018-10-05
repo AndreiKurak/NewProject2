@@ -8,6 +8,9 @@ import common.views.MessageView;
 import lib.command_options.DeleteCommandOptions;
 import lib.global_options.GlobalOptions;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class DeleteCommand implements Command<DeleteCommandOptions, GlobalOptions> {
 
     public ViewModel execute(DeleteCommandOptions options, GlobalOptions globalOptions) {
@@ -28,6 +31,7 @@ public class DeleteCommand implements Command<DeleteCommandOptions, GlobalOption
         catch (Exception ex){
             viewModel.setModel("Delete-command failed: " + ex.getMessage());
             viewModel.setViewName("ErrorView");
+            Logger.getLogger(DeleteCommand.class.getName()).log(Level.SEVERE, "Exception:", ex);
         }
         return viewModel;
     }

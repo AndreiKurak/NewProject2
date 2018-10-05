@@ -4,24 +4,21 @@
 <%@ page import="lib.connectors.DataConnection" %>
 <%@ page import="lib.connectors.DataBaseConnector" %>
 <%@ page import="lib.connectors.Books" %>
-<%@ page import="common.views.ErrorView" %>
+<%@ page import="java.util.logging.Logger" %>
+<%@ page import="java.util.logging.Level" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
         <title>InputLibrarianRequestPage</title>
     </head>
     <body>
-        <form action="<c:url value="/pages/input_options.jsp"/>">
-            action: <select name="selection">
-                        <option name="selection" value="add author title year" selected>add</option>
-                        <option name="selection" value="delete id">delete</option>
-                        <option name="selection" value="update id author title year">update</option>
-                        <option name="selection" value="list all authors titles years">list</option>
-                        <option name="selection" value="search author title year">search</option>
-                    </select>
-                
-                <input type="submit" value="confirm">
-        </form>
+        <%
+            String optionsUrl = request.getContextPath() + "/options_input";
+        %>
+            <a href="<%=optionsUrl%>/add_options.jsp?command=add">add</a>
+            <a href="<%=optionsUrl%>/delete_options.jsp?command=delete">delete</a>
+            <a href="<%=optionsUrl%>/update_options.jsp?command=update">update</a>
+            <a href="<%=optionsUrl%>/search_options.jsp?command=search">search</a>
         <%
             List<Book> bookList = null;
             try {
@@ -49,12 +46,16 @@
                     <td><%=book.getTitle() %></td>
                     <td><%=book.getYear() %></td>
                 </tr>
+
                 <%
                     }
                     }
                     catch (Exception ex) {
+                        Logger.getLogger("start_page.jsp").log(Level.SEVERE, "Exception:", ex);
                         %>
-                  <%=ex.getMessage()%>
+                        <p>
+                        <%=ex.getMessage()%>
+                        </p>
                 <%
                     }
                 %>

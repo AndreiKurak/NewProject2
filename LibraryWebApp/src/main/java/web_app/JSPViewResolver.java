@@ -23,9 +23,9 @@ public class JSPViewResolver implements ViewResolver {
         put("ListView", new JSPView("/pages/list.jsp"));
         put("ErrorView", new JSPView("/pages/error.jsp"));
         */
-        put("MessageView", new JSPView("/pages/message.jsp", request, response));
-        put("ListView", new JSPView("/pages/list.jsp", request, response));
-        put("ErrorView", new JSPView("/pages/error.jsp", request, response));
+        put("MessageView", new JSPView("/view_pages/message.jsp", request, response));
+        put("ListView", new JSPView("/view_pages/list.jsp", request, response));
+        put("ErrorView", new JSPView("/view_pages/error.jsp", request, response));
     }};
 
     //public JSPViewResolver() { }

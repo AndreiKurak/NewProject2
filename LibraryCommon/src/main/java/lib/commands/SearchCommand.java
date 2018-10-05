@@ -9,6 +9,9 @@ import common.views.ListView;
 import lib.command_options.SearchCommandOptions;
 import lib.global_options.GlobalOptions;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class SearchCommand implements Command<SearchCommandOptions, GlobalOptions> {
 
     public ViewModel execute(SearchCommandOptions options, GlobalOptions globalOptions) {
@@ -29,6 +32,7 @@ public class SearchCommand implements Command<SearchCommandOptions, GlobalOption
         catch (Exception ex){
             viewModel.setModel("Search-command failed:" + ex.getMessage());
             viewModel.setViewName("ErrorView");                             //java.util.ConcurrentModificationException
+            Logger.getLogger(SearchCommand.class.getName()).log(Level.SEVERE, "Exception:", ex);
         }
         return viewModel;
     }
