@@ -38,7 +38,7 @@ public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
             books.add(book);
             dbc.write(books);
 
-            viewModel.setModel("Add-command was performed:");
+            viewModel.setModel("Add-command was performed");
             viewModel.setViewName("MessageView");
         }
         catch (Exception ex){

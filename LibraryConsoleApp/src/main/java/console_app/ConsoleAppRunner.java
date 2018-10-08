@@ -1,13 +1,10 @@
 package console_app;
 
-import com.sun.javafx.util.Logging;
 import common.ApplicationExecution;
 import common.views.*;
 import framework_console.ConsoleOutput;
 import framework_console.ConsoleParametersParser;
 import lib.LibraryDescriptor;
-
-import java.util.logging.Logger;
 
 public class ConsoleAppRunner {
 

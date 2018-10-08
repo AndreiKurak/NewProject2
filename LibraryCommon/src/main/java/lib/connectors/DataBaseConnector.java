@@ -19,6 +19,16 @@ public class DataBaseConnector implements DataConnection {
         url += databaseName + "?serverTimezone=UTC";
     }
 
+    public void initializeTable() {
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS library(id int(11), author varchar(128), title varchar(128), year varchar(128))");
+        }
+        catch (Exception ex) {
+            throw new DataConnectionException("Error during table initialization", ex);
+        }
+    }
+
     public Books read(){
         Books books = new Books();
 
@@ -29,7 +39,8 @@ public class DataBaseConnector implements DataConnection {
         catch (Exception ex){
             throw new DataConnectionException("jdbc driver registration failed", ex);
         }
-
+        initializeTable();
+        
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM library")) {
