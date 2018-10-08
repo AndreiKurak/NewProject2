@@ -2,9 +2,7 @@ package lib.commands;
 
 import common.Command;
 import common.ViewModel;
-import common.views.ErrorView;
 import lib.Book;
-import common.views.ListView;
 import lib.connectors.*;
 import lib.command_options.ListCommandOptions;
 import lib.global_options.GlobalOptions;

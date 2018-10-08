@@ -3,8 +3,6 @@ package lib.commands;
 import common.Command;
 import lib.connectors.*;
 import common.ViewModel;
-import common.views.ErrorView;
-import common.views.MessageView;
 import lib.command_options.DeleteCommandOptions;
 import lib.global_options.GlobalOptions;
 

@@ -36,7 +36,7 @@ public class OutputWindowViewResolver implements ViewResolver {
                 viewMap.replace(key, value.getClass().getConstructor(OutputWindowView.class).newInstance(outputWindowView));
             }
             catch (Exception ex) {
-                throw new RuntimeException("Replacement failed", ex);
+                throw new RuntimeException("View replacement failed", ex);
             }
         });
     }

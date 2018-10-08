@@ -33,7 +33,6 @@ public class ConsoleParametersParser implements ParametersParser {
                 commandOptions.put(input[i].substring(0, input[i].indexOf(EQUALITY)), input[i].substring(input[i].indexOf(EQUALITY) + 1));
             else
                 commandOptions.put(input[i], input[i]);
-
     }
 
     @Override

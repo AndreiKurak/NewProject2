@@ -1,10 +1,7 @@
 package web_app;
 
 import common.ApplicationExecution;
-import common.ViewModel;
 
-import common.views.*;
-import framework_web.WebPageOutput;
 import framework_web.WebParametersParser;
 import lib.LibraryDescriptor;
 
@@ -14,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
 
 @WebServlet("/librarian_request")
 public class LibrarianRequestServlet extends HttpServlet {

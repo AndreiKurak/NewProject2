@@ -13,7 +13,7 @@ public class JSPViewResolver implements ViewResolver {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    private Map<String, View> viewsMap = new HashMap<String, View>(){{
+    private Map<String, JSPView> viewsMap = new HashMap<String, JSPView>(){{
         put("MessageView", new JSPView("/view_pages/message.jsp"));
         put("ListView", new JSPView("/view_pages/list.jsp"));
         put("ErrorView", new JSPView("/view_pages/error.jsp"));
@@ -30,14 +30,14 @@ public class JSPViewResolver implements ViewResolver {
         return viewsMap.get(viewName);
     }
 
-    public void addView(String viewName, View view) {
+    public void addView(String viewName, JSPView view) {
         viewsMap.put(viewName, view);
     }
 
     public void setServletArguments(HttpServletRequest request, HttpServletResponse response) {
         viewsMap.forEach((key, value) -> {
             try {
-                viewsMap.replace(key, new JSPView(((JSPView)value).getPageAddress(), request, response));
+                viewsMap.replace(key, new JSPView(value.getPageAddress(), request, response));
             }
             catch (Exception ex) {
                 throw new RuntimeException("Replacement failed", ex);

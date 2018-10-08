@@ -3,9 +3,7 @@ package lib.commands;
 import common.Command;
 import lib.connectors.*;
 import common.ViewModel;
-import common.views.ErrorView;
 import lib.Book;
-import common.views.ListView;
 import lib.command_options.SearchCommandOptions;
 import lib.global_options.GlobalOptions;
 

@@ -24,7 +24,6 @@ public class Books implements Serializable {
                 booksList.remove(book);
                 break;
             }
-        //booksList.remove(bookId);
     }
 
     public void update(int id, Book book) {

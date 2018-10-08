@@ -1,6 +1,7 @@
 package framework_web;
 
 import common.parser.ParametersParser;
+import common.parser.ParseException;
 
 import java.util.*;
 
@@ -11,6 +12,9 @@ public class WebParametersParser implements ParametersParser {
     private Map<String, Object> globalOptions = new HashMap<>();
 
     public WebParametersParser(Map<String, String[]> inputMap) {
+        if (inputMap.isEmpty())
+            throw new ParseException("Request parameters not found");
+
         command = inputMap.get("command")[0];
 
         inputMap.forEach((key, value) -> {

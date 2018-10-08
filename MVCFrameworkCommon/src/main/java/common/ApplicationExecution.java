@@ -11,6 +11,7 @@ public class ApplicationExecution {
 
     public void run(ParametersParser parametersParser, ApplicationDescriptor descriptor, ViewResolver viewResolver){
         Parser parser = new Parser();
+
         CommandWithOptions command = null;
         ViewModel viewModel = null;
         try {

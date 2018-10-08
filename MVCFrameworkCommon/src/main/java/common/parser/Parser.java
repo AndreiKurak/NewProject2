@@ -6,8 +6,6 @@ import common.descriptions.CommandDescription;
 import common.options_setter.OptionsSetter;
 import common.descriptions.OptionDescription;
 
-import java.util.*;
-
 public class Parser {
     
     public CommandWithOptions parse(ParametersParser parametersParser, ApplicationDescriptor applicationDescriptor) {
@@ -39,7 +37,7 @@ public class Parser {
                 if (key.contains(option.getName())) {
                     optionsSetter.setOptions(option.getName(), (String) value, command.getCommandOptions());
                     if (option.getValidator() != null && !option.getValidator().check((String) value))
-                        throw new ParseException("Unacceptable option value");  //fix this
+                        throw new ParseException("Unacceptable option value");
                 }
             });
 

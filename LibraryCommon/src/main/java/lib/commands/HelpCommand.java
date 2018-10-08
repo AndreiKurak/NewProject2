@@ -3,7 +3,6 @@ package lib.commands;
 import common.*;
 import common.descriptions.CommandDescription;
 import lib.LibraryDescriptor;
-import common.views.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
