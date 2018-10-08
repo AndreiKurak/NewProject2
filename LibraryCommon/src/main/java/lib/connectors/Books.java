@@ -44,20 +44,17 @@ public class Books implements Serializable {
 
     public List<Book> search(Book searchBook) {
         List<Book> searchResult = new ArrayList<>();
-        searchResult.addAll(booksList);
-
-        for (Book book : searchResult){
+        for (Book book : booksList) {
             if (searchBook.getAuthor() != null && !book.getAuthor().equals(searchBook.getAuthor())) {
-                searchResult.remove(book);
                 continue;
             }
             if (searchBook.getTitle() != null && !book.getTitle().equals(searchBook.getTitle())) {
-                searchResult.remove(book);
                 continue;
             }
             if (searchBook.getYear() != null && !book.getYear().equals(searchBook.getYear())) {
-                searchResult.remove(book);
+                continue;
             }
+            searchResult.add(book);
         }
         if (searchResult.isEmpty())
             return null;
