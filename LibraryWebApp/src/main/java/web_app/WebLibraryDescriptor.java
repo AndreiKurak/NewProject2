@@ -1,4 +1,4 @@
-package lib;
+package web_app;
 
 import common.ApplicationDescriptor;
 import common.descriptions.CommandDescription;
@@ -13,7 +13,7 @@ import lib.validators.TypeValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryDescriptor implements ApplicationDescriptor {
+public class WebLibraryDescriptor implements ApplicationDescriptor {
 
     GlobalOptions globalOptions = new GlobalOptions();
 
@@ -22,19 +22,15 @@ public class LibraryDescriptor implements ApplicationDescriptor {
         add(new OptionDescription("database"));
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
-
     private List<CommandDescription> commandsDescription = new ArrayList<CommandDescription>(){{
-    /*
         add(new CommandDescriptionBuilder("add").
-            setDescription("command, that is used for adding new books to the library").
                 setOptionsDescription(new OptionDescription("author").setMandatoryTrue().addValidator(new TypeValidator(new String())),
                         new OptionDescription("title").setMandatoryTrue().addValidator(new TypeValidator(new String())),
                         new OptionDescription("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator())).
-            setCommand(AddCommand.class).
-            setCommandOptions(AddCommandOptions.class).
-            createCommand());
+                setCommand(AddCommand.class).
+                setCommandOptions(AddCommandOptions.class).
+                createCommand());
         add(new CommandDescriptionBuilder("search").
-                setDescription("command, that is used for finding required book").
                 setOptionsDescription(new OptionDescription("author").addValidator(new TypeValidator(new String())),
                         new OptionDescription("title").addValidator(new TypeValidator(new String())),
                         new OptionDescription("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator())).
@@ -42,18 +38,15 @@ public class LibraryDescriptor implements ApplicationDescriptor {
                 setCommandOptions(SearchCommandOptions.class).
                 createCommand());
         add(new CommandDescriptionBuilder("delete").
-                setDescription("command, that is used for removing unnecessary or doubtful records").
                 setOptionsDescription(new OptionDescription("id").addValidator(new TypeValidator(new Integer(0)))).
                 setCommand(DeleteCommand.class).
                 setCommandOptions(DeleteCommandOptions.class).
                 createCommand());
         add(new CommandDescriptionBuilder("list").
-                setDescription("command, that is used to display the list with specified parameters").
                 setCommand(ListCommand.class).
                 setCommandOptions(ListCommandOptions.class).
                 createCommand());
         add(new CommandDescriptionBuilder("update").
-                setDescription("command, that is used for rewriting some information").
                 setOptionsDescription(new OptionDescription("author").addValidator(new TypeValidator(new String())),
                         new OptionDescription("title").addValidator(new TypeValidator(new String())),
                         new OptionDescription("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator()),
@@ -61,11 +54,6 @@ public class LibraryDescriptor implements ApplicationDescriptor {
                 setCommand(UpdateCommand.class).
                 setCommandOptions(UpdateCommandOptions.class).
                 createCommand());
-        add(new CommandDescriptionBuilder("help").
-            setDescription("command, that is used for showing information about commandsDescription and options").
-            setCommand(HelpCommand.class).
-            createCommand());
-    */
     }};
 
     public List<CommandDescription> getCommandsDescriptionList(){ //commandDescription

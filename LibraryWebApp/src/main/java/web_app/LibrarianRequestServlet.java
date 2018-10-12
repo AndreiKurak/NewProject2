@@ -33,6 +33,6 @@ public class LibrarianRequestServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //viewResolver.setOutputWindowView(new WebPageOutput(response.getWriter()));
         viewResolver.setServletArguments(request, response);
-        applicationExecution.run(new WebParametersParser(request.getParameterMap()), new LibraryDescriptor(), viewResolver);
+        applicationExecution.run(new WebParametersParser(request.getParameterMap()), new WebLibraryDescriptor(), viewResolver);
     }
 }

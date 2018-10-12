@@ -1,4 +1,4 @@
-package lib;
+package console_app;
 
 import common.ApplicationDescriptor;
 import common.descriptions.CommandDescription;
@@ -13,7 +13,7 @@ import lib.validators.TypeValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryDescriptor implements ApplicationDescriptor {
+public class ConsoleLibraryDescriptor implements ApplicationDescriptor {
 
     GlobalOptions globalOptions = new GlobalOptions();
 
@@ -22,17 +22,15 @@ public class LibraryDescriptor implements ApplicationDescriptor {
         add(new OptionDescription("database"));
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
-
     private List<CommandDescription> commandsDescription = new ArrayList<CommandDescription>(){{
-    /*
         add(new CommandDescriptionBuilder("add").
-            setDescription("command, that is used for adding new books to the library").
+                setDescription("command, that is used for adding new books to the library").
                 setOptionsDescription(new OptionDescription("author").setMandatoryTrue().addValidator(new TypeValidator(new String())),
                         new OptionDescription("title").setMandatoryTrue().addValidator(new TypeValidator(new String())),
                         new OptionDescription("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator())).
-            setCommand(AddCommand.class).
-            setCommandOptions(AddCommandOptions.class).
-            createCommand());
+                setCommand(AddCommand.class).
+                setCommandOptions(AddCommandOptions.class).
+                createCommand());
         add(new CommandDescriptionBuilder("search").
                 setDescription("command, that is used for finding required book").
                 setOptionsDescription(new OptionDescription("author").addValidator(new TypeValidator(new String())),
@@ -62,10 +60,9 @@ public class LibraryDescriptor implements ApplicationDescriptor {
                 setCommandOptions(UpdateCommandOptions.class).
                 createCommand());
         add(new CommandDescriptionBuilder("help").
-            setDescription("command, that is used for showing information about commandsDescription and options").
-            setCommand(HelpCommand.class).
-            createCommand());
-    */
+                setDescription("command, that is used for showing information about commandsDescription and options").
+                setCommand(HelpCommand.class).
+                createCommand());
     }};
 
     public List<CommandDescription> getCommandsDescriptionList(){ //commandDescription
