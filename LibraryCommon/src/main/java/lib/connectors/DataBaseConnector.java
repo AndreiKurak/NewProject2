@@ -1,5 +1,6 @@
 package lib.connectors;
 
+import com.mysql.jdbc.Driver;
 import lib.Book;
 
 import java.sql.*;
@@ -33,11 +34,17 @@ public class DataBaseConnector implements DataConnection {
         Books books = new Books();
 
         try {
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            //Class.forName("com.mysql.jdbc.Driver");
+            DriverManager.getDriver(url);
         }
         catch (Exception ex){
-            throw new DataConnectionException("jdbc driver registration failed", ex);
+            try {
+                //System.out.println("load...");
+                Class.forName("com.mysql.jdbc.Driver");
+                //DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            }
+            catch (Exception ex2) {
+                throw new DataConnectionException("jdbc driver registration failed", ex2);
+            }
         }
         initializeTable();
         

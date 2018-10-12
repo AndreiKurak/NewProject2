@@ -7,7 +7,7 @@
     <body>
         <%= request.getAttribute("view") %>
         <p>
-            <a href="/library/pages/start_page.jsp">Start Page</a>
+            <a href=<%=request.getContextPath()%>>Start Page</a>
         </p>
     </body>
 </html>

@@ -47,10 +47,6 @@ public class LibraryDescriptor implements ApplicationDescriptor {
                 createCommand());
         add(new CommandDescriptionBuilder("list").
                 setDescription("command, that is used to display the list with specified parameters").
-                setOptionsDescription(new OptionDescription("authors"),
-                        new OptionDescription("titles"),
-                        new OptionDescription("years"),
-                        new OptionDescription("all")).
                 setCommand(ListCommand.class).
                 setCommandOptions(ListCommandOptions.class).
                 createCommand());

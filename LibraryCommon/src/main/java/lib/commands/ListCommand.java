@@ -20,23 +20,9 @@ public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
         DataConnectionSelector dcs = new DataConnectionSelector();
         try{
             DataConnection dbc = dcs.select(globalOptions);
-            Books books = dbc.read();
+            Books books = new DataBaseConnector().read();//dbc.read();
 
-            if (options.getAll() != null) {
-                viewModel.setModel(books.list());
-            }
-            else{
-                List<String> singleParameters = new ArrayList<>();
-                for (Book book : books.list()){
-                    if (options.getAuthors() != null)
-                        singleParameters.add(book.getAuthor());
-                    if (options.getTitles() != null)
-                        singleParameters.add(book.getTitle());
-                    if (options.getYears() != null)
-                        singleParameters.add(book.getYear());
-                }
-            viewModel.setModel(singleParameters);
-            }
+            viewModel.setModel(books.list());
             viewModel.setViewName("ListView");
         }
         catch (Exception ex){
