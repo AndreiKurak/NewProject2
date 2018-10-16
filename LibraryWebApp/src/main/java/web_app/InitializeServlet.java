@@ -27,9 +27,4 @@ public class InitializeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/pages/start_page.jsp").forward(req, resp);
     }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
 }
