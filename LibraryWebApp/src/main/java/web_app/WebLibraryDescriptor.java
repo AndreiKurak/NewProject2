@@ -18,7 +18,6 @@ public class WebLibraryDescriptor implements ApplicationDescriptor {
     GlobalOptions globalOptions = new GlobalOptions();
 
     private List<OptionDescription> globalOptionsDescription = new ArrayList<OptionDescription>(){{
-        add(new OptionDescription("file"));
         add(new OptionDescription("database"));
     }};
     ////////////////////////////////////////////////////////////////////////////////////////

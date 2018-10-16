@@ -4,8 +4,7 @@
         <title>Input options of command Delete</title>
     </head>
     <body>
-        <form action="${pageContext.request.contextPath}/librarian_request" method="post">
-            <input name="command" value="<%=request.getParameter("command")%>" type="text" hidden>
+        <form action="${pageContext.request.contextPath}/showCommand/delete" method="post">
             <table>
                 <tr>
                     <td>id</td>

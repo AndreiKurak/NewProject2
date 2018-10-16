@@ -3,6 +3,7 @@ package framework_web;
 import common.parser.ParametersParser;
 import common.parser.ParseException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 public class WebParametersParser implements ParametersParser {
@@ -11,14 +12,15 @@ public class WebParametersParser implements ParametersParser {
     private Map<String, Object> commandOptions = new HashMap<>();
     private Map<String, Object> globalOptions = new HashMap<>();
 
-    public WebParametersParser(Map<String, String[]> inputMap) {
+    public WebParametersParser(HttpServletRequest req) {
+        Map<String, String[]> inputMap = req.getParameterMap();
         if (inputMap.isEmpty())
-            throw new ParseException("Request parameters not found");
+            throw new ParseException("Command options not found");
 
-        command = inputMap.get("command")[0];
+        command = req.getPathInfo().replace("/", "");
 
         inputMap.forEach((key, value) -> {
-            if (value[0] != "" && !value[0].equals(command))
+            if (value[0] != "")
                 commandOptions.put(key, value[0]);
         });
 

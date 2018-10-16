@@ -10,14 +10,12 @@
     </head>
     <body>
         <%
-            String optionsUrl = request.getContextPath() + "/options_input";
             String url = request.getContextPath();
         %>
-            <a href="<%=url%>/showAddCommand">add</a>
-            <a href="<%=optionsUrl%>/add_options.jsp?command=add">add</a>
-            <a href="<%=optionsUrl%>/delete_options.jsp?command=delete">delete</a>
-            <a href="<%=optionsUrl%>/update_options.jsp?command=update">update</a>
-            <a href="<%=optionsUrl%>/search_options.jsp?command=search">search</a>
+            <a href="<%=url%>/showCommand/add">add</a>
+            <a href="<%=url%>/showCommand/delete">delete</a>
+            <a href="<%=url%>/showCommand/update">update</a>
+            <a href="<%=url%>/showCommand/search">search</a>
         <%
             List<Book> bookList = (List<Book>) new ListCommand().execute(null, new GlobalOptions()).getModel();
         %>

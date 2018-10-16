@@ -13,7 +13,7 @@ public class DataBaseConnector implements DataConnection {
     private static final String password = "1234A5";
 
     public DataBaseConnector() {
-        url += "doc_register?serverTimezone=UTC";
+        url += "doc_register?serverTimezone=UTC&useSSL=false";
     }
 
     public DataBaseConnector(String databaseName) {
@@ -32,20 +32,6 @@ public class DataBaseConnector implements DataConnection {
 
     public Books read(){
         Books books = new Books();
-
-        try {
-            DriverManager.getDriver(url);
-        }
-        catch (Exception ex){
-            try {
-                //System.out.println("load...");
-                Class.forName("com.mysql.jdbc.Driver");
-                //DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            }
-            catch (Exception ex2) {
-                throw new DataConnectionException("jdbc driver registration failed", ex2);
-            }
-        }
         initializeTable();
         
         try (Connection connection = DriverManager.getConnection(url, user, password);

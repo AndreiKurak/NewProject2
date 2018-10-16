@@ -4,8 +4,7 @@
         <title>Input options of command Add</title>
     </head>
     <body>
-        <form action="${pageContext.request.contextPath}/librarian_request" method="post">
-            <input name="command" value="<%=request.getParameter("command")%>" type="text" hidden>
+        <form action="${pageContext.request.contextPath}/showCommand/add" method="post">
             <table>
                 <tr>
                     <td>author</td>
@@ -24,6 +23,13 @@
                     <td><input type="submit" value="confirm"></td>
                 </tr>
             </table>
+            <%
+                if (request.getAttribute("view") != null) {
+            %>
+                    <%=request.getAttribute("view")%>
+            <%
+                }
+            %>
         </form>
     </body>
 </html>

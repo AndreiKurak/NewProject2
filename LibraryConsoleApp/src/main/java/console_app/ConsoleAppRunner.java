@@ -1,6 +1,7 @@
 package console_app;
 
 import common.ApplicationExecution;
+import common.ViewModel;
 import common.views.*;
 import framework_console.ConsoleOutput;
 import framework_console.ConsoleParametersParser;
@@ -15,6 +16,10 @@ public class ConsoleAppRunner {
         viewResolver.addView("ErrorView", ErrorView.class);
 
         ApplicationExecution applicationExecution = new ApplicationExecution();
-        applicationExecution.run(new ConsoleParametersParser(args), new ConsoleLibraryDescriptor(), viewResolver);
+        ViewModel viewModel = applicationExecution.run(new ConsoleParametersParser(args), new ConsoleLibraryDescriptor(), viewResolver);
+
+        if (viewModel != null) {
+            viewResolver.getView(viewModel.getViewName()).showResult(viewModel.getModel());
+        }
     }
 }
