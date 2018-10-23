@@ -16,10 +16,6 @@ public class ConsoleAppRunner {
         viewResolver.addView("ErrorView", ErrorView.class);
 
         ApplicationExecution applicationExecution = new ApplicationExecution();
-        ViewModel viewModel = applicationExecution.run(new ConsoleParametersParser(args), new ConsoleLibraryDescriptor(), viewResolver);
-
-        if (viewModel != null) {
-            viewResolver.getView(viewModel.getViewName()).showResult(viewModel.getModel());
-        }
+        applicationExecution.run(new ConsoleParametersParser(args), new ConsoleLibraryDescriptor(), viewResolver);
     }
 }

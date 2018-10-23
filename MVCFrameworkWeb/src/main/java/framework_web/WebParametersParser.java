@@ -17,7 +17,7 @@ public class WebParametersParser implements ParametersParser {
         if (inputMap.isEmpty())
             throw new ParseException("Command options not found");
 
-        command = req.getPathInfo().replace("/", "");
+        command = req.getServletPath().replace("/", "").replaceAll(".do", "");
 
         inputMap.forEach((key, value) -> {
             if (value[0] != "")

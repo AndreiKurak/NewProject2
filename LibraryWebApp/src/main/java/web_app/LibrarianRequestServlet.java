@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/showCommand/*")
+@WebServlet("*.do")
 public class LibrarianRequestServlet extends HttpServlet {
     
     private ApplicationExecution applicationExecution = new ApplicationExecution();
@@ -26,17 +26,13 @@ public class LibrarianRequestServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher( "/options_input" + req.getPathInfo() + "_options.jsp").forward(req, resp);
+        req.getRequestDispatcher( "/options_input" + req.getServletPath().
+            replace(".do", "") + "_options.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         viewResolver.setServletArguments(request, response);
-        ViewModel viewModel = applicationExecution.run(new WebParametersParser(request), new WebLibraryDescriptor(), viewResolver);
-        
-        if (viewModel != null) {
-            request.setAttribute("view", viewModel.getModel());
-            doGet(request, response);
-        }
+        applicationExecution.run(new WebParametersParser(request), new WebLibraryDescriptor(), viewResolver);
     }
 }

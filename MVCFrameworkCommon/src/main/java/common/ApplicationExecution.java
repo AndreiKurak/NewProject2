@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public class ApplicationExecution {
 
-    public ViewModel run(ParametersParser parametersParser, ApplicationDescriptor descriptor, ViewResolver viewResolver){
+    public void run(ParametersParser parametersParser, ApplicationDescriptor descriptor, ViewResolver viewResolver){
         Parser parser = new Parser();
 
         CommandWithOptions command = null;
@@ -23,13 +23,9 @@ public class ApplicationExecution {
             viewModel.setModel("Execution failed: " + ex.getMessage());
             Logger.getLogger(ApplicationExecution.class.getName()).log(Level.SEVERE, "Exception:", ex);
         }
-        ////////////////
-        if (viewModel != null) { //go to jsp page with options
-            return viewModel;
-        }
-        ////////////////
-        //if (viewModel == null)
-        viewModel = command.getCommand().execute(command.getCommandOptions(), command.getGlobalOptions());
+
+        if (viewModel == null)
+            viewModel = command.getCommand().execute(command.getCommandOptions(), command.getGlobalOptions());
 
         if (viewModel.getViewName() != null) {
             viewResolver.getView(viewModel.getViewName()).showResult(viewModel.getModel());
@@ -37,6 +33,5 @@ public class ApplicationExecution {
         else {
             viewResolver.getView("ErrorView").showResult("View is not specified");
         }
-        return null;
     }
 }

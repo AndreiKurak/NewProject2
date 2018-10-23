@@ -7,15 +7,16 @@
 <html>
     <head>
         <title>InputLibrarianRequestPage</title>
+        <h2>Library</h2>
     </head>
     <body>
         <%
             String url = request.getContextPath();
         %>
-            <a href="<%=url%>/showCommand/add">add</a>
-            <a href="<%=url%>/showCommand/delete">delete</a>
-            <a href="<%=url%>/showCommand/update">update</a>
-            <a href="<%=url%>/showCommand/search">search</a>
+            <a href="<%=url%>/add.do">add</a>
+            <a href="<%=url%>/delete.do">delete</a>
+            <a href="<%=url%>/update.do">update</a>
+            <a href="<%=url%>/search.do">search</a>
         <%
             List<Book> bookList = (List<Book>) new ListCommand().execute(null, new GlobalOptions()).getModel();
         %>
