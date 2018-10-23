@@ -11,9 +11,10 @@ function validateChain() {
 function validateString(name, val) {
     var error = "Error: you wrote wrong value, must be string";
     if (!isNaN(parseFloat(val)) && isFinite(val))
-        document.getElementById(name).innerHTML = error;
+        //document.getElementById(name).innerHTML = error;
+        document.querySelector(`#${name}`).innerHTML = error;
     else {
-        document.getElementById(name).innerHTML = document.getElementById(name).innerHTML.replace(error, "");
+        document.querySelector(`#${name}`).innerHTML = document.querySelector(`#${name}`).innerHTML.replace(error, "");
         return true;
     }
     return false;
@@ -22,9 +23,9 @@ function validateString(name, val) {
 function validateNumber(name, val) {
     var error = "Error: you wrote wrong value, must be number";
     if (/[^[0-9]/.test(val))
-        document.getElementById(name).innerHTML = error;
+        document.querySelector(`#${name}`).innerHTML = error;
     else {
-        document.getElementById(name).innerHTML = document.getElementById(name).innerHTML.replace(error, "");
+        document.querySelector(`#${name}`).innerHTML = document.querySelector(`#${name}`).innerHTML.replace(error, "");
         return true;
     }
     return false;
@@ -33,9 +34,9 @@ function validateNumber(name, val) {
 function validateDate(name, val) {
     var error = "Error: you wrote number out of data range";
     if (val > new Date().getFullYear())
-        document.getElementById(name).innerHTML = error;
+        document.querySelector(`#${name}`).innerHTML = error;
     else {
-        document.getElementById(name).innerHTML = document.getElementById(name).innerHTML.replace(error, "");
+        document.querySelector(`#${name}`).innerHTML = document.querySelector(`#${name}`).innerHTML.replace(error, "");
         return true;
     }
     return false;
