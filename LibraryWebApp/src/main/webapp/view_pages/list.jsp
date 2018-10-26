@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="lib.Book" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -5,7 +7,14 @@
         <H2>List of books</H2>
     </head>
     <body>
-        <%= request.getAttribute("view") %>
+        <%
+            List<Book> books = (List<Book>) request.getAttribute("view");
+            for (Book book : books) {
+        %>
+            <p><%=book%></p>
+        <%
+            }
+        %>
         <p>
             <a href="<%=request.getContextPath()%>/home">Home Page</a>
         </p>
