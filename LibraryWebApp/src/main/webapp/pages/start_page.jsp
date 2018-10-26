@@ -13,10 +13,12 @@
         <%
             String url = request.getContextPath();
         %>
-            <a href="<%=url%>/add.do">add</a>
-            <a href="<%=url%>/delete.do">delete</a>
-            <a href="<%=url%>/update.do">update</a>
-            <a href="<%=url%>/search.do">search</a>
+        <%if (request.getAttribute("view") != null)%><%= request.getAttribute("view") %>
+        <p>
+        <a href="<%=url%>/add.do">add</a>
+        <a href="<%=url%>/delete.do">delete</a>
+        <a href="<%=url%>/update.do">update</a>
+        <a href="<%=url%>/search.do">search</a>
         <%
             List<Book> bookList = (List<Book>) new ListCommand().execute(null, new GlobalOptions()).getModel();
         %>

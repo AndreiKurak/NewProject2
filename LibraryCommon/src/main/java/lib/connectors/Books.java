@@ -26,15 +26,19 @@ public class Books implements Serializable {
             }
     }
 
-    public void update(int id, Book book) {
-        if (book.getAuthor() != null){
-            booksList.get(id).setAuthor(book.getAuthor());
-        }
-        if (book.getTitle() != null){
-            booksList.get(id).setTitle(book.getTitle());
-        }
-        if (book.getYear() != null){
-            booksList.get(id).setYear(book.getYear());
+    public void update(int id, Book updateBook) {
+        for (Book book : booksList) {
+            if (book.getId() == id) {
+                if (updateBook.getAuthor() != null) {
+                    book.setAuthor(updateBook.getAuthor());
+                }
+                if (updateBook.getTitle() != null) {
+                    book.setTitle(updateBook.getTitle());
+                }
+                if (updateBook.getYear() != null) {
+                    book.setYear(updateBook.getYear());
+                }
+            }
         }
     }
 
@@ -45,13 +49,13 @@ public class Books implements Serializable {
     public List<Book> search(Book searchBook) {
         List<Book> searchResult = new ArrayList<>();
         for (Book book : booksList) {
-            if (searchBook.getAuthor() != null && !book.getAuthor().equals(searchBook.getAuthor())) {
+            if (searchBook.getAuthor() != null && !searchBook.getAuthor().equals(book.getAuthor())) {
                 continue;
             }
-            if (searchBook.getTitle() != null && !book.getTitle().equals(searchBook.getTitle())) {
+            if (searchBook.getTitle() != null && !searchBook.getTitle().equals(book.getTitle())) {
                 continue;
             }
-            if (searchBook.getYear() != null && !book.getYear().equals(searchBook.getYear())) {
+            if (searchBook.getYear() != null && !searchBook.getYear().equals(book.getYear())) {
                 continue;
             }
             searchResult.add(book);

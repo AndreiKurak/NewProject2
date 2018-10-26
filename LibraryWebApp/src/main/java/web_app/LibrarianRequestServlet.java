@@ -3,6 +3,7 @@ package web_app;
 import common.ApplicationExecution;
 
 import common.ViewModel;
+import framework_web.JSPView;
 import framework_web.WebParametersParser;
 
 import javax.servlet.ServletException;
@@ -28,6 +29,8 @@ public class LibrarianRequestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher( "/options_input" + req.getServletPath().
             replace(".do", "") + "_options.jsp").forward(req, resp);
+        viewResolver.addView("ErrorView", new JSPView("/options_input" + req.getServletPath().
+                replace(".do", "") + "_options.jsp", req, resp));
     }
 
     @Override

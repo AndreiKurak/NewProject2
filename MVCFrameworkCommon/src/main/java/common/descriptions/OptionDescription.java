@@ -2,6 +2,8 @@ package common.descriptions;
 
 import common.validators.OptionValidator;
 import common.validators.ValidatorsChain;
+import common.validators2.OptionValidator2;
+import common.validators2.ValidatorsChain2;
 
 import java.util.Arrays;
 
@@ -10,6 +12,7 @@ public class OptionDescription {
     private String name;
     private boolean isMandatory = false;
     private OptionValidator validator;
+    private OptionValidator2 validator2;
 
     public OptionDescription(String name) {
         this.name = name;
@@ -46,6 +49,10 @@ public class OptionDescription {
         return validator;
     }
 
+    public OptionValidator2 getValidator2() {
+        return validator2;
+    }
+
     public void setValidator(OptionValidator validator) {
         this.validator = validator;
     }
@@ -57,6 +64,16 @@ public class OptionDescription {
 
     public OptionDescription addValidator(OptionValidator... validators) {
         this.validator = new ValidatorsChain(Arrays.asList(validators));
+        return this;
+    }
+
+    public OptionDescription addValidator(OptionValidator2 validator) {
+        this.validator2 = validator;
+        return this;
+    }
+
+    public OptionDescription addValidator(OptionValidator2... validators) {
+        this.validator2 = new ValidatorsChain2(Arrays.asList(validators));
         return this;
     }
 

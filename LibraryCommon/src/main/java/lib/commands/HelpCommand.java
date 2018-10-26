@@ -13,10 +13,10 @@ public class HelpCommand implements Command {
         ViewModel<List> viewModel = new ViewModel<>();
 
         List<CommandDescription> commandsInfo = new ArrayList<>();
-        LibraryDescriptor libraryDescriptor = new LibraryDescriptor();
+        LibraryDescriptor libraryDescriptor = new LibraryDescriptor(); /*
         for (int i = 0; i< libraryDescriptor.getCommandsDescriptionList().size(); i++){
             commandsInfo.add(libraryDescriptor.getCommandsDescriptionList().get(i));
-        }
+        }                                                                */
         viewModel.setModel(commandsInfo);
         viewModel.setViewName("ListView");
         System.out.println("\n" + libraryDescriptor.getGlobalOptionsDescriptionList());

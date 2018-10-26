@@ -5,6 +5,7 @@ import lib.connectors.*;
 import common.ViewModel;
 import lib.command_options.DeleteCommandOptions;
 import lib.global_options.GlobalOptions;
+import lib.validators2.Validator;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,15 +17,20 @@ public class DeleteCommand implements Command<DeleteCommandOptions, GlobalOption
 
         DataConnectionSelector dcs = new DataConnectionSelector();
         try{
-            DataConnection dbc = dcs.select(globalOptions);
-            Books books = dbc.read();
+            viewModel.setModel(new Validator().validate(options, "delete"));
+            if (viewModel.getModel() == null) {
+                DataConnection dbc = dcs.select(globalOptions);
+                Books books = dbc.read();
 
-            int bookId = Integer.valueOf(options.getId());
-            books.delete(bookId);
-            dbc.write(books);
+                int bookId = Integer.valueOf(options.getId());
+                books.delete(bookId);
+                dbc.write(books);
 
-            viewModel.setModel("Delete-command was performed");
-            viewModel.setViewName("MessageView");
+                viewModel.setModel("Delete-command was performed");
+                viewModel.setViewName("MessageView");
+            }
+            else
+                viewModel.setViewName("ErrorView");
         }
         catch (Exception ex){
             viewModel.setModel("Delete-command failed: " + ex.getMessage());

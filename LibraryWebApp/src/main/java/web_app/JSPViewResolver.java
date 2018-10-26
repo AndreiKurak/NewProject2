@@ -14,7 +14,7 @@ public class JSPViewResolver implements ViewResolver {
     private HttpServletResponse response;
 
     private Map<String, JSPView> viewsMap = new HashMap<String, JSPView>(){{
-        put("MessageView", new JSPView("/view_pages/message.jsp"));
+        put("MessageView", new JSPView("/home"));
         put("ListView", new JSPView("/view_pages/list.jsp"));
         put("ErrorView", new JSPView("/view_pages/error.jsp"));
     }};

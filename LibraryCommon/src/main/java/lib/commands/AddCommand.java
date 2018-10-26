@@ -6,6 +6,8 @@ import common.ViewModel;
 import lib.Book;
 import lib.command_options.AddCommandOptions;
 import lib.global_options.GlobalOptions;
+import lib.validators.TypeValidator;
+import lib.validators2.Validator;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,17 +28,21 @@ public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
 
         ViewModel<String> viewModel = new ViewModel<>();
 
-        try{
-            DataConnection dbc = dcs.select(globalOptions);
+        try {
+            viewModel.setModel(new Validator().validate(options, "add"));
+            if (viewModel.getModel() == null) {
+                DataConnection dbc = dcs.select(globalOptions);
+                Books books = dbc.read();
 
-            Books books = dbc.read();
+                Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
+                books.add(book);
+                dbc.write(books);
 
-            Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
-            books.add(book);
-            dbc.write(books);
-
-            viewModel.setModel("Add-command was performed");
-            viewModel.setViewName("MessageView");
+                viewModel.setModel("Add-command was performed");
+                viewModel.setViewName("MessageView");
+            }
+            else
+                viewModel.setViewName("ErrorView");
         }
         catch (Exception ex){
             viewModel.setModel("Add-command failed: " + ex.getMessage());

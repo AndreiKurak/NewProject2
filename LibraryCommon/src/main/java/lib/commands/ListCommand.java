@@ -6,6 +6,7 @@ import lib.Book;
 import lib.connectors.*;
 import lib.command_options.ListCommandOptions;
 import lib.global_options.GlobalOptions;
+import lib.validators2.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,16 @@ public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
 
         DataConnectionSelector dcs = new DataConnectionSelector();
         try{
-            DataConnection dbc = dcs.select(globalOptions);
-            Books books = new DataBaseConnector().read();//dbc.read();
+            viewModel.setModel(new Validator().validate(options, "list"));
+            if (viewModel.getModel() == null) {
+                DataConnection dbc = dcs.select(globalOptions);
+                Books books = new DataBaseConnector().read();//dbc.read();
 
-            viewModel.setModel(books.list());
-            viewModel.setViewName("ListView");
+                viewModel.setModel(books.list());
+                viewModel.setViewName("ListView");
+            }
+            else
+                viewModel.setViewName("ErrorView");
         }
         catch (Exception ex){
             viewModel.setModel("List-command failed: " + ex.getMessage());

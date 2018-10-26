@@ -6,6 +6,7 @@ import common.ViewModel;
 import lib.Book;
 import lib.command_options.UpdateCommandOptions;
 import lib.global_options.GlobalOptions;
+import lib.validators2.Validator;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,23 +18,31 @@ public class UpdateCommand implements Command<UpdateCommandOptions, GlobalOption
 
         DataConnectionSelector dcs = new DataConnectionSelector();
         try{
-            DataConnection dbc = dcs.select(globalOptions);
-            Books books = dbc.read();
+            viewModel.setModel(new Validator().validate(options, "update"));
+            if (viewModel.getModel() == null) {
+                DataConnection dbc = dcs.select(globalOptions);
+                Books books = dbc.read();
 
-            int id = Integer.valueOf(options.getId()) - 1;
-            Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
-            books.update(id, book);
-            dbc.write(books);
+                int id = Integer.valueOf(options.getId());// - 1;
+                Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
+                books.update(id, book);
+                dbc.write(books);
+
+                viewModel.setModel("Update-command was performed");
+                viewModel.setViewName("MessageView");
+            }
+            else
+                viewModel.setViewName("ErrorView");
         }
         catch (Exception ex){
             viewModel.setModel("Update-command failed: " + ex.getMessage());
             viewModel.setViewName("ErrorView");
             Logger.getLogger(UpdateCommand.class.getName()).log(Level.SEVERE, "Exception:", ex);
         }
-
+         /*
         viewModel.setModel("Update-command was performed");
         viewModel.setViewName("MessageView");
-
+           */
         return viewModel;
     }
 }
