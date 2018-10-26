@@ -18,6 +18,7 @@
                 </tr>
             </table>
             <a href="<%=request.getContextPath()%>/home">Home Page</a>
+            <p>
             <%if (request.getAttribute("view") != null)%><%= request.getAttribute("view") %>
         </form>
     </body>
