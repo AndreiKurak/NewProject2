@@ -33,7 +33,7 @@ public class LibraryDescriptor {
             createCommand());
         put("delete",
             new CommandDescriptionBuilder("delete").
-                    setOptionsDescription(new OptionDescription("id").addValidator(new TypeValidator2(new Integer(0)))).
+                    setOptionsDescription(new OptionDescription("id").setMandatoryTrue().addValidator(new TypeValidator2(new Integer(0)))).
                     createCommand());
         put("update",
             new CommandDescriptionBuilder("update").
