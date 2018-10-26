@@ -20,7 +20,6 @@ public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
 
         DataConnectionSelector dcs = new DataConnectionSelector();
         try{
-            viewModel.setModel(new Validator().validate(options, "list"));
             if (viewModel.getModel() == null) {
                 DataConnection dbc = dcs.select(globalOptions);
                 Books books = new DataBaseConnector().read();//dbc.read();
@@ -28,8 +27,6 @@ public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
                 viewModel.setModel(books.list());
                 viewModel.setViewName("ListView");
             }
-            else
-                viewModel.setViewName("ErrorView");
         }
         catch (Exception ex){
             viewModel.setModel("List-command failed: " + ex.getMessage());
