@@ -18,11 +18,10 @@ public class ApplicationExecution {
             command = parser.parse(parametersParser, descriptor);
         }
         catch (Exception ex) {
-            /*
             viewModel = new ViewModel();
             viewModel.setViewName("ErrorView");
             viewModel.setModel("Execution failed: " + ex.getMessage());
-            */
+
             Logger.getLogger(ApplicationExecution.class.getName()).log(Level.SEVERE, "Exception:", ex);
         }
 

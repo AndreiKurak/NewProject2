@@ -26,10 +26,9 @@
                     <td></td>
                     <td><input type="submit" value="confirm" id="button1"></td>
                 </tr>
-                <tr>
-                    <td><a href="<%=request.getContextPath()%>/home">Home Page</a></td>
-                </tr>
             </table>
+            <a href="<%=request.getContextPath()%>/home">Home Page</a>
+            <p>
             <%if (request.getAttribute("view") != null)%><%= request.getAttribute("view") %>
         </form>
     </body>

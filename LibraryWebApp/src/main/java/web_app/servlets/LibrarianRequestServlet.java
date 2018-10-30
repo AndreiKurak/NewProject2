@@ -1,10 +1,11 @@
-package web_app;
+package web_app.servlets;
 
 import common.ApplicationExecution;
 
-import common.ViewModel;
 import framework_web.JSPView;
 import framework_web.WebParametersParser;
+import web_app.JSPViewResolver;
+import web_app.WebLibraryDescriptor;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,9 +16,9 @@ import java.io.IOException;
 
 @WebServlet("*.do")
 public class LibrarianRequestServlet extends HttpServlet {
-    
+
     private ApplicationExecution applicationExecution = new ApplicationExecution();
-    
+
     private JSPViewResolver viewResolver = new JSPViewResolver();
 
     @Override
@@ -26,16 +27,11 @@ public class LibrarianRequestServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher( "/options_input" + req.getServletPath().
-            replace(".do", "") + "_options.jsp").forward(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        viewResolver.setServletArguments(req, resp);
         viewResolver.addView("ErrorView", new JSPView("/options_input" + req.getServletPath().
                 replace(".do", "") + "_options.jsp", req, resp));
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        viewResolver.setServletArguments(request, response);
-        applicationExecution.run(new WebParametersParser(request), new WebLibraryDescriptor(), viewResolver);
+        applicationExecution.run(new WebParametersParser(req), new WebLibraryDescriptor(), viewResolver);
     }
 }

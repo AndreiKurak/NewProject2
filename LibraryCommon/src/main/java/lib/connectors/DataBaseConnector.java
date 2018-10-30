@@ -1,7 +1,7 @@
 package lib.connectors;
 
-import com.mysql.jdbc.Driver;
 import lib.Book;
+import lib.PropertyValuesGetter;
 
 import java.sql.*;
 import java.util.Objects;
@@ -9,8 +9,9 @@ import java.util.Objects;
 public class DataBaseConnector implements DataConnection {
 
     private String url = "jdbc:mysql://localhost:3306/";
-    private static final String user = "root";
-    private static final String password = "1234A5";
+    private PropertyValuesGetter valuesGetter = new PropertyValuesGetter();
+    //private static final String user = "root";
+    //private static final String password = "1234A5";
 
     public DataBaseConnector() {
         url += "doc_register?serverTimezone=UTC&useSSL=false";
@@ -21,7 +22,7 @@ public class DataBaseConnector implements DataConnection {
     }
 
     public void initializeTable() {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(url, valuesGetter.getUser(), valuesGetter.getPassword());
              Statement stmt = connection.createStatement()) {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS library(id int(11), author varchar(128), title varchar(128), year varchar(128))");
         }
@@ -34,7 +35,7 @@ public class DataBaseConnector implements DataConnection {
         Books books = new Books();
         initializeTable();
         
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(url, valuesGetter.getUser(), valuesGetter.getPassword());
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM library")) {
             int i = 0;
@@ -53,13 +54,12 @@ public class DataBaseConnector implements DataConnection {
 
     public void write(Books books) {
         PreparedStatement prStmt = null;
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(url, valuesGetter.getUser(), valuesGetter.getPassword());
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM library")) {
             int count=0;
             while(rs.next())
-                //count=rs.getInt(1);
-                count++;
+                count++;    //count=rs.getInt(1);
             System.out.println("count: " + count);
 
             int bookIndex = 0;

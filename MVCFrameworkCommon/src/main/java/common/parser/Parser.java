@@ -34,13 +34,8 @@ public class Parser {
         if (commandDescription.getOptions() != null)
             for (OptionDescription option : commandDescription.getOptions())
                 parametersParser.getCommandOptions().forEach((key, value) -> {
-                    if (key.contains(option.getName())) {
+                    if (key.contains(option.getName()))
                         optionsSetter.setOptions(option.getName(), (String) value, command.getCommandOptions());
-                        /*
-                        if (option.getValidator() != null && !option.getValidator().check((String) value))
-                            throw new ParseException("Unacceptable value of option \"" + option.getName() + "\"");
-                            */
-                    }
                 });
 
         return command;

@@ -1,4 +1,4 @@
-package web_app;
+package web_app.servlets;
 
 import lib.connectors.DataConnectionException;
 
@@ -16,8 +16,7 @@ public class InitializeServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         try {
-            //Class.forName("com.mysql.jdbc.Driver");
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");  //Class.forName("com.mysql.jdbc.Driver");
         }
         catch (Exception ex) {
             throw new DataConnectionException("jdbc driver registration failed", ex);

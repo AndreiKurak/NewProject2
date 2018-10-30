@@ -27,6 +27,7 @@ public class SearchCommand implements Command<SearchCommandOptions, GlobalOption
                 viewModel.setModel(books.search(book));
                 viewModel.setViewName("ListView");
                 if (viewModel.getModel() == null) {
+                    viewModel.setViewName("ErrorView");
                     viewModel.setModel("nothing found");
                 }
             }
