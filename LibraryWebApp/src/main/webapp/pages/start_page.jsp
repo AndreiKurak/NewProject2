@@ -14,7 +14,6 @@
         <%if (request.getAttribute("view") != null)%><%= request.getAttribute("view") %>
         <p>
         <a href="<%=url%>/add.show">add</a>
-        <a href="<%=url%>/delete.do">delete</a>
         <a href="<%=url%>/update.show">update</a>
         <a href="<%=url%>/search.show">search</a>
         <form name="form" action="${pageContext.request.contextPath}/delete.do" method="post">
