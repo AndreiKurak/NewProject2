@@ -9,6 +9,7 @@ public class SearchCommandShow implements Command {
     public ViewModel execute(Object o, Object o2) {
         ViewModel viewModel = new ViewModel();
         viewModel.setModel("/options_input/search_options.jsp");
+        viewModel.setViewName("OptionsView");
         return viewModel;
     }
 }
