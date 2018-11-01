@@ -12,6 +12,8 @@ public class JSPView implements View {
     private HttpServletResponse response;
     private boolean sendRedirect = false;
 
+    public JSPView() {}
+
     public JSPView(String pageAddress) {
         this.pageAddress = pageAddress;
     }
@@ -39,16 +41,15 @@ public class JSPView implements View {
     @Override
     public void showResult(Object model) {
         try {
-            //request.setAttribute("view", model);
-            //request.getRequestDispatcher(pageAddress).forward(request, response);
-            request.getSession().setAttribute("view", model);
+            if (((String) model).startsWith("/")) {
+                pageAddress = (String) model;
+            }
+            else
+                request.getSession().setAttribute("view", model);
             if (sendRedirect) {
-                System.out.println("bla bla");
-                //request.getSession().setAttribute("view", model);
                 response.sendRedirect(request.getContextPath() + pageAddress);
             }
             else {
-                //request.setAttribute("view", model);
                 request.getRequestDispatcher(pageAddress).forward(request, response);
             }
         }

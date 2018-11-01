@@ -5,8 +5,8 @@
         <H2>Message about operation execution</H2>
     </head>
     <body>
-    <%= request.getSession().getAttribute("view") %>
-    <%request.getSession().removeAttribute("view");%>
+        <%= request.getSession().getAttribute("view") %>
+        <%request.getSession().removeAttribute("view");%>
         <p>
             <a href="<%=request.getContextPath()%>/home">Home Page</a>
         </p>

@@ -15,7 +15,7 @@ public class ConsoleParametersParser implements ParametersParser {
     private static final String EQUALITY = "=";
 
     public ConsoleParametersParser(String[] input) {
-        if (input == null)
+        if (input == null || (input.length == 1 && input[0].trim().equals("")))
             throw new ParseException("Empty input line");
 
         int optionsIndex = 0;

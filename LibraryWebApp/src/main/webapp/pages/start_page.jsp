@@ -15,9 +15,9 @@
         <%if (request.getSession().getAttribute("view") != null)%><%= request.getSession().getAttribute("view") %>
         <%request.getSession().removeAttribute("view");%>
         <p>
-        <a href="<%=url%>/add.show">add</a>
-        <a href="<%=url%>/update.show">update</a>
-        <a href="<%=url%>/search.show">search</a>
+        <a href="<%=url%>/showAdd.do">add</a>
+        <a href="<%=url%>/update.do">update</a>
+        <a href="<%=url%>/search.do">search</a>
         <form name="form" action="${pageContext.request.contextPath}/delete.do" method="post">
             <TABLE border="4" class="table table-striped table-bordered" cellspacing="0" width="50%">
                 <thead>

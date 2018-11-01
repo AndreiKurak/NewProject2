@@ -1,10 +1,15 @@
 package web_app.commands;
 
-import framework_web.CommandShow;
+import common.Command;
+import common.ViewModel;
 
-public class AddCommandShow implements CommandShow {
+public class AddCommandShow implements Command {
 
-    public String showOptions() {
-        return "/options_input/add_options.jsp";
+    @Override
+    public ViewModel execute(Object o, Object o2) {
+        ViewModel viewModel = new ViewModel();
+        viewModel.setModel("/options_input/add_options.jsp");
+        viewModel.setViewName("OptionsView");
+        return viewModel;
     }
 }

@@ -27,6 +27,11 @@ public class LibrarianRequestServlet extends HttpServlet {
     }
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         viewResolver.setServletArguments(req, resp);
         viewResolver.addView("ErrorView", new JSPView("/options_input" + req.getServletPath().

@@ -9,6 +9,9 @@ import lib.commands.*;
 import lib.global_options.GlobalOptions;
 import lib.validators.DateBorderValidator;
 import lib.validators.TypeValidator;
+import web_app.commands.AddCommandShow;
+import web_app.commands.SearchCommandShow;
+import web_app.commands.UpdateCommandShow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +25,20 @@ public class WebLibraryDescriptor implements ApplicationDescriptor {
     }};
     ////////////////////////////////////////////////////////////////////////////////////////
     private List<CommandDescription> commandsDescription = new ArrayList<CommandDescription>(){{
+        add(new CommandDescriptionBuilder("showAdd").
+                setCommandOptions(EmptyCommandOptions.class).
+                setCommand(AddCommandShow.class)
+                .createCommand());
         add(new CommandDescriptionBuilder("add").
                 setOptionsDescription(new OptionDescription("author").setMandatoryTrue().addValidator(new TypeValidator(new String())),
                         new OptionDescription("title").setMandatoryTrue().addValidator(new TypeValidator(new String())),
                         new OptionDescription("year").addValidator(new TypeValidator(new Integer(0)), new DateBorderValidator())).
                 setCommand(AddCommand.class).
                 setCommandOptions(AddCommandOptions.class).
+                createCommand());
+        add(new CommandDescriptionBuilder("showSearch").
+                setCommand(SearchCommandShow.class).
+                setCommandOptions(EmptyCommandOptions.class).
                 createCommand());
         add(new CommandDescriptionBuilder("search").
                 setOptionsDescription(new OptionDescription("author").addValidator(new TypeValidator(new String())),
@@ -44,6 +55,10 @@ public class WebLibraryDescriptor implements ApplicationDescriptor {
         add(new CommandDescriptionBuilder("list").
                 setCommand(ListCommand.class).
                 setCommandOptions(ListCommandOptions.class).
+                createCommand());
+        add(new CommandDescriptionBuilder("showUpdate").
+                setCommand(UpdateCommandShow.class).
+                setCommandOptions(EmptyCommandOptions.class).
                 createCommand());
         add(new CommandDescriptionBuilder("update").
                 setOptionsDescription(new OptionDescription("author").addValidator(new TypeValidator(new String())),

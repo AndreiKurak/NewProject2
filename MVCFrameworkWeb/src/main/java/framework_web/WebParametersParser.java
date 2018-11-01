@@ -14,9 +14,10 @@ public class WebParametersParser implements ParametersParser {
 
     public WebParametersParser(HttpServletRequest req) {
         Map<String, String[]> inputMap = req.getParameterMap();
+        /*
         if (inputMap.isEmpty())
             throw new ParseException("Command options not found");
-
+          */
         command = req.getServletPath().replace("/", "").replaceAll(".do", "");
 
         inputMap.forEach((key, value) -> {

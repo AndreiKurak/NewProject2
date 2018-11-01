@@ -17,6 +17,7 @@ public class JSPViewResolver implements ViewResolver {
         put("MessageView", new JSPView("/home", true));
         put("ListView", new JSPView("/view_pages/list.jsp"));
         put("ErrorView", new JSPView("/view_pages/error.jsp"));
+        put("OptionsView", new JSPView());
     }};
 
     public JSPViewResolver() { }
