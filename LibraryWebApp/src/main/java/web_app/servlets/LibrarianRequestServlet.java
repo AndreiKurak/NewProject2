@@ -30,7 +30,7 @@ public class LibrarianRequestServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         viewResolver.setServletArguments(req, resp);
         viewResolver.addView("ErrorView", new JSPView("/options_input" + req.getServletPath().
-                replace(".do", "") + "_options.jsp", req, resp));
+                replace(".do", "") + "_options.jsp", req, resp, false));
 
         applicationExecution.run(new WebParametersParser(req), new WebLibraryDescriptor(), viewResolver);
     }

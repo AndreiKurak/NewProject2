@@ -8,13 +8,14 @@
     </head>
     <body>
         <%
-            List<Book> books = (List<Book>) request.getAttribute("view");
+            List<Book> books = (List<Book>) request.getSession().getAttribute("view");
             for (Book book : books) {
         %>
             <p><%=book%></p>
         <%
             }
         %>
+        <%request.getSession().removeAttribute("view");%>
         <p>
             <a href="<%=request.getContextPath()%>/home">Home Page</a>
         </p>

@@ -11,7 +11,9 @@
         <%
             String url = request.getContextPath();
         %>
-        <%if (request.getAttribute("view") != null)%><%= request.getAttribute("view") %>
+        
+        <%if (request.getSession().getAttribute("view") != null)%><%= request.getSession().getAttribute("view") %>
+        <%request.getSession().removeAttribute("view");%>
         <p>
         <a href="<%=url%>/add.show">add</a>
         <a href="<%=url%>/update.show">update</a>

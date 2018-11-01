@@ -19,7 +19,8 @@
             </table>
             <a href="<%=request.getContextPath()%>/home">Home Page</a>
             <p>
-            <%if (request.getAttribute("view") != null)%><%= request.getAttribute("view") %>
+            <%if (request.getSession().getAttribute("view") != null)%><%= request.getSession().getAttribute("view") %>
+            <%request.getSession().removeAttribute("view");%>
         </form>
     </body>
 </html>
