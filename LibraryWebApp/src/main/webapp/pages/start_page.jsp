@@ -18,7 +18,7 @@
         <a href="<%=url%>/showAdd.do">add</a>
         <a href="<%=url%>/showUpdate.do">update</a>
         <a href="<%=url%>/showSearch.do">search</a>
-        <form name="form" action="${pageContext.request.contextPath}/delete.do" method="post">
+        
             <TABLE border="4" class="table table-striped table-bordered" cellspacing="0" width="50%">
                 <thead>
                     <tr>
@@ -37,9 +37,8 @@
                         <td><%=book.getAuthor() %></td>
                         <td><%=book.getTitle() %></td>
                         <td><%=book.getYear() %></td>
-                        <td><input type="submit" value="delete" id="<%=book.getId()%>"
-                                   onclick="document.getElementById('id').name='id';
-                                   document.getElementById('id').value=id">
+                        <td><a id="<%=book.getId()%>" href='${pageContext.request.contextPath}/delete.do?id='
+                               onclick="this.href+=id">delete</a>
                         </td>
                     </tr>
                     <%
@@ -47,7 +46,6 @@
                     %>
                 </tbody>
             </TABLE>
-            <input type="hidden" id="id">
-        </form>
+
     </body>
 </html>
