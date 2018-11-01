@@ -41,11 +41,17 @@ public class JSPView implements View {
     @Override
     public void showResult(Object model) {
         try {
-            if (((String) model).startsWith("/")) {
-                pageAddress = (String) model;
+            try {
+                if (((String) model).startsWith("/")) {
+                    pageAddress = (String) model;
+                }
+                else
+                    request.getSession().setAttribute("view", model);
             }
-            else
+            catch (Exception ex) {
                 request.getSession().setAttribute("view", model);
+            }
+
             if (sendRedirect) {
                 response.sendRedirect(request.getContextPath() + pageAddress);
             }
