@@ -42,9 +42,8 @@ public class JSPView implements View {
     public void showResult(Object model) {
         try {
             try {
-                if (((String) model).startsWith("/")) {
+                if (((String) model).startsWith("/"))
                     pageAddress = (String) model;
-                }
                 else
                     request.getSession().setAttribute("view", model);
             }

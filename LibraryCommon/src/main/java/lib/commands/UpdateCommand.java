@@ -39,10 +39,7 @@ public class UpdateCommand implements Command<UpdateCommandOptions, GlobalOption
             viewModel.setViewName("ErrorView");
             Logger.getLogger(UpdateCommand.class.getName()).log(Level.SEVERE, "Exception:", ex);
         }
-         /*
-        viewModel.setModel("Update-command was performed");
-        viewModel.setViewName("MessageView");
-           */
+
         return viewModel;
     }
 }

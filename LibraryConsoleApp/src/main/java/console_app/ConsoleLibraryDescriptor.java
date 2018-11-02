@@ -48,7 +48,7 @@ public class ConsoleLibraryDescriptor implements ApplicationDescriptor {
         add(new CommandDescriptionBuilder("list").
                 setDescription("command, that is used to display the list with specified parameters").
                 setCommand(ListCommand.class).
-                setCommandOptions(ListCommandOptions.class).
+                setCommandOptions(EmptyCommandOptions.class).
                 createCommand());
         add(new CommandDescriptionBuilder("update").
                 setDescription("command, that is used for rewriting some information").
@@ -62,6 +62,7 @@ public class ConsoleLibraryDescriptor implements ApplicationDescriptor {
         add(new CommandDescriptionBuilder("help").
                 setDescription("command, that is used for showing information about commandsDescription and options").
                 setCommand(HelpCommand.class).
+                setCommandOptions(EmptyCommandOptions.class).
                 createCommand());
     }};
 

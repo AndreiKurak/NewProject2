@@ -52,8 +52,8 @@ public class LibraryDescriptor {
             new CommandDescriptionBuilder("list").
                     createCommand());
         put("help",
-                new CommandDescriptionBuilder("help").
-                        createCommand());
+            new CommandDescriptionBuilder("help").
+                    createCommand());
     }};
 
     public Map<String, CommandDescription> getCommandsDescriptionMap(){ //commandDescription

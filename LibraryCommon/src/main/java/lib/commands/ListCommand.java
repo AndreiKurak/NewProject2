@@ -2,20 +2,16 @@ package lib.commands;
 
 import common.Command;
 import common.ViewModel;
-import lib.Book;
+import lib.command_options.EmptyCommandOptions;
 import lib.connectors.*;
-import lib.command_options.ListCommandOptions;
 import lib.global_options.GlobalOptions;
-import lib.validators2.Validator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ListCommand implements Command<ListCommandOptions, GlobalOptions> {
+public class ListCommand implements Command<EmptyCommandOptions, GlobalOptions> {
 
-    public ViewModel execute(ListCommandOptions options, GlobalOptions globalOptions) {
+    public ViewModel execute(EmptyCommandOptions options, GlobalOptions globalOptions) {
         ViewModel viewModel = new ViewModel();
 
         DataConnectionSelector dcs = new DataConnectionSelector();

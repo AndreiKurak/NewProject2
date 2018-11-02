@@ -54,7 +54,7 @@ public class WebLibraryDescriptor implements ApplicationDescriptor {
                 createCommand());
         add(new CommandDescriptionBuilder("list").
                 setCommand(ListCommand.class).
-                setCommandOptions(ListCommandOptions.class).
+                setCommandOptions(EmptyCommandOptions.class).
                 createCommand());
         add(new CommandDescriptionBuilder("showUpdate").
                 setCommand(UpdateCommandShow.class).
