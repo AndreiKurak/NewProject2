@@ -10,11 +10,13 @@ public class ValidatorsChain implements OptionValidator {
         this.validatorList = validators;
     }
 
-    public boolean check(String optionValue){
+    public String check(String optionValue){
+        String checkResult = null;
         for (OptionValidator option : validatorList){
-            if (!option.check(optionValue))
-                return false;
+            checkResult = option.check(optionValue);
+            if (checkResult != null)
+                return checkResult;
         }
-        return true;
+        return checkResult;
     }
 }

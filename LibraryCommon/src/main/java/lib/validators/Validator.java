@@ -1,4 +1,4 @@
-package lib.validators2;
+package lib.validators;
 
 import common.descriptions.CommandDescription;
 import common.descriptions.OptionDescription;

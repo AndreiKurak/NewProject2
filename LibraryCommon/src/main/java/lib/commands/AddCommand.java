@@ -6,8 +6,7 @@ import common.ViewModel;
 import lib.Book;
 import lib.command_options.AddCommandOptions;
 import lib.global_options.GlobalOptions;
-import lib.validators.TypeValidator;
-import lib.validators2.Validator;
+import lib.validators.Validator;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
