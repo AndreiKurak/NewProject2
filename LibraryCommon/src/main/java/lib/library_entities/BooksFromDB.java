@@ -1,7 +1,6 @@
 package lib.library_entities;
 
 import lib.PropertyValuesGetter;
-import lib.connectors.DataBaseConnector;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,11 +11,13 @@ import java.util.List;
 
 public class BooksFromDB implements Books {
 
-    private PropertyValuesGetter valuesGetter = new PropertyValuesGetter();
-    private SessionFactory sessionFactory= new Configuration().configure().buildSessionFactory();
+    private SessionFactory sessionFactory;
 
     public BooksFromDB() {
-        //sessionFactory = new Configuration().addProperties(valuesGetter.getProp()).addAnnotatedClass(Book.class).configure().buildSessionFactory();
+        sessionFactory = new Configuration().
+                addPackage("lib.library_entities").
+                addProperties(new PropertyValuesGetter().getProp()).
+                addAnnotatedClass(Book.class).buildSessionFactory();
     }
 
     public void add(Book addBook) {

@@ -25,8 +25,8 @@ public class PropertyValuesGetter {
                 throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
             }
 
-            user = prop.getProperty("user");
-            password = prop.getProperty("password");
+            user = prop.getProperty("hibernate.connection.username");
+            password = prop.getProperty("hibernate.connection.password");
         }
         catch (Exception ex) {
             Logger.getLogger(PropertyValuesGetter.class.getName()).log(Level.SEVERE, "Exception:", ex);
