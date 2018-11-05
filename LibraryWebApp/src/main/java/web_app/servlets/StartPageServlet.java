@@ -1,7 +1,7 @@
 package web_app.servlets;
 
-import lib.Book;
 import lib.commands.ListCommand;
+import lib.library_entities.Book;
 import lib.global_options.GlobalOptions;
 
 import javax.servlet.ServletException;

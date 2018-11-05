@@ -8,12 +8,13 @@ import java.util.logging.Logger;
 
 public class PropertyValuesGetter {
 
+    private Properties prop;
     private String user;
     private String password;
 
     public PropertyValuesGetter() {
         try {
-            Properties prop = new Properties();
+            prop = new Properties();
             String propFileName = "config.properties";
 
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
@@ -30,6 +31,10 @@ public class PropertyValuesGetter {
         catch (Exception ex) {
             Logger.getLogger(PropertyValuesGetter.class.getName()).log(Level.SEVERE, "Exception:", ex);
         }
+    }
+
+    public Properties getProp() {
+        return prop;
     }
 
     public String getUser() {

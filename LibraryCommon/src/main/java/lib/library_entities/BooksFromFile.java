@@ -1,21 +1,18 @@
-package lib.connectors;
+package lib.library_entities;
 
-import lib.Book;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Books implements Serializable {
+public class BooksFromFile implements Books {
 
     List<Book> booksList = new ArrayList<>();
 
-    public void add(Book book) {
+    public void add(Book addBook) {
         if (booksList.size() != 0)
-            book.setId(booksList.get(booksList.size() - 1).getId() + 1);
+            addBook.setId(booksList.get(booksList.size() - 1).getId() + 1);
         else
-            book.setId(1);
-        booksList.add(book);
+            addBook.setId(1);
+        booksList.add(addBook);
     }
 
     public void delete(int bookId) {
@@ -27,7 +24,7 @@ public class Books implements Serializable {
     }
 
     public void update(int id, Book updateBook) {
-        for (Book book : booksList) {
+        for (Book book : booksList)
             if (book.getId() == id) {
                 if (updateBook.getAuthor() != null) {
                     book.setAuthor(updateBook.getAuthor());
@@ -38,8 +35,8 @@ public class Books implements Serializable {
                 if (updateBook.getYear() != null) {
                     book.setYear(updateBook.getYear());
                 }
+                break;
             }
-        }
     }
 
     public List<Book> list() {

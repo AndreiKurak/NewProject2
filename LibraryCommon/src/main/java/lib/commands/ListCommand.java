@@ -5,6 +5,7 @@ import common.ViewModel;
 import lib.command_options.EmptyCommandOptions;
 import lib.connectors.*;
 import lib.global_options.GlobalOptions;
+import lib.library_entities.Books;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

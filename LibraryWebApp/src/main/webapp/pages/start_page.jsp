@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="lib.Book" %>
 <%@ page import="java.util.List" %>
+<%@ page import="lib.library_entities.Book" %>
+<%@ page import="lib.library_entities.Book" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -37,15 +38,12 @@
                         <td><%=book.getAuthor() %></td>
                         <td><%=book.getTitle() %></td>
                         <td><%=book.getYear() %></td>
-                        <td><a id="<%=book.getId()%>" href='${pageContext.request.contextPath}/delete.do?id='
-                               onclick="this.href+=id">delete</a>
-                        </td>
+                        <td><a href='${pageContext.request.contextPath}/delete.do?id=<%=book.getId()%>'>delete</a></td>
                     </tr>
                     <%
                         }
                     %>
                 </tbody>
             </TABLE>
-
     </body>
 </html>

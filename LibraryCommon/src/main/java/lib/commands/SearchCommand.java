@@ -3,9 +3,10 @@ package lib.commands;
 import common.Command;
 import lib.connectors.*;
 import common.ViewModel;
-import lib.Book;
 import lib.command_options.SearchCommandOptions;
 import lib.global_options.GlobalOptions;
+import lib.library_entities.Book;
+import lib.library_entities.Books;
 import lib.validators.Validator;
 
 import java.util.logging.Level;

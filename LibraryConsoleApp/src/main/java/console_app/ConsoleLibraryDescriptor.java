@@ -4,6 +4,7 @@ import common.ApplicationDescriptor;
 import common.descriptions.CommandDescription;
 import common.descriptions.CommandDescriptionBuilder;
 import common.descriptions.OptionDescription;
+import console_app.commands.HelpCommand;
 import lib.command_options.*;
 import lib.commands.*;
 import lib.global_options.GlobalOptions;

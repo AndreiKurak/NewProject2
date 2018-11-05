@@ -3,9 +3,10 @@ package lib.commands;
 import common.Command;
 import lib.connectors.*;
 import common.ViewModel;
-import lib.Book;
 import lib.command_options.AddCommandOptions;
 import lib.global_options.GlobalOptions;
+import lib.library_entities.Books;
+import lib.library_entities.Book;
 import lib.validators.Validator;
 
 import java.util.logging.Level;
@@ -33,8 +34,7 @@ public class AddCommand implements Command<AddCommandOptions, GlobalOptions> {
                 DataConnection dbc = dcs.select(globalOptions);
                 Books books = dbc.read();
 
-                Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
-                books.add(book);
+                books.add(new Book(options.getAuthor(), options.getTitle(), options.getYear()));
                 dbc.write(books);
 
                 viewModel.setModel("Add-command was performed");

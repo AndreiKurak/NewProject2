@@ -12,8 +12,6 @@ public class JSPView implements View {
     private HttpServletResponse response;
     private boolean sendRedirect = false;
 
-    public JSPView() {}
-
     public JSPView(String pageAddress) {
         this.pageAddress = pageAddress;
     }
@@ -41,15 +39,7 @@ public class JSPView implements View {
     @Override
     public void showResult(Object model) {
         try {
-            try {
-                if (((String) model).startsWith("/"))
-                    pageAddress = (String) model;
-                else
-                    request.getSession().setAttribute("view", model);
-            }
-            catch (Exception ex) {
-                request.getSession().setAttribute("view", model);
-            }
+            request.getSession().setAttribute("view", model);
 
             if (sendRedirect) {
                 response.sendRedirect(request.getContextPath() + pageAddress);

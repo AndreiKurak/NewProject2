@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="lib.Book" %>
+<%@ page import="lib.library_entities.Book" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>

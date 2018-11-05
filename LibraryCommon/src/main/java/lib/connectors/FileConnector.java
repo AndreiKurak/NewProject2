@@ -1,5 +1,7 @@
 package lib.connectors;
 
+import lib.library_entities.Books;
+
 import java.io.*;
 
 public class FileConnector implements DataConnection {

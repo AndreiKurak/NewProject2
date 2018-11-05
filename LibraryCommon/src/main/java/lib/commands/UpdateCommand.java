@@ -3,9 +3,10 @@ package lib.commands;
 import common.Command;
 import lib.connectors.*;
 import common.ViewModel;
-import lib.Book;
 import lib.command_options.UpdateCommandOptions;
 import lib.global_options.GlobalOptions;
+import lib.library_entities.Books;
+import lib.library_entities.Book;
 import lib.validators.Validator;
 
 import java.util.logging.Level;
@@ -23,7 +24,7 @@ public class UpdateCommand implements Command<UpdateCommandOptions, GlobalOption
                 DataConnection dbc = dcs.select(globalOptions);
                 Books books = dbc.read();
 
-                int id = Integer.valueOf(options.getId());// - 1;
+                int id = Integer.valueOf(options.getId());
                 Book book = new Book(options.getAuthor(), options.getTitle(), options.getYear());
                 books.update(id, book);
                 dbc.write(books);

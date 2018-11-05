@@ -17,7 +17,10 @@ public class JSPViewResolver implements ViewResolver {
         put("MessageView", new JSPView("/home", true));
         put("ListView", new JSPView("/view_pages/list.jsp"));
         put("ErrorView", new JSPView("/view_pages/error.jsp"));
-        put("OptionsView", new JSPView());
+
+        put("AddShowView", new JSPView("/options_input/add_options.jsp"));
+        put("SearchShowView", new JSPView("/options_input/search_options.jsp"));
+        put("UpdateShowView", new JSPView("/options_input/update_options.jsp"));
     }};
 
     public JSPViewResolver() { }

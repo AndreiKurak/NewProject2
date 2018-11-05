@@ -5,6 +5,7 @@ import lib.connectors.*;
 import common.ViewModel;
 import lib.command_options.DeleteCommandOptions;
 import lib.global_options.GlobalOptions;
+import lib.library_entities.Books;
 import lib.validators.Validator;
 
 import java.util.logging.Level;

@@ -1,11 +1,9 @@
 package console_app;
 
 import common.ApplicationExecution;
-import common.ViewModel;
 import common.views.*;
 import framework_console.ConsoleOutput;
 import framework_console.ConsoleParametersParser;
-import lib.LibraryDescriptor;
 
 public class ConsoleAppRunner {
 

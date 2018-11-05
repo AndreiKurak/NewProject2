@@ -1,20 +1,9 @@
 package lib;
 
-import lib.connectors.Books;
-import lib.connectors.DataBaseConnector;
-import lib.connectors.DataConnectionException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DataBaseConnectorTest {
-
+    /*
     private static final String url = "jdbc:mysql://localhost:3306/doc_register_test?serverTimezone=UTC";
     private static final String user = "root";
     private static final String password = "1234A5";
@@ -37,7 +26,7 @@ public class DataBaseConnectorTest {
     public void shouldLoadDataFromDatabaseCorrectly() {
         System.out.println("test");
         DataBaseConnector dbc = new DataBaseConnector();
-        Books books = dbc.read();
+        BooksFromFile books = dbc.read();
         assertThat(books.list().get(0).getAuthor()).isEqualTo("auth");
         assertThat(books.list().get(0).getYear()).isEqualTo("1678");
     }
@@ -57,11 +46,11 @@ public class DataBaseConnectorTest {
     @Test
     public void shouldAddNewBook() {
         DataBaseConnector dbc = new DataBaseConnector("doc_register_test");
-        Books books = new Books();
+        BooksFromFile books = new BooksFromFile();
         books.add(new Book("a", "t", "1980"));
         dbc.write(books);
 
-        Books booksFromTable = dbc.read();
+        BooksFromFile booksFromTable = dbc.read();
         assertThat(booksFromTable.list().get(0).getAuthor()).isEqualTo("a");
     }
 
@@ -69,11 +58,11 @@ public class DataBaseConnectorTest {
     public void shouldDeleteBook() {
         Preparer.fillTable();
         DataBaseConnector dbc = new DataBaseConnector("doc_register_test");
-        Books books = dbc.read();
+        BooksFromFile books = dbc.read();
         books.delete(2);
         dbc.write(books);
 
-        Books booksFromTable = dbc.read();
+        BooksFromFile booksFromTable = dbc.read();
         assertThat(booksFromTable.list().size()).isEqualTo(books.list().size());
     }
 
@@ -81,11 +70,11 @@ public class DataBaseConnectorTest {
     public void shouldUpdateBooksCorrectly(){
         Preparer.fillTable();
         DataBaseConnector dbc = new DataBaseConnector("doc_register_test");
-        Books books = dbc.read();
+        BooksFromFile books = dbc.read();
         books.update(1, new Book("newAuthor", "Sorrow", "1890"));
         dbc.write(books);
 
-        Books booksFromTable = dbc.read();
+        BooksFromFile booksFromTable = dbc.read();
         assertThat(booksFromTable.list().get(1).getAuthor()).isEqualTo(books.list().get(1).getAuthor());
     }
 
@@ -100,4 +89,5 @@ public class DataBaseConnectorTest {
         }
         System.out.println("after");
     }
+    */
 }

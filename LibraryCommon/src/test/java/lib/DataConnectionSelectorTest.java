@@ -35,4 +35,5 @@ public class DataConnectionSelectorTest {
         DataConnectionSelector selector = new DataConnectionSelector();
         assertThat(selector.select(globalOptions)).isNull();
     }
+
 }
