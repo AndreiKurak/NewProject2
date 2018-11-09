@@ -1,34 +1,45 @@
-package lib.library_entities;
+package lib.hibernate_tests;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "library")
-public class Book {
+public class TestBook {
 
     private Integer id;
     private String author;
     private String title;
     private String year;
 
-    public Book() { }
+    private TestBookGenres bookGenre;
+    @ManyToOne
+    @JoinColumn(name = "book_genre", referencedColumnName = "genre")
+    public TestBookGenres getBookGenre() {
+        return this.bookGenre;
+    }
 
-    public Book(String author, String title, String year) {
+    public void setBookGenre(TestBookGenres bookGenre) {
+        this.bookGenre = bookGenre;
+    }
+
+    public TestBook() { }
+
+    public TestBook(String author, String title, String year) {
         this.author = author;
         this.title = title;
         this.year = year;
     }
 
-    public Book(Integer id, String author, String title, String year) {
+    public TestBook(Integer id, String author, String title, String year) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.year = year;
     }
-    
+
     @Id //@Basic
-    @Column(name = "id", nullable = true)
+    @Column(name = "book_id", nullable = true)
     public Integer getId() {
         return id;
     }
@@ -71,7 +82,7 @@ public class Book {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Book that = (Book) o;
+        TestBook that = (TestBook) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(author, that.author) &&
                 Objects.equals(title, that.title) &&

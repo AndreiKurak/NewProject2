@@ -9,12 +9,15 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 public class DataBaseConnector implements DataConnection {
-
-    private String url = "jdbc:mysql://localhost:3306/doc_register?serverTimezone=UTC&useSSL=false";
+    
     private PropertyValuesGetter valuesGetter = new PropertyValuesGetter();
 
+    public DataBaseConnector() {//SessionFactory sessionFactory
+        //this.sessionFactory = sessionFactory;
+    }
+
     private void initializeTable() {
-        try (Connection connection = DriverManager.getConnection(url, valuesGetter.getUser(), valuesGetter.getPassword());
+        try (Connection connection = DriverManager.getConnection(valuesGetter.getUrl(), valuesGetter.getUser(), valuesGetter.getPassword());
              Statement stmt = connection.createStatement()) {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS library(id int(11), author varchar(128), title varchar(128), year varchar(128))");
         }
@@ -27,7 +30,7 @@ public class DataBaseConnector implements DataConnection {
     public BooksFromDB read() {
         initializeTable();
 
-        return new BooksFromDB();
+        return new BooksFromDB();   //new BooksFromDB(sessionFactory);
     }
 
     @Override

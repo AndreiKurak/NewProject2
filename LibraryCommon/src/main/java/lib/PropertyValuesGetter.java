@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 public class PropertyValuesGetter {
 
     private Properties prop;
+
+    private String url;
     private String user;
     private String password;
 
@@ -25,6 +27,7 @@ public class PropertyValuesGetter {
                 throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
             }
 
+            url = prop.getProperty("hibernate.connection.url");
             user = prop.getProperty("hibernate.connection.username");
             password = prop.getProperty("hibernate.connection.password");
         }
@@ -35,6 +38,10 @@ public class PropertyValuesGetter {
 
     public Properties getProp() {
         return prop;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public String getUser() {
