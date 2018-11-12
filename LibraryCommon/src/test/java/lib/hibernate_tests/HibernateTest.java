@@ -30,13 +30,14 @@ public class HibernateTest {
         PropertyValuesGetter valuesGetter = new PropertyValuesGetter();
         valuesGetter.getProp().setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/doc_register_test?serverTimezone=UTC&useSSL=false");
 
-        sessionFactory = new Configuration().
+        SessionFactoryGetter.setSessionFactory(new Configuration().
                 addPackage("lib.hibernate_tests").
                 addProperties(valuesGetter.getProp()).
                 addAnnotatedClass(TestBook.class).
                 addAnnotatedClass(TestBookGenres.class).
                 addAnnotatedClass(TestBookISBN.class).
-                buildSessionFactory();
+                buildSessionFactory());
+        sessionFactory = SessionFactoryGetter.getSessionFactory();
         try (Session session = sessionFactory.openSession()){
             session.beginTransaction();
             session.createQuery("DELETE FROM TestBook").executeUpdate();
@@ -51,7 +52,7 @@ public class HibernateTest {
 
     @After
     public void afterDoThis() {
-        sessionFactory.close();
+        SessionFactoryGetter.getSessionFactory().close();
     }
 
     @Test
@@ -260,9 +261,12 @@ public class HibernateTest {
             session.close();
             genre.setId(2);
             genre.setGenre("Thriller");
+
             Session session2 = sessionFactory.openSession();
             session2.beginTransaction();
+
             session2.persist(genre);
+
             session2.getTransaction().commit();
             assertThat(session2.createQuery("from TestBookGenres").list().size()).isEqualTo(2);
             session2.close();
