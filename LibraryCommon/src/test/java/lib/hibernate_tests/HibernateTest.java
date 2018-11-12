@@ -369,4 +369,34 @@ public class HibernateTest {
             throw ex;
         }
     }
+
+    @Test
+    public void shouldAddLastChangesWithUpdate() {
+        TestBookISBN number = new TestBookISBN();
+        number.setId(1);
+        number.setNumber("1876504741296");
+
+        TestBook book = new TestBook(1, "Alexandr", "Morning", "1965");
+        book.setNumber(number);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            number.setBook(book);
+            session.save(number);
+
+            session.getTransaction().commit();
+            session.close();
+
+            Session session2 = sessionFactory.openSession();
+            session2.beginTransaction();
+            number.setNumber("34580-197439857");
+            session2.update(number);
+            number.setNumber("123");
+            session2.getTransaction().commit();
+            assertThat(session2.get(TestBookISBN.class, 1).getNumber()).isEqualTo("123");
+            session2.close();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
 }
