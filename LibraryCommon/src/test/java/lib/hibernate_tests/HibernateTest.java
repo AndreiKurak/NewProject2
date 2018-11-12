@@ -254,14 +254,17 @@ public class HibernateTest {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
 
-            session.persist(genre);
+            session.save(genre);
             
             session.getTransaction().commit();
             session.close();
-
+            genre.setId(2);
+            genre.setGenre("Thriller");
             Session session2 = sessionFactory.openSession();
-            genre = session2.get(TestBookGenres.class, 1);
-            assertThat(genre.getGenre()).isEqualTo("Fantastic");
+            session2.beginTransaction();
+            session2.persist(genre);
+            session2.getTransaction().commit();
+            assertThat(session2.createQuery("from TestBookGenres").list().size()).isEqualTo(2);
             session2.close();
         }
         catch (Exception ex) {
