@@ -12,9 +12,21 @@ public class TestBook {
     private String title;
     private String year;
 
+    private TestBookISBN number;
+
+    @OneToOne
+    @JoinColumn(name = "isbn_id", referencedColumnName = "id")
+    public TestBookISBN getNumber() {
+        return this.number;
+    }
+
+    public void setNumber(TestBookISBN number) {
+        this.number = number;
+    }
+
     private TestBookGenres bookGenre;
     @ManyToOne
-    @JoinColumn(name = "book_genre", referencedColumnName = "genre")
+    @JoinColumn(name = "genre_id", referencedColumnName = "id")
     public TestBookGenres getBookGenre() {
         return this.bookGenre;
     }
@@ -38,8 +50,8 @@ public class TestBook {
         this.year = year;
     }
 
-    @Id //@Basic
-    @Column(name = "book_id", nullable = true)
+    @Id
+    @Column(name = "id", nullable = true)
     public Integer getId() {
         return id;
     }

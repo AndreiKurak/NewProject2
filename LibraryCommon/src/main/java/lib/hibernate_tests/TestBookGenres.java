@@ -28,7 +28,7 @@ public class TestBookGenres implements Serializable {
     }
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    /*@GeneratedValue(strategy = GenerationType.AUTO)*/
     @Column(name = "id")
     public int getId() {
         return id;

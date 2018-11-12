@@ -1,7 +1,9 @@
 package lib.hibernate_tests;
 
 import lib.PropertyValuesGetter;
+import lib.connectors.DataBaseConnector;
 import lib.connectors.DataConnectionException;
+import lib.connectors.SessionFactoryGetter;
 import org.hibernate.*;
 import org.hibernate.query.Query;
 import org.junit.After;
@@ -19,32 +21,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class HibernateTest {
 
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Before
     public void beforeDoThis() {
+        new DataBaseConnector().initializeTestTables();
+
         PropertyValuesGetter valuesGetter = new PropertyValuesGetter();
-
-        try (Connection connection = DriverManager.getConnection(valuesGetter.getUrl(), valuesGetter.getUser(), valuesGetter.getPassword());
-             Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS library(id int(11), author varchar(128), title varchar(128), year varchar(128), book_genre varchar(128))");
-            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS book_genres(id int(11), genre varchar(128))");
-        }
-        catch (Exception ex) {
-            throw new DataConnectionException("Error during table initialization", ex);
-        }
-
         valuesGetter.getProp().setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/doc_register_test?serverTimezone=UTC&useSSL=false");
+
         sessionFactory = new Configuration().
                 addPackage("lib.hibernate_tests").
                 addProperties(valuesGetter.getProp()).
                 addAnnotatedClass(TestBook.class).
                 addAnnotatedClass(TestBookGenres.class).
+                addAnnotatedClass(TestBookISBN.class).
                 buildSessionFactory();
         try (Session session = sessionFactory.openSession()){
             session.beginTransaction();
             session.createQuery("DELETE FROM TestBook").executeUpdate();
             session.createQuery("DELETE FROM TestBookGenres").executeUpdate();
+            session.createQuery("DELETE FROM TestBookISBN").executeUpdate();
             session.getTransaction().commit();
         }
         catch (Exception ex) {
@@ -114,7 +111,7 @@ public class HibernateTest {
     }
 
     @Test
-    public void shouldDeleteOrNotDeleteBook() {     //???
+    public void shouldDeleteOrNotDeleteBook() {     //with cascadeType.All will delete book
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
 
@@ -135,34 +132,6 @@ public class HibernateTest {
             session.remove(bookGenre);
 
             session.getTransaction().commit();
-        }
-        catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Test
-    public void shouldNotAbleToWorkWithLoadedObjectAfterSessionClosed() {
-        try  {
-            Session session = sessionFactory.openSession();
-            session.beginTransaction();
-
-            TestBookGenres genre = new TestBookGenres();
-            genre.setId(1);
-            genre.setGenre("Fantastic");
-
-            TestBook book = new TestBook(10, "Andrey", "Future World", "2016");
-            genre.addBook(book);
-            book.setBookGenre(genre);
-
-            session.save(book);
-            session.getTransaction().commit();
-
-            TestBook testBook = session.load(TestBook.class, 10);
-            //assertThat(testBook.getAuthor()).isEqualTo("Andrey");
-            session.close();
-
-            assertThat(testBook.getAuthor()).isNotEqualTo("Andrey");
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -194,7 +163,7 @@ public class HibernateTest {
     }
 
     @Test
-    public void shouldCreateDifferentObjectWithSessionSaveAfterEvict() {
+    public void shouldCreateDifferentObjectWithSessionSaveAfterEvict() {   ///
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
 
@@ -206,7 +175,7 @@ public class HibernateTest {
             genre.addBook(book);
             book.setBookGenre(genre);
 
-            Integer id1 = (Integer) session.save(book);  //save  //persist, refresh, replicate
+            Integer id1 = (Integer) session.save(book);
 
             session.evict(book);
 
@@ -215,6 +184,179 @@ public class HibernateTest {
             assertThat(id1).isNotEqualTo(id2);
 
             session.getTransaction().commit();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Test
+    public void shouldUpdateBookWithMethodMerge() {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            TestBookGenres genre = new TestBookGenres();
+            genre.setId(1);
+            genre.setGenre("Fantastic");
+
+            TestBook book = new TestBook(10, "Andrey", "Future World", "2016");
+            genre.addBook(book);
+            book.setBookGenre(genre);
+            session.save(book);
+            session.getTransaction().commit();
+            session.close();
+            book.setAuthor("Unknown");
+
+            Session session2 = sessionFactory.openSession();
+            session2.beginTransaction();
+            session2.update(book); //update or merge
+            session2.getTransaction().commit();
+            assertThat(book.getAuthor()).isEqualTo("Unknown");
+            session2.close();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Test
+    public void checkExample() {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            TestBookGenres genre = new TestBookGenres();
+            genre.setId(1);
+            genre.setGenre("Fantastic");
+
+            session.save(genre);
+            session.getTransaction().commit();
+            session.close();
+
+            Session session2 = sessionFactory.openSession();
+            session2.beginTransaction();
+
+            TestBookGenres genre2 = session2.load(TestBookGenres.class, 1);
+            genre2.setGenre("Horror");
+            session2.getTransaction().commit();
+            session2.close();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Test
+    public void shouldAddNewGenreWithMethodPersist() { 
+        TestBookGenres genre = new TestBookGenres();
+        genre.setId(1);
+        genre.setGenre("Fantastic");
+
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            session.persist(genre);
+            
+            session.getTransaction().commit();
+            session.close();
+
+            Session session2 = sessionFactory.openSession();
+            genre = session2.get(TestBookGenres.class, 1);
+            assertThat(genre.getGenre()).isEqualTo("Fantastic");
+            session2.close();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Test
+    public void shouldUpdateGenreWithMethodReplicateWhereReplicationModeSetAsLatestVersion() {
+        TestBookGenres genre = new TestBookGenres();
+        genre.setId(1);
+        genre.setGenre("Fantastic");
+
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            session.save(genre);
+
+            session.getTransaction().commit();
+            session.close();
+            genre.setGenre("Horror");
+            Session session2 = sessionFactory.openSession();
+            session2.beginTransaction();
+            session2.replicate(genre, ReplicationMode.LATEST_VERSION);
+
+            session2.getTransaction().commit();
+            assertThat(((TestBookGenres)session2.createQuery("from TestBookGenres where id=1").uniqueResult()).getGenre()).
+                    isEqualTo("Horror");
+            session2.close();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Test
+    public void shouldEvictSoNoBooksWillBeSaved() {
+        TestBookGenres genre = new TestBookGenres();
+        genre.setId(1);
+        genre.setGenre("Fantastic");
+
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            session.save(genre);
+            session.evict(genre);
+            session.getTransaction().commit();
+            assertThat(session.createQuery("from TestBookGenres").list().size()).
+                    isEqualTo(0);
+            session.close();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Test
+    public void shouldAddGenreWithFlushDespiteOfEvict() {
+        TestBookGenres genre = new TestBookGenres();
+        genre.setId(1);
+        genre.setGenre("Fantastic");
+
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            session.save(genre);
+            session.flush();
+            session.evict(genre);
+            session.getTransaction().commit();
+            assertThat(session.createQuery("from TestBookGenres").list().size()).
+                    isEqualTo(1);
+            session.close();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Test
+    public void shouldAddBookWithNumber() {
+        TestBookISBN number = new TestBookISBN();
+        number.setId(1);
+        number.setNumber("1876504741296");
+
+        TestBook book = new TestBook(1, "Alexandr", "Morning", "1965");
+        book.setNumber(number);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            number.setBook(book);
+            session.save(number);
+
+            session.getTransaction().commit();
+            assertThat(((TestBook)session.createQuery("from TestBook").uniqueResult()).getNumber()).
+                    isNotNull();
+            session.close();
         }
         catch (Exception ex) {
             throw ex;
