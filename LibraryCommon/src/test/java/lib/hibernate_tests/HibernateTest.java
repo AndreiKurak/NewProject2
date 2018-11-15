@@ -3,26 +3,15 @@ package lib.hibernate_tests;
 import javax.persistence.OptimisticLockException;
 import lib.PropertyValuesGetter;
 import lib.connectors.DataBaseConnector;
-import lib.connectors.DataConnectionException;
 import lib.connectors.SessionFactoryGetter;
 import org.hibernate.*;
-import org.hibernate.annotations.common.util.impl.Log;
-import org.hibernate.query.Query;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.hibernate.cfg.Configuration;
 
-import javax.transaction.RollbackException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Fail.fail;
 
 public class HibernateTest {
 

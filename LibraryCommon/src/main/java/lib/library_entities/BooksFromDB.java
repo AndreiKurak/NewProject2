@@ -1,16 +1,12 @@
 package lib.library_entities;
 
-import lib.PropertyValuesGetter;
 import lib.connectors.SessionFactoryGetter;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Example;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class BooksFromDB implements Books {
 

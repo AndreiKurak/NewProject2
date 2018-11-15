@@ -1,21 +1,12 @@
 package lib.hibernate_tests;
 
-import lib.PropertyValuesGetter;
-import lib.connectors.SessionFactoryGetter;
-import org.hibernate.SessionFactory;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.io.File;
 import java.io.Serializable;
 
 @Entity
