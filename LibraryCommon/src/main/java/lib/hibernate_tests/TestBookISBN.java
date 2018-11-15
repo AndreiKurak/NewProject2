@@ -1,10 +1,29 @@
 package lib.hibernate_tests;
 
+import lib.PropertyValuesGetter;
+import lib.connectors.SessionFactoryGetter;
+import org.hibernate.SessionFactory;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.File;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "book_isbn")
-public class TestBookISBN {
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@OptimisticLocking(type = OptimisticLockType.ALL)
+@DynamicUpdate(true)
+public class TestBookISBN implements Serializable {
 
     private int id;
     private String genre;
@@ -16,6 +35,14 @@ public class TestBookISBN {
     }
 
     public void setBook(TestBook book) {
+        this.book = book;
+    }
+
+    public TestBookISBN() { }
+
+    public TestBookISBN(int id, String genre, TestBook book) {
+        this.id = id;
+        this.genre = genre;
         this.book = book;
     }
 

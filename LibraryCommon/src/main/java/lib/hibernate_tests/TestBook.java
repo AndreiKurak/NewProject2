@@ -1,5 +1,7 @@
 package lib.hibernate_tests;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.util.Objects;
 

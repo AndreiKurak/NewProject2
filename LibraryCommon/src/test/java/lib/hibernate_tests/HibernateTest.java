@@ -1,23 +1,28 @@
 package lib.hibernate_tests;
 
+import javax.persistence.OptimisticLockException;
 import lib.PropertyValuesGetter;
 import lib.connectors.DataBaseConnector;
 import lib.connectors.DataConnectionException;
 import lib.connectors.SessionFactoryGetter;
 import org.hibernate.*;
+import org.hibernate.annotations.common.util.impl.Log;
 import org.hibernate.query.Query;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.hibernate.cfg.Configuration;
 
+import javax.transaction.RollbackException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Fail.fail;
 
 public class HibernateTest {
 
@@ -124,7 +129,8 @@ public class HibernateTest {
             genre.addBook(book);
             book.setBookGenre(genre);
 
-            session.save(genre);    session.save(book);
+            session.save(genre);
+            session.save(book);
             session.getTransaction().commit();
 
             TestBookGenres bookGenre = session.get(TestBookGenres.class, 1);
@@ -397,6 +403,89 @@ public class HibernateTest {
         }
         catch (Exception ex) {
             throw ex;
+        }
+    }
+
+    @Test
+    public void shouldSaveNumberDespiteEvictingBecauseOfFlush() {
+        TestBookISBN number = new TestBookISBN();
+        number.setId(1);
+        number.setNumber("1876504741296");
+
+        TestBook book = new TestBook(1, "Alexandr", "Morning", "1965");
+        book.setNumber(number);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            //If flush mode is 'AUTO' before firing any query hibernate will check if there are any tables to be updated
+            session.setFlushMode(FlushMode.AUTO);   //manual, commit, always +
+            System.out.println(session.getFlushMode().name());
+            number.setBook(book);
+            session.save(number);
+            session.createQuery("from TestBook").list().size();
+
+            session.evict(number);
+            session.getTransaction().commit();
+            assertThat(session.get(TestBookISBN.class, 1)).isNotNull();
+            session.close();
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Test (expected = OptimisticLockException.class)
+    public void shouldThrowAnExceptionBecauseOfTryingToUpdateEntitiesWithOptimisticLockingInParallelTransactions() {
+        try {
+            Session session0 = sessionFactory.openSession();
+            session0.beginTransaction();
+                TestBookISBN isbn = new TestBookISBN(1, "123", new TestBook(1, "Alexandr", "Morning", "1965"));
+                session0.save(isbn);
+            session0.getTransaction().commit();
+            session0.close();
+
+            Session session1 = sessionFactory.openSession();
+            session1.beginTransaction();
+            Session session2 = sessionFactory.openSession();
+            session2.beginTransaction();
+
+            TestBookISBN isbn1 = session1.find(TestBookISBN.class, 1);
+            //session1.lock(isbn1, LockMode.OPTIMISTIC);
+            isbn1.setNumber("1234");
+            session1.update(isbn1);
+            TestBookISBN isbn2 = session2.find(TestBookISBN.class, 1);
+            isbn2.setNumber("4321");
+
+            session1.getTransaction().commit();
+            session1.close();
+
+            session2.getTransaction().commit();
+            session2.close();
+        } catch (Exception e) {
+            System.out.println("------------" + e);
+            throw e;
+        }
+    }
+
+    @Test
+    public void shouldTakeTheSecondQueryFromCache() {
+        try {
+            Session session0 = sessionFactory.openSession();
+            session0.beginTransaction();
+            TestBookISBN isbn = new TestBookISBN(1, "123", new TestBook(1, "Alexandr", "Morning", "1965"));
+            session0.save(isbn);
+            session0.getTransaction().commit();
+            session0.close();
+
+            Session session1 = sessionFactory.openSession();
+            TestBookISBN isbn1 = session1.get(TestBookISBN.class, 1);
+            //System.out.println(isbn1.getId() + " " + isbn1.getNumber() + " " + isbn1.getBook());
+            session1.close();
+            Session session2 = sessionFactory.openSession();
+            TestBookISBN isbn2 = session2.get(TestBookISBN.class, 1);
+            //System.out.println(isbn2.getId() + " " + isbn2.getNumber() + " " + isbn2.getBook());
+            session2.close();
+        } catch (Exception e) {
+            throw e;
         }
     }
 }
