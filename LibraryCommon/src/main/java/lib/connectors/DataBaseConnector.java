@@ -32,7 +32,7 @@ public class DataBaseConnector implements DataConnection {
              Statement stmt = connection.createStatement()) {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS library(id int(11) primary key not null, author varchar(128), title varchar(128), year varchar(128), genre_id int(11), isbn_id int(11))");
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS book_genres(id int(11) primary key not null, genre varchar(128))");
-            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS book_isbn(id int(11) primary key not null, isbn varchar(128))");
+            //stmt.executeUpdate("CREATE TABLE IF NOT EXISTS book_isbn(id int(11) primary key not null, isbn varchar(128))");
         }
         catch (Exception ex) {
             throw new DataConnectionException("Error during table initialization", ex);

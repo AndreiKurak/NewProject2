@@ -1,10 +1,16 @@
 package lib.hibernate_tests;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "library")
+@Table(name = "library" , schema = "doc_register_test")
+/*@OptimisticLocking(type = OptimisticLockType.ALL)
+@DynamicUpdate(true)*/
 public class TestBook {
 
     private Integer id;
@@ -14,7 +20,7 @@ public class TestBook {
 
     private TestBookISBN number;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "isbn_id", referencedColumnName = "id")
     public TestBookISBN getNumber() {
         return this.number;
@@ -114,5 +120,15 @@ public class TestBook {
                 ", title='" + title + '\'' +
                 ", year='" + year + '\'' +
                 '}';
+    }
+
+    private long version;
+    @Version
+    @Column(name="version")
+    public long getVersion() {
+        return version;
+    }
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

@@ -12,8 +12,9 @@ public class SessionFactoryGetter {
         return sessionFactory;
     }
 
-    public static void setSessionFactory(SessionFactory sessionFactory1) {
+    public static SessionFactory getSessionFactory(SessionFactory sessionFactory1) {
         if (sessionFactory == null)
             sessionFactory = sessionFactory1;
+        return sessionFactory;
     }
 }

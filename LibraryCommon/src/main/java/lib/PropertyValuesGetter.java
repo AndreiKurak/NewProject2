@@ -51,4 +51,8 @@ public class PropertyValuesGetter {
     public String getPassword() {
         return password;
     }
+
+    public void addProperty() {
+        prop.setProperty("hibernate.hbm2ddl.auto", "create"); //update, create-drop
+    }
 }

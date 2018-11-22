@@ -19,20 +19,20 @@ public class HibernateTest {
 
     @Before
     public void beforeDoThis() {
-        new DataBaseConnector().initializeTestTables();
+       // new DataBaseConnector().initializeTestTables();
 
         PropertyValuesGetter valuesGetter = new PropertyValuesGetter();
         valuesGetter.getProp().setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/doc_register_test?serverTimezone=UTC&useSSL=false");
+        valuesGetter.addProperty();
 
-        SessionFactoryGetter.setSessionFactory(new Configuration().
+        sessionFactory = SessionFactoryGetter.getSessionFactory(new Configuration().
                 addPackage("lib.hibernate_tests").
                 addProperties(valuesGetter.getProp()).
                 addAnnotatedClass(TestBook.class).
                 addAnnotatedClass(TestBookGenres.class).
                 addAnnotatedClass(TestBookISBN.class).
                 buildSessionFactory());
-        sessionFactory = SessionFactoryGetter.getSessionFactory();
-        try (Session session = sessionFactory.openSession()){
+        /*try (Session session = sessionFactory.openSession()){
             session.beginTransaction();
             session.createQuery("DELETE FROM TestBook").executeUpdate();
             session.createQuery("DELETE FROM TestBookGenres").executeUpdate();
@@ -41,12 +41,12 @@ public class HibernateTest {
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
-        }
+        }*/
     }
 
     @After
     public void afterDoThis() {
-        SessionFactoryGetter.getSessionFactory().close();
+        sessionFactory.close();
     }
 
     @Test
@@ -437,11 +437,11 @@ public class HibernateTest {
             Session session2 = sessionFactory.openSession();
             session2.beginTransaction();
 
-            TestBookISBN isbn1 = session1.find(TestBookISBN.class, 1);
-            //session1.lock(isbn1, LockMode.OPTIMISTIC);
+            TestBookISBN isbn1 = session1.get(TestBookISBN.class, 1);
+            session1.lock(isbn1, LockMode.OPTIMISTIC);
             isbn1.setNumber("1234");
             session1.update(isbn1);
-            TestBookISBN isbn2 = session2.find(TestBookISBN.class, 1);
+            TestBookISBN isbn2 = session2.get(TestBookISBN.class, 1);
             isbn2.setNumber("4321");
 
             session1.getTransaction().commit();
@@ -476,5 +476,93 @@ public class HibernateTest {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    @Test
+    public void shouldReturnNullBecauseFlushWasNotExecutedBeforeQuery() {
+        try {
+            Session session0 = sessionFactory.openSession();
+            session0.beginTransaction();
+            TestBookISBN isbn = new TestBookISBN(1, "123", new TestBook(1, "Alexandr", "Morning", "1965"));
+            session0.save(isbn);
+            session0.getTransaction().commit();
+            session0.close();
+
+            Session session1 = sessionFactory.openSession();
+            session1.beginTransaction();
+            session1.setFlushMode(FlushMode.COMMIT);
+            TestBookISBN isbn1 = session1.get(TestBookISBN.class, 1);
+            //session1.lock(isbn1, LockMode.OPTIMISTIC);
+            isbn1.setNumber("1234");
+            session1.update(isbn1);
+            TestBookISBN isbn2 = (TestBookISBN) session1.createQuery("from TestBookISBN where number=1234").uniqueResult();
+            assertThat(isbn2).isNotNull();
+            session1.getTransaction().commit();
+            session1.close();
+        } catch (Exception e) {
+            System.out.println("------------" + e);
+            throw e;
+        }
+    }
+
+    @Test (expected = org.hibernate.OptimisticLockException.class)
+    public void should() {
+        try {
+            Session session0 = sessionFactory.openSession();
+            session0.beginTransaction();
+            TestBook book = new TestBook(1, "Alexandr", "Morning", "1965");
+            session0.save(book);
+            session0.getTransaction().commit();
+            session0.close();
+
+            Session session1 = sessionFactory.openSession();
+            session1.beginTransaction();
+            TestBook book1 = session1.get(TestBook.class, 1, new LockOptions(LockMode.OPTIMISTIC));
+
+            Session session2 = sessionFactory.openSession();
+            session2.beginTransaction();
+            TestBook book2 = session2.get(TestBook.class, 1);
+            //session1.lock(isbn1, LockMode.OPTIMISTIC);
+            book2.setYear("1966");
+            session2.getTransaction().commit();
+            session2.close();
+
+            TestBookISBN isbn1 = new TestBookISBN(1, "18649217", book1);
+            session1.persist(isbn1);
+            session1.getTransaction().commit();
+            session1.close();
+        } catch (Exception e) {
+            System.out.println("------------" + e);
+            throw e;
+        }
+    }
+
+    @Test
+    public void testThis() {
+
+        TestBook book = new TestBook(1, "A", "T", "Y");
+        TestBookISBN isbn = new TestBookISBN();
+        isbn.setId(1);
+        isbn.setNumber("1234");
+        book.setNumber(isbn);
+        isbn.setBook(book);
+        Session session = sessionFactory.openSession();
+        Transaction trx = session.beginTransaction();
+        session.save(isbn);
+        trx.commit();
+        session.close();
+
+        Session session2 = sessionFactory.openSession();
+        Transaction tx2 = session2.beginTransaction();
+        TestBookISBN i2 = (TestBookISBN) session2.find(TestBookISBN.class, 1);
+        //System.out.println(i2.getBook());
+        // at this point book on isbn instance should be a proxy.
+        tx2.commit();
+        session2.close();
+
+        // if book property on isbn is a proxy, this should cause a
+        // LazyInitialization exception.
+        TestBook b2 = i2.getBook();
+        System.out.println(b2);
     }
 }

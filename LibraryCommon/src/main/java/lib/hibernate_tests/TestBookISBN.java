@@ -12,15 +12,13 @@ import java.io.Serializable;
 @Entity
 @Table(name = "book_isbn")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@OptimisticLocking(type = OptimisticLockType.ALL)
-@DynamicUpdate(true)
 public class TestBookISBN implements Serializable {
 
     private int id;
-    private String genre;
+    private String number;
 
-    private TestBook book = new TestBook();
-    @OneToOne(cascade = {CascadeType.ALL/*, CascadeType.MERGE*/}, mappedBy = "number")
+    private TestBook book/* = new TestBook()*/;
+    @OneToOne(cascade = {CascadeType.ALL/*, CascadeType.MERGE*/}, fetch = FetchType.LAZY, mappedBy = "number")
     public TestBook getBook() {
         return this.book;
     }
@@ -31,9 +29,9 @@ public class TestBookISBN implements Serializable {
 
     public TestBookISBN() { }
 
-    public TestBookISBN(int id, String genre, TestBook book) {
+    public TestBookISBN(int id, String number, TestBook book) {
         this.id = id;
-        this.genre = genre;
+        this.number = number;
         this.book = book;
     }
 
@@ -51,10 +49,20 @@ public class TestBookISBN implements Serializable {
     @Basic
     @Column(name = "isbn", nullable = true, length = 128)
     public String getNumber() {
-        return genre;
+        return number;
     }
 
-    public void setNumber(String genre) {
-        this.genre = genre;
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    private long version;
+    @Version
+    @Column(name="version")
+    public long getVersion() {
+        return version;
+    }
+    public void setVersion(long version) {
+        this.version = version;
     }
 }
