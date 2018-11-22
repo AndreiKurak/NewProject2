@@ -554,15 +554,17 @@ public class HibernateTest {
 
         Session session2 = sessionFactory.openSession();
         Transaction tx2 = session2.beginTransaction();
-        TestBookISBN i2 = (TestBookISBN) session2.find(TestBookISBN.class, 1);
-        //System.out.println(i2.getBook());
+        //TestBookISBN i2 = (TestBookISBN) session2.find(TestBookISBN.class, 1);
+        TestBook i2 = (TestBook) session2.find(TestBook.class, 1);
+        System.out.println(i2.getNumber());
         // at this point book on isbn instance should be a proxy.
         tx2.commit();
         session2.close();
 
         // if book property on isbn is a proxy, this should cause a
         // LazyInitialization exception.
-        TestBook b2 = i2.getBook();
+        //TestBook b2 = i2.getBook();
+        TestBookISBN b2 = i2.getNumber();
         System.out.println(b2);
     }
 }

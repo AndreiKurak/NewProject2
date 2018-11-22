@@ -20,7 +20,7 @@ public class TestBook {
 
     private TestBookISBN number;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "isbn_id", referencedColumnName = "id")
     public TestBookISBN getNumber() {
         return this.number;
