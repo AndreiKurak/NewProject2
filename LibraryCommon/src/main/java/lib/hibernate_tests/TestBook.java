@@ -11,7 +11,7 @@ import java.util.Objects;
 @Table(name = "library" , schema = "doc_register_test")
 /*@OptimisticLocking(type = OptimisticLockType.ALL)
 @DynamicUpdate(true)*/
-public class TestBook {
+public class TestBook extends TestBookWeight {
 
     private Integer id;
     private String author;

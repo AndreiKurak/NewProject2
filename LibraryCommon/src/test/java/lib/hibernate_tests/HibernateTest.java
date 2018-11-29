@@ -506,7 +506,7 @@ public class HibernateTest {
     }
 
     @Test (expected = org.hibernate.OptimisticLockException.class)
-    public void should() {
+    public void shouldThrowAnExceptionBecauseOfVersionConflict() {
         try {
             Session session0 = sessionFactory.openSession();
             session0.beginTransaction();
@@ -524,6 +524,39 @@ public class HibernateTest {
             TestBook book2 = session2.get(TestBook.class, 1);
             //session1.lock(isbn1, LockMode.OPTIMISTIC);
             book2.setYear("1966");
+            session2.getTransaction().commit();
+            session2.close();
+            
+            TestBookISBN isbn1 = new TestBookISBN(1, "18649217", book1);
+            session1.persist(isbn1);
+            session1.getTransaction().commit();
+            session1.close();
+        } catch (Exception e) {
+            System.out.println("------------" + e);
+            throw e;
+        }
+    }
+
+    @Test (expected = org.hibernate.OptimisticLockException.class)
+    public void shouldThrowAnExceptionBecauseOfDeletingEntityWithOptimisticLockingEnabled() {
+        try {
+            Session session0 = sessionFactory.openSession();
+            session0.beginTransaction();
+            TestBook book = new TestBook(1, "Alexandr", "Morning", "1965");
+            session0.save(book);
+            session0.getTransaction().commit();
+            session0.close();
+
+            Session session1 = sessionFactory.openSession();
+            session1.beginTransaction();
+            TestBook book1 = session1.get(TestBook.class, 1, new LockOptions(LockMode.OPTIMISTIC));
+
+            Session session2 = sessionFactory.openSession();
+            session2.beginTransaction();
+            TestBook book2 = session2.get(TestBook.class, 1);
+            //session1.lock(isbn1, LockMode.OPTIMISTIC);
+            //book2.setYear("1966");
+            session2.delete(book2);
             session2.getTransaction().commit();
             session2.close();
 
@@ -554,17 +587,56 @@ public class HibernateTest {
 
         Session session2 = sessionFactory.openSession();
         Transaction tx2 = session2.beginTransaction();
-        //TestBookISBN i2 = (TestBookISBN) session2.find(TestBookISBN.class, 1);
-        TestBook i2 = (TestBook) session2.find(TestBook.class, 1);
-        System.out.println(i2.getNumber());
+        //TestBookISBN b2 = (TestBookISBN) session2.find(TestBookISBN.class, 1);
+        TestBook b2 = (TestBook) session2.find(TestBook.class, 1);
+        System.out.println(b2.getNumber());
         // at this point book on isbn instance should be a proxy.
         tx2.commit();
         session2.close();
 
         // if book property on isbn is a proxy, this should cause a
         // LazyInitialization exception.
-        //TestBook b2 = i2.getBook();
-        TestBookISBN b2 = i2.getNumber();
-        System.out.println(b2);
+        //TestBook b2 = b2.getBook();
+        TestBookISBN i2 = b2.getNumber();
+        System.out.println(i2);
+    }
+
+    @Test
+    public void shouldThrowAnException() {
+        try {
+            Session session0 = sessionFactory.openSession();
+            session0.beginTransaction();
+            TestBook book = new TestBook(1, "Alexandr", "Morning", "1965");
+            session0.save(book);
+            session0.getTransaction().commit();
+            session0.close();
+
+            Session session1 = sessionFactory.openSession();
+            session1.beginTransaction();
+            TestBook book1 = session1.get(TestBook.class, 1/*, new LockOptions(LockMode.OPTIMISTIC)*/);
+
+            Session session2 = sessionFactory.openSession();
+            session2.beginTransaction();
+            TestBook book2 = session2.get(TestBook.class, 1);
+            book2.setYear("1966");
+            session2.getTransaction().commit();
+            session2.close();
+
+            TestBookISBN isbn1 = new TestBookISBN(1, "18649217", book1);
+            session1.persist(isbn1);
+            //System.out.println(((TestBook)session1.createQuery("FROM TestBook WHERE id=1 and version=1").uniqueResult()).getYear());
+            //before commit
+            Session session3 = sessionFactory.openSession();
+            TestBook testBook2 = (TestBook)session3.createQuery("FROM TestBook WHERE id=1").uniqueResult();
+            System.out.println(testBook2.getYear() + " + version: " + testBook2.getVersion());
+            session3.close();
+            if (testBook2.getVersion() != book1.getVersion())
+                throw new RuntimeException("Newer version was found in database");
+            session1.getTransaction().commit();
+            session1.close();
+        } catch (Exception e) {
+            assertThat("Newer version was found in database").isEqualTo(e.getMessage());
+            System.out.println("------------" + e);
+        }
     }
 }
