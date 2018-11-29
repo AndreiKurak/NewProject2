@@ -628,9 +628,9 @@ public class HibernateTest {
             //before commit
             Session session3 = sessionFactory.openSession();
             TestBook testBook2 = (TestBook)session3.createQuery("FROM TestBook WHERE id=1").uniqueResult();
-            System.out.println(testBook2.getYear() + " + version: " + testBook2.getVersion());
+            //System.out.println(testBook2.getYear() + " + version: " + testBook2.getVersion());
             session3.close();
-            if (testBook2.getVersion() != book1.getVersion())
+            if (testBook2 == null || testBook2.getVersion() != book1.getVersion())
                 throw new RuntimeException("Newer version was found in database");
             session1.getTransaction().commit();
             session1.close();
