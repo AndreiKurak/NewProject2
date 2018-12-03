@@ -517,7 +517,7 @@ public class HibernateTest {
 
             Session session1 = sessionFactory.openSession();
             session1.beginTransaction();
-            TestBook book1 = session1.get(TestBook.class, 1, new LockOptions(LockMode.OPTIMISTIC));
+            TestBook book1 = session1.load(TestBook.class, 1, new LockOptions(LockMode.OPTIMISTIC));
 
             Session session2 = sessionFactory.openSession();
             session2.beginTransaction();
@@ -549,7 +549,7 @@ public class HibernateTest {
 
             Session session1 = sessionFactory.openSession();
             session1.beginTransaction();
-            TestBook book1 = session1.get(TestBook.class, 1, new LockOptions(LockMode.OPTIMISTIC));
+            TestBook book1 = session1.load(TestBook.class, 1, new LockOptions(LockMode.OPTIMISTIC));
 
             Session session2 = sessionFactory.openSession();
             session2.beginTransaction();

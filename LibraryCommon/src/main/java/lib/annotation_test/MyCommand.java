@@ -5,12 +5,12 @@ public class MyCommand {
 
     @PrintCommand(print = "message")
     public void message() {
+        //System.out.println("message: ");
         try {
-            new Action().go();
+            new Action().doAction();
         }
         catch (Exception ex) {
             
         }
-        //System.out.println("message");
     }
 }
