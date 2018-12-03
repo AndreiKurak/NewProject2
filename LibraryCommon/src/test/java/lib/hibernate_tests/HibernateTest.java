@@ -450,7 +450,7 @@ public class HibernateTest {
             session2.getTransaction().commit();
             session2.close();
         } catch (Exception e) {
-            System.out.println("------------" + e);
+            System.out.println("---" + e);
             throw e;
         }
     }
@@ -500,7 +500,7 @@ public class HibernateTest {
             session1.getTransaction().commit();
             session1.close();
         } catch (Exception e) {
-            System.out.println("------------" + e);
+            System.out.println("---" + e);
             throw e;
         }
     }
@@ -531,7 +531,7 @@ public class HibernateTest {
             session1.getTransaction().commit();
             session1.close();
         } catch (Exception e) {
-            System.out.println("------------" + e);
+            System.out.println("---" + e);
             throw e;
         }
     }
@@ -548,7 +548,7 @@ public class HibernateTest {
 
             Session session1 = sessionFactory.openSession();
             session1.beginTransaction();
-            TestBook book1 = session1.get(TestBook.class, 1, new LockOptions(LockMode.OPTIMISTIC));
+            TestBook book1 = session1.load(TestBook.class, 1, new LockOptions(LockMode.OPTIMISTIC));
 
             Session session2 = sessionFactory.openSession();
             session2.beginTransaction();
@@ -564,13 +564,13 @@ public class HibernateTest {
             session1.getTransaction().commit();
             session1.close();
         } catch (Exception e) {
-            System.out.println("------------" + e);
+            System.out.println("---" + e);
             throw e;
         }
     }
 
     @Test
-    public void testThis() {
+    public void testLazyInitialization() {
 
         TestBook book = new TestBook(1, "A", "T", "Y");
         TestBookISBN isbn = new TestBookISBN();
@@ -601,7 +601,7 @@ public class HibernateTest {
     }
 
     @Test
-    public void shouldThrowAnException() {
+    public void shouldThrowAnExceptionBecauseOfVersionConflictWithCustomOptimisticLocking() {
         try {
             Session session0 = sessionFactory.openSession();
             session0.beginTransaction();
@@ -612,7 +612,7 @@ public class HibernateTest {
 
             Session session1 = sessionFactory.openSession();
             session1.beginTransaction();
-            TestBook book1 = session1.load(TestBook.class, 1/*, new LockOptions(LockMode.OPTIMISTIC)*/);
+            TestBook book1 = session1.load(TestBook.class, 1, new LockOptions(LockMode.OPTIMISTIC));
 
             Session session2 = sessionFactory.openSession();
             session2.beginTransaction();
@@ -634,8 +634,8 @@ public class HibernateTest {
             session1.getTransaction().commit();
             session1.close();
         } catch (Exception e) {
+            System.out.println("---" + e);
             assertThat("Newer version was found in database").isEqualTo(e.getMessage());
-            System.out.println("------------" + e);
         }
     }
 }
