@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "library" , schema = "doc_register_test")
+@Table(name = "library")//, schema = "doc_register_test")
 /*@OptimisticLocking(type = OptimisticLockType.ALL)
 @DynamicUpdate(true)*/
 public class TestBook extends TestBookWeight {
@@ -42,6 +42,10 @@ public class TestBook extends TestBookWeight {
     }
 
     public TestBook() { }
+
+    public TestBook(Integer id) {
+        this.id = id;
+    }
 
     public TestBook(String author, String title, String year) {
         this.author = author;
@@ -96,6 +100,18 @@ public class TestBook extends TestBookWeight {
         this.year = year;
     }
 
+    private long version;
+
+    @Version
+    @Column(name="version")
+    public long getVersion() {
+        return version;
+    }
+    
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,15 +136,5 @@ public class TestBook extends TestBookWeight {
                 ", title='" + title + '\'' +
                 ", year='" + year + '\'' +
                 '}';
-    }
-
-    private long version;
-    @Version
-    @Column(name="version")
-    public long getVersion() {
-        return version;
-    }
-    public void setVersion(long version) {
-        this.version = version;
     }
 }

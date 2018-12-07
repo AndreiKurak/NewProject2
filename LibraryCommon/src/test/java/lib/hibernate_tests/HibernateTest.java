@@ -638,4 +638,20 @@ public class HibernateTest {
             assertThat("Newer version was found in database").isEqualTo(e.getMessage());
         }
     }
+
+    @Test
+    public void proxyObjectshouldReturnFieldOfEntity() {
+        Session session0 = sessionFactory.openSession();
+        session0.beginTransaction();
+        TestBook testBook1 = new TestBook(1);
+        testBook1.setAuthor("Shepard");
+        session0.save(testBook1);
+        session0.getTransaction().commit();
+        session0.close();
+    
+        Session session1 = sessionFactory.openSession();
+        TestBookProxy proxy = new TestBookProxy(1, session1);
+        assertThat(proxy.getAuthor()).isEqualTo("Shepard");
+        session1.close();
+    }
 }
