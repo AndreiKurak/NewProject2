@@ -1,11 +1,14 @@
-package lib.hibernate_tests;
+package lib.hibernate_tests.proxies;
 
+import lib.hibernate_tests.TestBook;
+import lib.hibernate_tests.TestBookGenres;
+import lib.hibernate_tests.TestBookISBN;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.Objects;
 
-public class TestBookProxy extends TestBook {
+public class TestBookStaticProxy extends TestBook {
 
     private Integer id;
     private TestBook bookEntity;  //real book
@@ -36,7 +39,7 @@ public class TestBookProxy extends TestBook {
         bookEntity.setBookGenre(bookGenre);
     }
 
-    public TestBookProxy(Integer id, Session session) {
+    public TestBookStaticProxy(Integer id, Session session) {
         this.id = id;
         this.session = session;
     }

@@ -2,8 +2,10 @@ package lib.hibernate_tests;
 
 import javax.persistence.OptimisticLockException;
 import lib.PropertyValuesGetter;
-import lib.connectors.DataBaseConnector;
 import lib.connectors.SessionFactoryGetter;
+import lib.hibernate_tests.proxies.MyEntity;
+import lib.hibernate_tests.proxies.TestBookStaticProxy;
+import lib.hibernate_tests.proxies.TestProxyFactory;
 import org.hibernate.*;
 import org.junit.After;
 import org.junit.Before;
@@ -640,8 +642,13 @@ public class HibernateTest {
     }
 
     @Test
-    public void proxyObjectshouldReturnFieldOfEntity() {
-        Session session0 = sessionFactory.openSession();
+    public void proxyObjectShouldReturnFieldOfEntity() {
+        TestProxyFactory proxyFactory = new TestProxyFactory();
+        TestBook bookProxy = (TestBook) proxyFactory.createProxy(TestBook.class);
+        bookProxy.setAuthor("Shepard");
+        assertThat(bookProxy.getAuthor()).isEqualTo("Shepard");
+
+        /*Session session0 = sessionFactory.openSession();
         session0.beginTransaction();
         TestBook testBook1 = new TestBook(1);
         testBook1.setAuthor("Shepard");
@@ -650,8 +657,8 @@ public class HibernateTest {
         session0.close();
     
         Session session1 = sessionFactory.openSession();
-        TestBookProxy proxy = new TestBookProxy(1, session1);
+        TestBookStaticProxy proxy = new TestBookStaticProxy(1, session1);
         assertThat(proxy.getAuthor()).isEqualTo("Shepard");
-        session1.close();
+        session1.close();*/
     }
 }
