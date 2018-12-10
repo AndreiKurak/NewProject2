@@ -21,14 +21,14 @@ import javax.tools.ToolProvider;
 public class TestProxyFactory {
 
     private String getSourceCode(Class entity) {
-        String sourceCode;
+        StringBuffer sourceCodeBuffer = new StringBuffer("import lib.hibernate_tests.*; ");
 
-        sourceCode = "import lib.hibernate_tests.*; ";
+        //sourceCode = "import lib.hibernate_tests.*; ";
         String entityClassName = entity.getSimpleName();
-        sourceCode += "public class " + entityClassName + "Proxy extends " + entityClassName + " {";
+        sourceCodeBuffer.append("public class " + entityClassName + "Proxy extends " + entityClassName + " {");
 
         String entityVariable = "entity";
-        sourceCode += " private " + entityClassName + " " + entityVariable + "; ";
+        sourceCodeBuffer.append(" private " + entityClassName + " " + entityVariable + "; ");
         Method[] methods = entity.getMethods();
         String methodName;
         String argumentVariable;
@@ -36,17 +36,18 @@ public class TestProxyFactory {
         for (int i = 0; i < methods.length; i++) {
             methodName = methods[i].getName();
             if (methodName.contains("get") && !methodName.equals("getClass")) {
-                sourceCode += "public " + methods[i].getReturnType().getSimpleName() + " " + methodName + "() { " + logic + " return " + entityVariable + "." + methodName + "(); } ";
+                sourceCodeBuffer.append("public " + methods[i].getReturnType().getSimpleName() + " " + methodName + "() { "
+                        + logic + " return " + entityVariable + "." + methodName + "(); } ");
             }
             if (methodName.contains("set")) {
                 argumentVariable = methodName.replace("set", "").toLowerCase();
-                sourceCode += "public void " + methodName + "(" + methods[i].getParameterTypes()[0].getSimpleName() + " " + argumentVariable + ") { " + logic + " "
-                        + entityVariable + "." + methodName + "(" + argumentVariable + "); } ";
+                sourceCodeBuffer.append("public void " + methodName + "(" + methods[i].getParameterTypes()[0].getSimpleName() + " " + argumentVariable
+                        + ") { " + logic + " " + entityVariable + "." + methodName + "(" + argumentVariable + "); } ");
             }
         }
-        sourceCode += " }";
-        
-        return sourceCode;
+        sourceCodeBuffer.append(" }");
+
+        return sourceCodeBuffer.toString();
     }
 
     public Object createProxy(Class entityClass/*, int id, Session session*/) {
