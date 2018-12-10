@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.lang.reflect.Proxy;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
@@ -19,10 +20,10 @@ import javax.tools.ToolProvider;
 
 public class TestProxyFactory {
 
-    public String getSourceCode(Class entity) {
+    private String getSourceCode(Class entity) {
         String sourceCode;
 
-        sourceCode = "import lib.hibernate_tests.*; import lib.hibernate_tests.proxies.MyEntity; ";
+        sourceCode = "import lib.hibernate_tests.*; ";
         String entityClassName = entity.getSimpleName();
         sourceCode += "public class " + entityClassName + "Proxy extends " + entityClassName + " {";
 
@@ -43,8 +44,8 @@ public class TestProxyFactory {
                         + entityVariable + "." + methodName + "(" + argumentVariable + "); } ";
             }
         }
-
         sourceCode += " }";
+        
         return sourceCode;
     }
 
@@ -56,8 +57,9 @@ public class TestProxyFactory {
             // generate the source code, using the source filename as the class name
             String classname = sourceFile.getName().split("\\.")[0];
             String sourceCode = getSourceCode(entityClass);
-                System.out.println(classname);
-                sourceCode = sourceCode.replace(entityClass.getSimpleName() + "Proxy", classname);
+
+            sourceCode = sourceCode.replace(entityClass.getSimpleName() + "Proxy", classname);
+
             // write the source code into the source file
             FileWriter writer = new FileWriter(sourceFile);
             writer.write(sourceCode);
@@ -81,5 +83,10 @@ public class TestProxyFactory {
         catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+    
+    public static Object createProxyByAndotherWay(Object ob) {
+        return Proxy.newProxyInstance(ob.getClass().getClassLoader(),
+                new Class<?>[]{ob.getClass()}, new SomeInvocationHandler(ob));
     }
 }

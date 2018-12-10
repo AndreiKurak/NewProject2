@@ -3,7 +3,6 @@ package lib.hibernate_tests;
 import javax.persistence.OptimisticLockException;
 import lib.PropertyValuesGetter;
 import lib.connectors.SessionFactoryGetter;
-import lib.hibernate_tests.proxies.MyEntity;
 import lib.hibernate_tests.proxies.TestBookStaticProxy;
 import lib.hibernate_tests.proxies.TestProxyFactory;
 import org.hibernate.*;
