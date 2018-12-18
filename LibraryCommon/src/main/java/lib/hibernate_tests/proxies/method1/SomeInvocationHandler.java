@@ -1,4 +1,4 @@
-package lib.hibernate_tests.proxies;
+package lib.hibernate_tests.proxies.method1;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

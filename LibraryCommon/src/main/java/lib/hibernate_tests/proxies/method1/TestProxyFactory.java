@@ -1,7 +1,4 @@
-package lib.hibernate_tests.proxies;
-
-import lib.hibernate_tests.TestBook;
-import org.hibernate.Session;
+package lib.hibernate_tests.proxies.method1;
 
 import java.lang.reflect.Method;
 

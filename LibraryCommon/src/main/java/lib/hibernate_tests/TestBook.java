@@ -1,5 +1,6 @@
 package lib.hibernate_tests;
 
+import lib.hibernate_tests.proxies.method2.TestBookInterface;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
@@ -11,7 +12,7 @@ import java.util.Objects;
 @Table(name = "library")//, schema = "doc_register_test")
 /*@OptimisticLocking(type = OptimisticLockType.ALL)
 @DynamicUpdate(true)*/
-public class TestBook extends TestBookWeight {
+public class TestBook extends TestBookWeight implements TestBookInterface {
 
     private Integer id;
     private String author;
