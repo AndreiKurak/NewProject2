@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+    <bean id="exampleBean" class="examples_test.chapter1_4.ExampleBean" depends-on="driver">
+        <!-- constructor injection using the nested ref element -->
+        <constructor-arg>
+            <ref bean="anotherExampleBean"/>
+        </constructor-arg>
+
+        <!-- constructor injection using the neater ref attribute -->
+        <constructor-arg type="int" value="1"/>
+
+        <property name="collection">
+            <props>
+                <prop key="key1">value1</prop>
+                <prop key="key2">value2</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="exampleBean2" class="examples_test.chapter1_4.ExampleBean2" autowire="byName"/>
+
+    <bean id="anotherExampleBean" class="examples_test.chapter1_4.AnotherBean" scope="prototype"/>
+
+    <bean id="beanChild" parent="exampleBean">
+        <property name="collection">
+            <props>
+                <prop key="key3">value3</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="driver" class="examples_test.chapter1_4.DriverBean"/>
+    <bean name="autowiredBean" class="examples_test.chapter1_4.AutowiredBean"/>
+
+    <bean id="commandManager" class="examples_test.chapter1_4.CommandManager">
+        <lookup-method name="createCommand" bean="anotherExampleBean"/>
+    </bean>
+</beans>

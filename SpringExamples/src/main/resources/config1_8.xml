@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="messenger" class="examples_test.chapter1_8.Messenger">
+        <property name="message" value="konichiwa"/>
+    </bean>
+
+    <bean class="examples_test.chapter1_8.ExampleBeanPostProcessor"/>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" value="classpath:jdbc.properties"/>
+    </bean>
+
+    <bean id="sourceFactory" class="examples_test.chapter1_8.SourceFactory"/>
+
+    <bean id="dataSource" class="examples_test.chapter1_8.BasicDataSource" factory-bean="sourceFactory">
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+</beans>
