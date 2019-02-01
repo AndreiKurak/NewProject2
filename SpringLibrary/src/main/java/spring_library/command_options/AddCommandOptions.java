@@ -5,13 +5,13 @@ import javax.validation.constraints.NotNull;
 
 public class AddCommandOptions {
 
-    @NotNull
+    @NotNull(message = "Missed option \"author\"")
     private String author;
 
-    @NotNull
+    @NotNull(message = "Missed option \"title\"")
     private String title;
 
-    @Digits(integer = 4, fraction = 0)
+    @Digits(integer = 4, fraction = 0, message = "Incorrect type of option \"year\"")
     private String year;
 
     public String getAuthor() {

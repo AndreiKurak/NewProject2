@@ -9,7 +9,7 @@ public class SearchCommandOptions {
 
     private String title;
 
-    @Digits(integer = 4, fraction = 0)
+    @Digits(integer = 4, fraction = 0, message = "Incorrect type of option \"year\"")
     private String year;
 
     public String getAuthor() {

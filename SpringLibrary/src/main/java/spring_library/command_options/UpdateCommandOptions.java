@@ -5,14 +5,15 @@ import javax.validation.constraints.NotNull;
 
 public class UpdateCommandOptions {
 
-    @NotNull
+    @NotNull(message = "Missed option \"id\"")
+    @Digits(integer = 3, fraction = 0, message = "Incorrect type of option \"id\"")
     private String id;
 
     private String author;
 
     private String title;
 
-    @Digits(integer = 4, fraction = 0)
+    @Digits(integer = 4, fraction = 0, message = "Incorrect type of option \"year\"")
     private String year;
 
     public String getId() {

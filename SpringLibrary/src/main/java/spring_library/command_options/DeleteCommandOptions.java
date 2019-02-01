@@ -5,8 +5,8 @@ import javax.validation.constraints.NotNull;
 
 public class DeleteCommandOptions {
 
-    @NotNull
-    @Digits(integer = 3, fraction = 0)
+    @NotNull(message = "Missed option \"id\"")
+    @Digits(integer = 3, fraction = 0, message = "Incorrect type of option \"id\"")
     private String id;
 
     public String getId() {

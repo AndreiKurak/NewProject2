@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/command")
-public class BookController {
+public class CommandController {
 
     @Autowired
     LibService libService;
@@ -31,7 +31,7 @@ public class BookController {
         ModelAndView model = new ModelAndView("view");
 
         if (result.hasErrors()) {
-            model.setViewName("start_page");
+            model.setViewName("add_options");
             model.addObject("message", "Error");
             System.out.println("errors?");
         }
@@ -39,7 +39,6 @@ public class BookController {
             model.addObject("message", "AddCommand was successfully performed");
             libService.add(new Book(modelRequest.getAuthor(), modelRequest.getTitle(), modelRequest.getYear()));
         }
-        System.out.println("Yo!" + modelRequest.getAuthor());
         return model;
     }
 
@@ -47,7 +46,7 @@ public class BookController {
     public ModelAndView delete(@Valid @ModelAttribute DeleteCommandOptions modelRequest, BindingResult result) {
         ModelAndView model = new ModelAndView("view");
         if (result.hasErrors()) {
-            model.setViewName("start_page");
+            model.setViewName("delete_options");
             model.addObject("message", "Error");
             System.out.println("errors?");
         }
@@ -62,7 +61,7 @@ public class BookController {
     public ModelAndView update(@Valid @ModelAttribute UpdateCommandOptions modelRequest, BindingResult result) {
         ModelAndView model = new ModelAndView("view");
         if (result.hasErrors()) {
-            model.setViewName("start_page");
+            model.setViewName("update_options");
             model.addObject("message", "Error");
             System.out.println("errors?");
         }
@@ -78,7 +77,7 @@ public class BookController {
     public ModelAndView search(@Valid @ModelAttribute SearchCommandOptions modelRequest, BindingResult result) {
         ModelAndView model = new ModelAndView("view");
         if (result.hasErrors()) {
-            model.setViewName("start_page");
+            model.setViewName("search_options");
             model.addObject("message", "Error");
             System.out.println("errors?");
         }
