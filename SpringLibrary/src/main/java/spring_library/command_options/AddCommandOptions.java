@@ -2,13 +2,16 @@ package spring_library.command_options;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class AddCommandOptions {
 
     @NotNull(message = "Missed option \"author\"")
+    @Size(min = 2, message = "Too short value of option \"author\"")
     private String author;
 
     @NotNull(message = "Missed option \"title\"")
+    @Size(min = 2, message = "Too short value of option \"title\"")
     private String title;
 
     @Digits(integer = 4, fraction = 0, message = "Incorrect type of option \"year\"")

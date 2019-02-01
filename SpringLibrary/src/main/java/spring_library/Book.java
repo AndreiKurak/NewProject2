@@ -9,8 +9,7 @@ import java.util.Objects;
 public class Book {
 
     private Integer id;
-
-    @Size(min = 4)
+    
     private String author;
     private String title;
     private String year;

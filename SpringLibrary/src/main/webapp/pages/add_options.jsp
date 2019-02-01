@@ -28,6 +28,8 @@
                     <td><input type="submit" value="confirm" id="button1"></td>
                 </tr>
             </table>
+            ${message}
+            <p>
             <a href="<%=request.getContextPath()%>/home">Home Page</a>
         </form>
     </body>
