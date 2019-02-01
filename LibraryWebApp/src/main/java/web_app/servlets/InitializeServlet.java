@@ -21,7 +21,7 @@ public class InitializeServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         try {
-            SessionFactoryGetter.setSessionFactory(new Configuration().
+            SessionFactoryGetter.getSessionFactory(new Configuration().
                     addPackage("lib.library_entities").
                     addProperties(new PropertyValuesGetter().getProp()).
                     addAnnotatedClass(Book.class).buildSessionFactory());

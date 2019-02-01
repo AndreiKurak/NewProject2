@@ -18,6 +18,9 @@
         <module>MVCFrameworkWeb</module>
         <module>MVCFrameworkConsole</module>
         <module>SpringExamples</module>
+        <module>SpringLibrary</module>
+        <module>spring_mvc_common</module>
+        <module>SpringMVCCommon</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
