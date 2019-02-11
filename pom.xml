@@ -21,6 +21,7 @@
         <module>SpringLibrary</module>
         <module>spring_mvc_common</module>
         <module>SpringMVCCommon</module>
+        <module>SpringXmlLibrary</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

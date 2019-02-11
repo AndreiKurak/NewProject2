@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="spring_library.Book"%>
+<%@ page import="spring_xml_library.Book"%>
 <html>
     <head>
         <title>Home</title>
@@ -42,5 +42,6 @@
             %>
             </tbody>
         </TABLE>
+
     </body>
 </html>

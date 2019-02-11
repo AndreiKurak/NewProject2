@@ -19,8 +19,4 @@
         </listener-class>
     </listener>-->
     
-    <welcome-file-list>
-        <welcome-file>pages/start_page.jsp</welcome-file>
-    </welcome-file-list>
-    
 </web-app>

@@ -1,4 +1,4 @@
-package spring_library;
+package spring_xml_library;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,15 +6,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 @Transactional(readOnly = true)
 public class LibService {
 
-    @Autowired
+
     private BookDAO bookDAO;
 
     public BookDAO getBookDAO() {
         return bookDAO;
+    }
+
+    public void setBookDAO(BookDAO bookDAO) {
+        this.bookDAO = bookDAO;
     }
 
     @Transactional(readOnly = false)

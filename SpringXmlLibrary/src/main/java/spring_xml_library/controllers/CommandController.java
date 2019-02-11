@@ -1,4 +1,4 @@
-package spring_library.controllers;
+package spring_xml_library.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import spring_library.Book;
-import spring_library.LibService;
-import spring_library.command_options.AddCommandOptions;
-import spring_library.command_options.DeleteCommandOptions;
-import spring_library.command_options.SearchCommandOptions;
-import spring_library.command_options.UpdateCommandOptions;
+import spring_xml_library.Book;
+import spring_xml_library.BookDAO;
+import spring_xml_library.LibService;
+import spring_xml_library.command_options.AddCommandOptions;
+import spring_xml_library.command_options.DeleteCommandOptions;
+import spring_xml_library.command_options.SearchCommandOptions;
+import spring_xml_library.command_options.UpdateCommandOptions;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,14 +26,11 @@ public class CommandController {
     LibService libService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    //@ResponseBody
     public ModelAndView add(@Valid @ModelAttribute AddCommandOptions modelRequest, BindingResult result) {
-        ModelAndView model = new ModelAndView("view");
-
+        ModelAndView model = new ModelAndView("home");
         if (result.hasErrors()) {
-            model.setViewName("add_options");
+            model.setViewName("pages/add_options.jsp");
             model.addObject("message", result);
-            System.out.println("errors?");
         }
         else {
             model.addObject("message", "AddCommand was successfully performed");
@@ -43,11 +41,10 @@ public class CommandController {
 
     @RequestMapping(value = "/delete", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView delete(@Valid @ModelAttribute DeleteCommandOptions modelRequest, BindingResult result) {
-        ModelAndView model = new ModelAndView("view");
+        ModelAndView model = new ModelAndView("home");
         if (result.hasErrors()) {
-            model.setViewName("delete_options");
+            model.setViewName("pages/delete_options.jsp");
             model.addObject("message", result);
-            System.out.println("errors?");
         }
         else {
             model.addObject("message", "DeleteCommand was successfully performed");
@@ -58,11 +55,10 @@ public class CommandController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ModelAndView update(@Valid @ModelAttribute UpdateCommandOptions modelRequest, BindingResult result) {
-        ModelAndView model = new ModelAndView("view");
+        ModelAndView model = new ModelAndView("home");
         if (result.hasErrors()) {
-            model.setViewName("update_options");
+            model.setViewName("pages/update_options.jsp");
             model.addObject("message", result);
-            System.out.println("errors?");
         }
         else {
             model.addObject("message", "UpdateCommand was successfully performed");
@@ -76,13 +72,12 @@ public class CommandController {
     public ModelAndView search(@Valid @ModelAttribute SearchCommandOptions modelRequest, BindingResult result) {
         ModelAndView model = new ModelAndView("view");
         if (result.hasErrors()) {
-            model.setViewName("search_options");
+            model.setViewName("pages/search_options.jsp");
             model.addObject("message", result);
-            System.out.println("errors?");
         }
         else {
-            model.addObject("message", "SearchCommand was successfully performed");
-            libService.search(new Book(modelRequest.getAuthor(), modelRequest.getTitle(), modelRequest.getYear()));
+            List<Book> bookList = libService.search(new Book(modelRequest.getAuthor(), modelRequest.getTitle(), modelRequest.getYear()));
+            model.addObject("message", bookList);
         }
         return model;
     }
@@ -92,8 +87,6 @@ public class CommandController {
         ModelAndView model = new ModelAndView("view");
         List<Book> bookList = libService.list();
         model.addObject("message", bookList);
-        System.out.println(bookList);
         return model;
-
     }
 }
