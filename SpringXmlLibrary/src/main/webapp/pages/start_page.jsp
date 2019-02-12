@@ -14,6 +14,7 @@
         <a href="<%=url%>/options/delete">delete</a>
         <a href="<%=url%>/options/search">search</a>
         <a href="<%=url%>/options/update">update</a>
+        <a href="<%=url%>/test/add">update</a>
         ${message}
 
         <TABLE border="4" class="table table-striped table-bordered" cellspacing="0" width="50%">
