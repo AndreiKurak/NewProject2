@@ -48,8 +48,8 @@
         <property name="suffix" value="" />
     </bean>
 
-    <bean id="testService" class="spring_xml_library.LibService">
+    <!--<bean id="testService" class="spring_xml_library.LibService">
         <property name="bookDAO" ref="bookDAO"/>
-    </bean>
+    </bean>-->
 
 </beans>
