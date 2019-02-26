@@ -11,6 +11,7 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.jdbc.JdbcTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,7 +50,8 @@ public class TransactionRollbackTest {   //without annotation @Transaction
     @Test
     @Transactional
     @Rollback(false)
-    public void shouldRollback() throws Exception {
+    public void shouldRollback() /*throws Exception */ {
+
         Book book = new Book("author", "title", "2017");
         bookDAO.add(book);
 
@@ -58,8 +60,9 @@ public class TransactionRollbackTest {   //without annotation @Transaction
         //assertThat(JdbcTestUtils.countRowsInTable(jdbcTemplate, "library")).isEqualTo(4);
     }
 
-    @After
+    @AfterTransaction
     public void after() {
-        //jdbcTemplate.execute("DELETE FROM doc_register_test.library");
+        assertThat(JdbcTestUtils.countRowsInTable(jdbcTemplate, "library")).isEqualTo(0);
+        jdbcTemplate.execute("DELETE FROM doc_register_test.library");
     }
 }
