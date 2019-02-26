@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Commit;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.jdbc.JdbcTestUtils;
@@ -25,7 +26,7 @@ public class TxAnnotationDrivenTest {   //without annotation @Transaction
     private SessionFactory sessionFactory;
 
     @Autowired
-    private LibService libService;
+    private BookDAO bookDAO;
 
     JdbcTemplate jdbcTemplate;
 
@@ -38,7 +39,7 @@ public class TxAnnotationDrivenTest {   //without annotation @Transaction
     public void test() throws Exception{
 
         Book book = new Book("author", "title", "2018");
-        libService.add(book);
+        bookDAO.add(book);
         throw new RuntimeException();
 
         //assertThat(JdbcTestUtils.countRowsInTable(jdbcTemplate, "library")).isEqualTo(4);
@@ -47,11 +48,11 @@ public class TxAnnotationDrivenTest {   //without annotation @Transaction
 
     @Test
     @Transactional
-    @Commit
+    @Rollback(false)
     public void test2() throws Exception{
-        Book book = new Book("author", "title", "2018");
-        libService.add(book);
-        throw new Exception();
+        Book book = new Book("author", "title", "2017");
+        bookDAO.add(book);
+        throw new RuntimeException();
 
         //assertThat(JdbcTestUtils.countRowsInTable(jdbcTemplate, "library")).isEqualTo(4);
     }
