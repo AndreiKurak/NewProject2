@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:database_test_config.xml")
-public class TxAnnotationDrivenTest {   //without annotation @Transaction
+public class TransactionRollbackTest {   //without annotation @Transaction
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -35,8 +35,8 @@ public class TxAnnotationDrivenTest {   //without annotation @Transaction
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @Test
-    public void test() throws Exception{
+    @Test //must enable tx:annotation-driven
+    public void shouldWorkWithoutTransactionalAnnotationAndMakeRollback() throws Exception{
 
         Book book = new Book("author", "title", "2018");
         bookDAO.add(book);
@@ -49,9 +49,10 @@ public class TxAnnotationDrivenTest {   //without annotation @Transaction
     @Test
     @Transactional
     @Rollback(false)
-    public void test2() throws Exception{
+    public void shouldRollback() throws Exception {
         Book book = new Book("author", "title", "2017");
         bookDAO.add(book);
+
         throw new RuntimeException();
 
         //assertThat(JdbcTestUtils.countRowsInTable(jdbcTemplate, "library")).isEqualTo(4);
