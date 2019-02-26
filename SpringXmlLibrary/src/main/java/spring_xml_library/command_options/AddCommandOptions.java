@@ -14,7 +14,7 @@ public class AddCommandOptions {
     @Size(min = 2, message = "Too short value of option \"title\"")
     private String title;
 
-    @Digits(integer = 4, fraction = 0, message = "Incorrect type of option \"year\"")
+    //@Digits(integer = 4, fraction = 0, message = "Incorrect type of option \"year\"")
     private String year;
 
     public String getAuthor() {

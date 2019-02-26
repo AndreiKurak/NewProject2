@@ -25,6 +25,8 @@ public class BookDAO implements EntityDAO {
     @Override
     public void add(Book addBook) {
         Integer count = (Integer) getSession().createQuery("select max(id) from Book").uniqueResult();
+        if (count == null)
+            count = 0;
         addBook.setId(count + 1);
         getSession().save(addBook);
     }

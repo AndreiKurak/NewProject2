@@ -19,7 +19,6 @@
         <module>MVCFrameworkConsole</module>
         <module>SpringExamples</module>
         <module>SpringLibrary</module>
-        <module>spring_mvc_common</module>
         <module>SpringMVCCommon</module>
         <module>SpringXmlLibrary</module>
     </modules>
@@ -37,7 +36,7 @@
         <dependency>
             <artifactId>junit</artifactId>
             <groupId>junit</groupId>
-            <version>4.10</version>
+            <version>4.12</version>
         </dependency>
         <dependency>
             <artifactId>mockito-all</artifactId>

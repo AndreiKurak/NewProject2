@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 public class DeleteCommandOptions {
 
     @NotNull(message = "Missed option \"id\"")
-    @Digits(integer = 3, fraction = 0, message = "Incorrect type of option \"id\"")
+    //@Digits(integer = 3, fraction = 0, message = "Incorrect type of option \"id\"")
     private String id;
 
     public String getId() {

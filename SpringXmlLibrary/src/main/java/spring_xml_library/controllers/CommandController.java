@@ -22,11 +22,19 @@ import java.util.List;
 @RequestMapping("/command")
 public class CommandController {
 
+    private LibService libService;
+
+    public LibService getLibService() {
+        return libService;
+    }
+
     @Autowired
-    LibService libService;
+    public void setLibService(LibService libService) {
+        this.libService = libService;
+    }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView add(@Valid @ModelAttribute AddCommandOptions modelRequest, BindingResult result) {
+    public ModelAndView add(@Valid @ModelAttribute("command") AddCommandOptions modelRequest, BindingResult result) {
         ModelAndView model = new ModelAndView("home");
         if (result.hasErrors()) {
             model.setViewName("pages/add_options.jsp");
@@ -40,7 +48,7 @@ public class CommandController {
     }
 
     @RequestMapping(value = "/delete", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView delete(@Valid @ModelAttribute DeleteCommandOptions modelRequest, BindingResult result) {
+    public ModelAndView delete(@Valid @ModelAttribute("command") DeleteCommandOptions modelRequest, BindingResult result) {
         ModelAndView model = new ModelAndView("home");
         if (result.hasErrors()) {
             model.setViewName("pages/delete_options.jsp");
@@ -54,7 +62,7 @@ public class CommandController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ModelAndView update(@Valid @ModelAttribute UpdateCommandOptions modelRequest, BindingResult result) {
+    public ModelAndView update(@Valid @ModelAttribute("command") UpdateCommandOptions modelRequest, BindingResult result) {
         ModelAndView model = new ModelAndView("home");
         if (result.hasErrors()) {
             model.setViewName("pages/update_options.jsp");
@@ -69,8 +77,8 @@ public class CommandController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public ModelAndView search(@Valid @ModelAttribute SearchCommandOptions modelRequest, BindingResult result) {
-        ModelAndView model = new ModelAndView("view");
+    public ModelAndView search(@Valid @ModelAttribute("command") SearchCommandOptions modelRequest, BindingResult result) {
+        ModelAndView model = new ModelAndView("pages/view.jsp");
         if (result.hasErrors()) {
             model.setViewName("pages/search_options.jsp");
             model.addObject("message", result);
@@ -84,7 +92,7 @@ public class CommandController {
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public ModelAndView list() {
-        ModelAndView model = new ModelAndView("view");
+        ModelAndView model = new ModelAndView("pages/view.jsp");
         List<Book> bookList = libService.list();
         model.addObject("message", bookList);
         return model;
