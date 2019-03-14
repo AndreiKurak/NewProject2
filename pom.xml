@@ -19,8 +19,8 @@
         <module>MVCFrameworkConsole</module>
         <module>SpringExamples</module>
         <module>SpringLibrary</module>
-        <module>SpringMVCCommon</module>
         <module>SpringXmlLibrary</module>
+        <module>SpringBootWebLibrary</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
