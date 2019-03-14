@@ -15,4 +15,6 @@ public interface BookDAO extends JpaRepository<Book, Integer> {
 
     <S extends Book> S save(S entity);
 
+
+    Book findById(int id);
 }
